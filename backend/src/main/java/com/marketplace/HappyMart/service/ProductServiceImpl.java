@@ -48,8 +48,13 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
     }
 
+    @Override
+    public void deleteAllProducts() {
+        productRepository.deleteAll();
+    }
+
     @Transactional
-    public void deleteProduct(Long id) {
+    public void deleteProductById(Long id) {
         if (!productRepository.existsById(id)) {
             throw new RuntimeException("Product not found");
         }

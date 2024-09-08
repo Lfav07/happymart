@@ -13,6 +13,7 @@ public interface ProductService {
     public Product updateProduct(Long id, String company, String name, String image,
                                  Category category, int quantity, int price,
                                  int weight, String description);
-    public void deleteProduct(Long id);
+    public void deleteProductById(Long id);
+    public void deleteAllProducts();
 
 }
