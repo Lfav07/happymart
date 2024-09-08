@@ -11,6 +11,9 @@ public class Product {
     @Column(name = "product_id")
     private int id;
 
+    @Column(name = "company")
+    private  String company;
+
     @Column(name = "name")
     private String name;
 
@@ -33,15 +36,11 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private User customer;
-
-
     public Product() {
     }
 
-    public Product(String name, String image, Category category, int quantity, int price, int weight, String description, User customer) {
+    public Product(String company, String name, String image, Category category, int quantity, int price, int weight, String description) {
+       this.company = company;
         this.name = name;
         this.image = image;
         this.category = category;
@@ -49,7 +48,7 @@ public class Product {
         this.price = price;
         this.weight = weight;
         this.description = description;
-        this.customer = customer;
+
     }
 
 
@@ -117,11 +116,13 @@ public class Product {
         this.description = description;
     }
 
-    public User getCustomer() {
-        return customer;
+    public String getCompany() {
+        return company;
     }
 
-    public void setCustomer(User customer) {
-        this.customer = customer;
+    public void setCompany(String company) {
+        this.company = company;
     }
+
+
 }
