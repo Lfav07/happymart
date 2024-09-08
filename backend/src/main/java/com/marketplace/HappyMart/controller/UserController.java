@@ -2,7 +2,7 @@ package com.marketplace.HappyMart.controller;
 
 import com.marketplace.HappyMart.dto.UserDTO;
 import com.marketplace.HappyMart.model.User;
-import com.marketplace.HappyMart.service.UserService;
+import com.marketplace.HappyMart.service.interfaces.UserService;
 import com.marketplace.HappyMart.config.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
