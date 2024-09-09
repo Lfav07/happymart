@@ -11,7 +11,7 @@ public interface OrderService {
     public List<Order> getAllOrders();
     public Order getOrderById(Long id);
     public Order updateOrder(Long id, Long userId, int totalAmount);
-    public Order updateOrderStatus(OrderStatus orderStatus);
+    public Order updateOrderStatus(Long id, OrderStatus orderStatus);
     public void deleteOrderById(Long id);
     public void deleteAllOrders();
 }
