@@ -32,6 +32,11 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
 
     @Override
+    public List<OrderItem> getAllOrderItems() {
+        return orderItemRepository.findAll();
+    }
+
+    @Override
     public List<OrderItem> getOrderItemsByOrderId(Long orderId) {
         return orderItemRepository.findByOrderId(orderId);
     }
