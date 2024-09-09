@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CategoryServiceImpl implements CategoryService {
 
@@ -25,20 +26,19 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category getCategoryById(Long id) {
-        return categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+    public Optional<Category> getCategoryById(Long id) {
+        return categoryRepository.findById(id);
 
     }
 
     @Override
     @Transactional
-    public Category updateCategory(Long id, String name) {
-        Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+    public Optional<Category> updateCategory(Long id, String name) {
+        return  categoryRepository.findById(id)
+                        .map(category -> {
         category.setName(name);
-        return  categoryRepository.save(category);
-
+        return categoryRepository.save(category);
+                        });
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.marketplace.HappyMart.service.interfaces.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ReviewServiceImpl implements ReviewService {
 
@@ -23,8 +24,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Review getReviewByProductId(Long productId) {
-       return reviewRepository.findById(productId)
-               .orElseThrow(() -> new RuntimeException("Review not found"));
+    public Optional<Review> getReviewByProductId(Long productId) {
+       return reviewRepository.findById(productId);
     }
 }

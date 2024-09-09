@@ -7,6 +7,7 @@ import com.marketplace.HappyMart.service.interfaces.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 public class OrderServiceImpl implements OrderService {
 
@@ -24,26 +25,27 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getOrderById(Long id) {
-        return orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+    public Optional<Order> getOrderById(Long id) {
+        return orderRepository.findById(id);
     }
 
     @Override
-    public Order updateOrder(Long id, Long userId, int totalAmount) {
-       Order order =  orderRepository.findById(id)
-               .orElseThrow(() -> new RuntimeException("Order not found"));
-       order.setUserId(id);
-       order.setTotalAmount(totalAmount);
-       return orderRepository.save(order);
+    public Optional<Order> updateOrder(Long id, Long userId, int totalAmount) {
+       return orderRepository.findById(id)
+               .map(order -> {
+                   order.setUserId(id);
+                   order.setTotalAmount(totalAmount);
+                   return  orderRepository.save(order);
+               });
     }
 
     @Override
-    public Order updateOrderStatus(Long id, OrderStatus orderStatus) {
-        Order order =  orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
-        order.setStatus(orderStatus);
-        return  orderRepository.save(order);
+    public Optional<Order> updateOrderStatus(Long id, OrderStatus orderStatus) {
+        return  orderRepository.findById(id)
+                .map(order -> {
+                    order.setStatus(orderStatus);
+                    return  orderRepository.save(order);
+                });
     }
 
     @Override

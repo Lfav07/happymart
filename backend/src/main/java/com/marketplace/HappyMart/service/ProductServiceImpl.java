@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -24,28 +25,29 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
-    public Product getProductById(Long id) {
-        return productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id);
     }
 
     @Transactional
-    public Product updateProduct(Long id, String company, String name, String image,
+    public Optional<Product> updateProduct(Long id, String company, String name, String image,
                                  Category category, int quantity, int price,
                                  int weight, String description) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+        return  productRepository.findById(id)
+                        .map(product -> {
 
-        product.setCompany(company);
-        product.setName(name);
-        product.setImage(image);
-        product.setCategory(category);
-        product.setQuantity(quantity);
-        product.setPrice(price);
-        product.setWeight(weight);
-        product.setDescription(description);
 
-        return productRepository.save(product);
+                            product.setCompany(company);
+                            product.setName(name);
+                            product.setImage(image);
+                            product.setCategory(category);
+                            product.setQuantity(quantity);
+                            product.setPrice(price);
+                            product.setWeight(weight);
+                            product.setDescription(description);
+
+                            return productRepository.save(product);
+                        });
     }
 
     @Override
