@@ -10,7 +10,8 @@ public interface OrderService {
     public Order createOrder(Order order);
     public List<Order> getAllOrders();
     public Order getOrderById(Long id);
-    public Order updateOrder(Long id, Long userId, int totalAmount, OrderStatus status);
+    public Order updateOrder(Long id, Long userId, int totalAmount);
+    public Order updateOrderStatus(OrderStatus orderStatus);
     public void deleteOrderById(Long id);
     public void deleteAllOrders();
 }
