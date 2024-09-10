@@ -3,6 +3,7 @@ package com.marketplace.HappyMart.controller;
 
 import com.marketplace.HappyMart.model.Product;
 import com.marketplace.HappyMart.service.interfaces.ProductService;
+import com.marketplace.HappyMart.util.ValidationUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -32,10 +33,7 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<?> addProduct(@Valid @RequestBody Product product, BindingResult result) {
         if (result.hasErrors()) {
-            List<String> errorMessages = result.getAllErrors().stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.toList());
-            return ResponseEntity.badRequest().body(errorMessages);
+           return ValidationUtil.handleValidationErrors(result);
         }
         Product createdProduct = productService.createProduct(product);
         return ResponseEntity.ok(createdProduct);
@@ -52,10 +50,7 @@ public class ProductController {
     public ResponseEntity<?> updateProduct(@PathVariable Long id, @Valid @RequestBody
     Product updatedProduct, BindingResult result) {
         if (result.hasErrors()) {
-            List<String> errorMessages = result.getAllErrors().stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.toList());
-            return ResponseEntity.badRequest().body(errorMessages);
+            return ValidationUtil.handleValidationErrors(result);
         }
         return productService.updateProduct(id, updatedProduct.getCompany(),
                         updatedProduct.getName(), updatedProduct.getImage(),
