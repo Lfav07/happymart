@@ -27,4 +27,12 @@ public class ReviewServiceImpl implements ReviewService {
     public Optional<Review> getReviewByProductId(Long productId) {
        return reviewRepository.findById(productId);
     }
+
+    @Override
+    public void deleteReviewById(Long id) {
+        if (!reviewRepository.existsById(id)) {
+            throw new RuntimeException("Review not found");
+        }
+         reviewRepository.deleteById(id);
+    }
 }

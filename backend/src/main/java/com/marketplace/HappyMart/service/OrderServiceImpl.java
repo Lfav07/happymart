@@ -5,10 +5,12 @@ import com.marketplace.HappyMart.model.OrderStatus;
 import com.marketplace.HappyMart.repository.OrderRepository;
 import com.marketplace.HappyMart.service.interfaces.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class OrderServiceImpl implements OrderService {
 
     @Autowired

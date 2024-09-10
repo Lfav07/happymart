@@ -5,10 +5,12 @@ import com.marketplace.HappyMart.repository.CategoryRepository;
 import com.marketplace.HappyMart.service.interfaces.CategoryService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
@@ -45,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public void deleteCategoryById(Long id) {
         if (!categoryRepository.existsById(id)) {
-            throw new RuntimeException("Product not found");
+            throw new RuntimeException("Category not found");
         }
         categoryRepository.deleteById(id);
     }

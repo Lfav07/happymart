@@ -9,4 +9,5 @@ public interface ReviewService {
     public Review createReview(Review review);
     public  List<Review> getAllReviews();
     public Optional<Review> getReviewByProductId(Long productId);
+    public void deleteReviewById(Long id);
 }

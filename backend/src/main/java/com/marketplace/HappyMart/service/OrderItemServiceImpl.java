@@ -25,7 +25,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public OrderItem createOrderItem(OrderItem orderItem) {
         Order order = orderRepository.findById(orderItem.getOrder().getId())
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new RuntimeException("OrderItem not found"));
 
         orderItem.setOrder(order);
         return orderItemRepository.save(orderItem);
