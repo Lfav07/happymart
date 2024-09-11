@@ -22,4 +22,6 @@ public interface ProductService {
 
     public void deleteAllProducts();
 
+    List<Product> searchProducts(String keyword, Long categoryId, Integer minPrice, Integer maxPrice);
+
 }
