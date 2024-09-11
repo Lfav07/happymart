@@ -65,4 +65,18 @@ public class ProductController {
         productService.deleteProductById(id);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAllProducts() {
+        productService.deleteAllProducts();
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/search")
+    public List<Product> searchProducts(@RequestParam(required = false) String keyword,
+                                        @RequestParam(required = false) Long categoryId,
+                                        @RequestParam(required = false) Integer minPrice,
+                                        @RequestParam(required = false) Integer maxPrice) {
+        return productService.searchProducts(keyword, categoryId, minPrice, maxPrice);
+    }
 }
