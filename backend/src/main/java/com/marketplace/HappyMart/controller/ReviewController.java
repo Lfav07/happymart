@@ -42,7 +42,7 @@ public class ReviewController {
                 .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/id")
+    @DeleteMapping("/{id}")
     public  ResponseEntity<Void> deleteReviewById(@PathVariable Long id) {
         reviewService.deleteReviewById(id);
         return ResponseEntity.ok().build();
