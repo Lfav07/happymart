@@ -10,6 +10,30 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    @Column(name = "quantity", nullable = false)
+    private int quantity;
+
+    @Column(name = "price", nullable = false)
+    private double price;
+
+    public OrderItem() {
+    }
+
+    public OrderItem(Order order, Product product, int quantity, double price) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
     public Long getId() {
         return id;
     }
@@ -26,12 +50,12 @@ public class OrderItem {
         this.order = order;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getQuantity() {
@@ -42,38 +66,11 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
-
-    @ManyToOne
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
-
-    @Column(name = "product_id", nullable = false)
-    private Long productId;
-
-    @Column(name = "quantity", nullable = false)
-    private int quantity;
-
-    @Column(name = "price", nullable = false)
-    private int price;
-
-
-
-    public OrderItem() {
-    }
-
-    public OrderItem(Order order, Long productId, int quantity, int price) {
-        this.order = order;
-        this.productId = productId;
-        this.quantity = quantity;
-        this.price = price;
-    }
-
-
 }
