@@ -2,13 +2,14 @@ package com.marketplace.HappyMart.service;
 
 import com.marketplace.HappyMart.model.*;
 import com.marketplace.HappyMart.service.interfaces.CartService;
+import com.marketplace.HappyMart.service.interfaces.CheckoutService;
 import com.marketplace.HappyMart.service.interfaces.OrderItemService;
 import com.marketplace.HappyMart.service.interfaces.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CheckoutServiceImpl {
+public class CheckoutServiceImpl implements CheckoutService {
 
     @Autowired
     private CartService cartService;
@@ -25,7 +26,7 @@ public class CheckoutServiceImpl {
 
         Order order = new Order();
         order.setUserId(cart.getUser().getId());
-        order.setTotalAmount(cart.getTotalPrice()); // Assuming cart's total price is double
+        order.setTotalAmount(cart.getTotalPrice());
         order.setStatus(OrderStatus.PENDING);
 
         Order savedOrder = orderService.createOrder(order);
@@ -35,7 +36,7 @@ public class CheckoutServiceImpl {
             orderItem.setOrder(savedOrder);
             orderItem.setProduct(cartItem.getProduct());
             orderItem.setQuantity(cartItem.getQuantity());
-            orderItem.setPrice(cartItem.getPrice()); // Assuming cart item price is double
+            orderItem.setPrice(cartItem.getPrice());
 
             orderItemService.createOrderItem(orderItem);
         }
