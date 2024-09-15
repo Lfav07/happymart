@@ -12,7 +12,7 @@ public class Product {
     private int id;
 
     @Column(name = "company")
-    private  String company;
+    private String company;
 
     @Column(name = "name")
     private String name;
@@ -40,7 +40,7 @@ public class Product {
     }
 
     public Product(String company, String name, String image, Category category, int quantity, int price, int weight, String description) {
-       this.company = company;
+        this.company = company;
         this.name = name;
         this.image = image;
         this.category = category;
