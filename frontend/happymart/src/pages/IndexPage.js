@@ -6,7 +6,7 @@ const IndexPage = () => {
 
     return (
         <div>
-            <h1>Welcome</h1>
+            <h1>HappyMarket</h1>
             <p>Choose an action:</p>
             <button onClick={() => navigate('/login')}>Go to Login</button>
             <button onClick={() => navigate('/register')}>Go to Register</button>
