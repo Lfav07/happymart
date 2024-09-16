@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function CompleteProductList() {
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -16,11 +18,14 @@ function CompleteProductList() {
                 setProducts(response.data);
             } catch (error) {
                 console.error('There was an error fetching the products!', error);
+                if (error.response && error.response.status === 403) {
+                    navigate('/login', { replace: true }); // Redirect to login
+                }
             }
         };
 
         fetchProducts();
-    }, []);
+    }, [navigate]);
 
     return (
         <div className="CompleteProductList">
