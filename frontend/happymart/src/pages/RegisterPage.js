@@ -11,6 +11,13 @@ const RegisterPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+
+        if (!username || !password || !email) {
+            setMessage('All fields are required');
+            return;
+        }
+
         try {
             const response = await axios.post('http://localhost:8080/api/auth/register', {
                 username,
@@ -19,8 +26,8 @@ const RegisterPage = () => {
             });
             setMessage('Registration successful! Redirecting to login...');
             setTimeout(() => {
-                navigate('/login'); // Redirect to LoginPage after successful registration
-            }, 2000); // Delay redirection to show success message
+                navigate('/login');
+            }, 2000);
         } catch (error) {
             setMessage(error.response ? error.response.data : 'Error occurred');
         }
@@ -55,6 +62,7 @@ const RegisterPage = () => {
                     />
                 </div>
                 <button type="submit">Register</button>
+                 <button onClick={() => navigate('/login')}>Go to Login</button>
             </form>
             {message && <p>{message}</p>}
         </div>
