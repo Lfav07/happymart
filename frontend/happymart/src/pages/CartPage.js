@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useUser } from '../contexts/UserContext';
 
 const CartPage = () => {
-  const [userId, setUserId] = useState('');
+  const { user } = useUser();
   const [cart, setCart] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -10,10 +11,11 @@ const CartPage = () => {
 
   useEffect(() => {
     const fetchCart = async () => {
-      if (!userId) return;
+      if (!user.id) return;
+
       setLoading(true);
       try {
-        const cartResponse = await axios.get(`/carts/${userId}`);
+        const cartResponse = await axios.get(`/carts/${user.id}`);
         setCart(cartResponse.data);
 
         const itemsResponse = await axios.get(`/carts/${cartResponse.data.id}/items`);
@@ -27,17 +29,11 @@ const CartPage = () => {
     };
 
     fetchCart();
-  }, [userId]);
+  }, [user.id]);
 
   return (
     <div>
       <h1>Cart</h1>
-      <input
-        type="text"
-        value={userId}
-        onChange={(e) => setUserId(e.target.value)}
-        placeholder="Enter User ID"
-      />
       {loading && <p>Loading cart...</p>}
       {error && <p>{error}</p>}
       {cart && (
