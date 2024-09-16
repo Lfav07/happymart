@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = ({ onLogin }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+     const navigate = useNavigate(); // Hook for navigation
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -13,13 +15,18 @@ const LoginPage = ({ onLogin }) => {
                 username,
                 password
             });
-            localStorage.setItem('jwt', response.data); // Save JWT token
-            setMessage('Login successful!');
+            localStorage.setItem('jwt', response.data);
+            localStorage.setItem('username', username);
+            setMessage('Login successful!, Redirecting to home page!');
+             setTimeout(() => {
+                            navigate('/home');
+                        }, 2000);
             if (onLogin) onLogin();
         } catch (error) {
-            setMessage(error.response ? error.response.data : 'Error occurred');
+            setMessage(error.response ? error.response.data : 'Error occurred, Please try again');
         }
     };
+
 
     return (
         <div>
@@ -42,6 +49,7 @@ const LoginPage = ({ onLogin }) => {
                     />
                 </div>
                 <button type="submit">Login</button>
+                <button onClick={() => navigate('/register')}>Go to Register</button>
             </form>
             {message && <p>{message}</p>}
         </div>
