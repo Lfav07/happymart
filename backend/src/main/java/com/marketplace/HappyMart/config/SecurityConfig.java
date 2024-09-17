@@ -42,7 +42,8 @@ public class SecurityConfig {
                 }))
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
+                                .requestMatchers("/api/auth/register", "/api/auth/login",
+                                        "/api/admin/validate-security-code").permitAll()
                                 .requestMatchers("/api/auth/update-password").authenticated()
                                 .anyRequest().authenticated()
                 )
