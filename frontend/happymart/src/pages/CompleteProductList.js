@@ -48,6 +48,7 @@ function CompleteProductList() {
                     <li>No products found.</li>
                 )}
             </ul>
+               <button onClick={() => navigate('/home')}>Home</button>
         </div>
     );
 }

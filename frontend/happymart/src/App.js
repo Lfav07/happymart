@@ -7,9 +7,11 @@ import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import CompleteProductList from './pages/CompleteProductList';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminProtectedRoute from './components/AdminProtectedRoute'
 import HomePage from './pages/HomePage'
 import CartPage from './pages/CartPage'
 import LogoutPage from './pages/LogoutPage'
+import AdminLoginPage from './pages/AdminLoginPage'
 
 const App = () => {
     return (
@@ -23,6 +25,8 @@ const App = () => {
                 <Route path="/cart" element={<ProtectedRoute element={CartPage} />} />
                 <Route path="/home" element={<ProtectedRoute element={HomePage} />} />
                 <Route path="/logout" element={<ProtectedRoute element={LogoutPage} />} />
+                <Route path="/admin/login" element={<AdminLoginPage />} />
+
             </Routes>
         </Router>
         </UserProvider>

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useUser } from '../contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const CartPage = () => {
   const { user } = useUser();
   const [cart, setCart] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
+      const navigate = useNavigate();
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -52,6 +54,7 @@ const CartPage = () => {
           </ul>
         </div>
       )}
+      <button onClick={() => navigate('/home')}>Home</button>
     </div>
   );
 };
