@@ -30,7 +30,7 @@ const AdminLoginPage = ({ onLogin }) => {
             localStorage.setItem('username', username);
             setMessage('Login successful! Redirecting to home page!');
             setTimeout(() => {
-                navigate('/home');
+                navigate('/admin/home');
             }, 2000);
             if (onLogin) onLogin();
         } catch (error) {
