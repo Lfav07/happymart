@@ -22,6 +22,20 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.save(category);
     }
 
+    @Transactional
+    @Override
+    public Optional<Category> createCategoryByName(String name) {
+        Optional<Category> existingCategory = categoryRepository.findByName(name);
+        if (existingCategory.isPresent()) {
+            return existingCategory;
+        }
+
+        Category newCategory = new Category();
+        newCategory.setName(name);
+        return Optional.of(categoryRepository.save(newCategory));
+    }
+
+
     @Override
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
