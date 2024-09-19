@@ -13,7 +13,6 @@ const AdminLoginPage = ({ onLogin }) => {
         e.preventDefault();
 
         try {
-
             const response = await axios.post('http://localhost:8080/api/admin/validate-security-code', { securityCode });
 
             if (!response.data) {
@@ -21,13 +20,14 @@ const AdminLoginPage = ({ onLogin }) => {
                 return;
             }
 
-
             const loginResponse = await axios.post('http://localhost:8080/api/auth/login', {
                 username,
                 password
             });
+
             localStorage.setItem('jwt', loginResponse.data);
             localStorage.setItem('username', username);
+            localStorage.setItem('securityCode', securityCode);
             setMessage('Login successful! Redirecting to home page!');
             setTimeout(() => {
                 navigate('/admin/home');
@@ -37,6 +37,7 @@ const AdminLoginPage = ({ onLogin }) => {
             setMessage(error.response ? error.response.data : 'Error occurred, please try again');
         }
     };
+
 
     return (
         <div>
