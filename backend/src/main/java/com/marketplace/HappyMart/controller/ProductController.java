@@ -1,19 +1,18 @@
 package com.marketplace.HappyMart.controller;
 
-
+import com.marketplace.HappyMart.model.Category;
 import com.marketplace.HappyMart.model.Product;
+import com.marketplace.HappyMart.service.CategoryServiceImpl;
+import com.marketplace.HappyMart.service.interfaces.CategoryService;
 import com.marketplace.HappyMart.service.interfaces.ProductService;
 import com.marketplace.HappyMart.util.ValidationUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.Binding;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/products")
@@ -21,8 +20,12 @@ public class ProductController {
     @Autowired
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    @Autowired
+    private final CategoryServiceImpl categoryService;
+
+    public ProductController(ProductService productService, CategoryServiceImpl categoryService) {
         this.productService = productService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping
@@ -33,8 +36,18 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<?> addProduct(@Valid @RequestBody Product product, BindingResult result) {
         if (result.hasErrors()) {
-           return ValidationUtil.handleValidationErrors(result);
+            return ValidationUtil.handleValidationErrors(result);
         }
+
+
+
+        String categoryName = product.getCategory().getName();
+        Category category = categoryService.createCategoryByName(categoryName)
+                .orElseThrow(() -> new RuntimeException("Category could not be created or retrieved"));
+
+
+        product.setCategory(category);
+
         Product createdProduct = productService.createProduct(product);
         return ResponseEntity.ok(createdProduct);
     }
@@ -52,6 +65,13 @@ public class ProductController {
         if (result.hasErrors()) {
             return ValidationUtil.handleValidationErrors(result);
         }
+
+        // Ensure the category is persisted
+        Category category = updatedProduct.getCategory();
+        if (category != null && category.getId() == 0) {
+            categoryService.createCategory(category);
+        }
+
         return productService.updateProduct(id, updatedProduct.getCompany(),
                         updatedProduct.getName(), updatedProduct.getImage(),
                         updatedProduct.getCategory(), updatedProduct.getQuantity(),
