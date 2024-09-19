@@ -2,6 +2,7 @@ package com.marketplace.HappyMart.service;
 
 import com.marketplace.HappyMart.model.Category;
 import com.marketplace.HappyMart.model.Product;
+import com.marketplace.HappyMart.repository.CategoryRepository;
 import com.marketplace.HappyMart.repository.ProductRepository;
 import com.marketplace.HappyMart.service.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,17 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
     @Transactional
     public Product createProduct(Product product) {
-        return productRepository.save(product);
+        Category category = product.getCategory();
+
+        if (category.getId() == 0) {
+            categoryRepository.save(category);
+        }
+       return productRepository.save(product);
     }
 
     public List<Product> getAllProducts() {
