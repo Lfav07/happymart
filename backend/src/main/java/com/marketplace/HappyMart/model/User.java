@@ -30,6 +30,16 @@ public class User {
         return username;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
