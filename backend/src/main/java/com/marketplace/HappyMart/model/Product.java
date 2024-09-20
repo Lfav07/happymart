@@ -120,6 +120,21 @@ public class Product {
         return company;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", company='" + company + '\'' +
+                ", name='" + name + '\'' +
+                ", image='" + image + '\'' +
+                ", category=" + category +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", weight=" + weight +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
     public void setCompany(String company) {
         this.company = company;
     }
