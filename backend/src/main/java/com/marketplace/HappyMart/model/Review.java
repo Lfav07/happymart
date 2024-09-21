@@ -58,6 +58,17 @@ public class Review {
         this.rating = rating;
     }
 
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id=" + id +
+                ", user=" + user +
+                ", product=" + product +
+                ", rating=" + rating +
+                ", comment='" + comment + '\'' +
+                '}';
+    }
+
     public String getComment() {
         return comment;
     }
