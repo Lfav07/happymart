@@ -29,6 +29,16 @@ public class Order {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", totalAmount=" + totalAmount +
+                ", status=" + status +
+                '}';
+    }
+
     public Long getUserId() {
         return userId;
     }
