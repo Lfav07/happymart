@@ -22,8 +22,7 @@ public class CartServiceImpl implements CartService {
     private CartRepository cartRepository;
 
     @Autowired
-    private CartItemRepository cartItemRepository; // Fixed variable name to camelCase
-
+    private CartItemRepository cartItemRepository;
     @Autowired
     private UserRepository userRepository;
 
