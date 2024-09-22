@@ -19,7 +19,7 @@ function AdminProductsPage() {
             } catch (error) {
                 console.error('There was an error fetching the products!', error);
                 if (error.response && error.response.status === 403) {
-                    navigate('/login', { replace: true }); // Redirect to login
+                    navigate('/login', { replace: true });
                 }
             }
         };
@@ -28,11 +28,11 @@ function AdminProductsPage() {
     }, [navigate]);
 
     const handleAddProduct = () => {
-        navigate('/admin/products/add'); // Navigate to the add product page
+        navigate('/admin/products/add');
     };
 
     const handleEditProduct = (id) => {
-        navigate(`/admin/products/edit/${id}`); // Navigate to the edit product page
+        navigate(`/admin/products/edit/${id}`);
     };
 
     const handleDeleteProduct = async (id) => {
@@ -47,7 +47,7 @@ function AdminProductsPage() {
         } catch (error) {
             console.error('There was an error deleting the product!', error);
             if (error.response && error.response.status === 403) {
-                navigate('/login', { replace: true }); // Redirect to login
+                navigate('/login', { replace: true }); /
             }
         }
     };
