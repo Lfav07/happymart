@@ -39,6 +39,12 @@ public class CartController {
     public ResponseEntity<CartItem> addCartItem(@PathVariable Long cartId,
                                                 @RequestParam Long productId,
                                                 @RequestParam int quantity) {
+
+        Optional<Cart> cart = cartService.getCartByUserId(cartId);
+        if (cart.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+
         CartItem cartItem = cartService.addCartItem(cartId, productId, quantity);
         return ResponseEntity.ok(cartItem);
     }
