@@ -25,11 +25,11 @@ const AdminLoginPage = ({ onLogin }) => {
                 password
             });
 
-            // Destructure the token and user from the login response
+
             const { token, user } = loginResponse.data;
 
             localStorage.setItem('jwt', token);
-            localStorage.setItem('userId', user.id); // Store the user ID
+            localStorage.setItem('userId', user.id);
             localStorage.setItem('username', username);
             localStorage.setItem('securityCode', securityCode);
 
