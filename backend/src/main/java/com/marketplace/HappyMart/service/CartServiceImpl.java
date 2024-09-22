@@ -67,19 +67,21 @@ public class CartServiceImpl implements CartService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + productId));
 
-
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
         cartItem.setPrice(product.getPrice() * quantity);
 
+
         cart.getItems().add(cartItem);
         cart.updateTotalPrice();
 
-        cartRepository.save(cart);
         return cartItemRepository.save(cartItem);
     }
+
+
+
 
     @Override
     public Optional<CartItem> getCartItemById(Long cartItemId) {
