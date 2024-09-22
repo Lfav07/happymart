@@ -25,18 +25,25 @@ const AdminLoginPage = ({ onLogin }) => {
                 password
             });
 
-            localStorage.setItem('jwt', loginResponse.data);
+            // Destructure the token and user from the login response
+            const { token, user } = loginResponse.data;
+
+            localStorage.setItem('jwt', token);
+            localStorage.setItem('userId', user.id); // Store the user ID
             localStorage.setItem('username', username);
             localStorage.setItem('securityCode', securityCode);
+
             setMessage('Login successful! Redirecting to home page!');
             setTimeout(() => {
                 navigate('/admin/home');
             }, 2000);
+
             if (onLogin) onLogin();
         } catch (error) {
             setMessage(error.response ? error.response.data : 'Error occurred, please try again');
         }
     };
+
 
 
     return (
