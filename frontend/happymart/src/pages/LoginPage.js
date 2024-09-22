@@ -6,7 +6,7 @@ const LoginPage = ({ onLogin }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-     const navigate = useNavigate(); // Hook for navigation
+     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -15,8 +15,10 @@ const LoginPage = ({ onLogin }) => {
                 username,
                 password
             });
-            localStorage.setItem('jwt', response.data);
-            localStorage.setItem('username', username);
+             const { token, user } = response.data;
+            localStorage.setItem('jwt', token);
+            localStorage.setItem('userId', user.id);
+            localStorage.setItem('username', user.username);
             setMessage('Login successful!, Redirecting to home page!');
              setTimeout(() => {
                             navigate('/home');
