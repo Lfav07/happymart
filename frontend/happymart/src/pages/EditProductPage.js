@@ -4,29 +4,44 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 function EditProductPage() {
     const [product, setProduct] = useState(null);
+    const [categories, setCategories] = useState([]);
+    const [errorMessage, setErrorMessage] = useState('');
     const { id } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchProduct = async () => {
+        const fetchProductAndCategories = async () => {
             try {
                 const token = localStorage.getItem('jwt');
-                const response = await axios.get(`http://localhost:8080/products/${id}`, {
+                const productResponse = await axios.get(`http://localhost:8080/products/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                setProduct(response.data);
+                const categoriesResponse = await axios.get('http://localhost:8080/categories', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                setProduct(productResponse.data);
+                setCategories(categoriesResponse.data);
             } catch (error) {
-                console.error('There was an error fetching the product!', error);
+                console.error('Error fetching product or categories:', error);
+                setErrorMessage('Failed to load product or categories.');
             }
         };
 
-        fetchProduct();
+        fetchProductAndCategories();
     }, [id]);
 
     const handleChange = (e) => {
-        setProduct({ ...product, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        if (name === 'category') {
+            const selectedCategory = categories.find(category => category.id === parseInt(value));
+            setProduct({ ...product, category: selectedCategory });
+        } else {
+            setProduct({ ...product, [name]: value });
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -40,7 +55,8 @@ function EditProductPage() {
             });
             navigate('/admin/products');
         } catch (error) {
-            console.error('There was an error updating the product!', error);
+            console.error('Error updating the product:', error);
+            setErrorMessage('Failed to update the product.');
         }
     };
 
@@ -49,16 +65,25 @@ function EditProductPage() {
     return (
         <div>
             <h1>Edit Product</h1>
+            {errorMessage && <p className="error">{errorMessage}</p>}
             <form onSubmit={handleSubmit}>
                 <input type="text" name="name" value={product.name} onChange={handleChange} placeholder="Product Name" required />
                 <input type="text" name="image" value={product.image} onChange={handleChange} placeholder="Image URL" required />
                 <input type="text" name="company" value={product.company} onChange={handleChange} placeholder="Company" required />
-                <input type="text" name="category" value={product.category} onChange={handleChange} placeholder="Category" required />
+
+                <select name="category" value={product.category.id} onChange={handleChange}>
+                    {categories.map((cat) => (
+                        <option key={cat.id} value={cat.id}>{cat.name}</option>
+                    ))}
+                </select>
+
                 <input type="number" name="quantity" value={product.quantity} onChange={handleChange} placeholder="Quantity" required />
                 <input type="number" name="price" value={product.price} onChange={handleChange} placeholder="Price" required />
                 <input type="number" name="weight" value={product.weight} onChange={handleChange} placeholder="Weight" required />
                 <textarea name="description" value={product.description} onChange={handleChange} placeholder="Description" required />
                 <button type="submit">Update Product</button>
+
+                <button onClick={() => navigate('/admin/products')}>Back to catalog</button>
             </form>
         </div>
     );
