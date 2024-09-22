@@ -1,5 +1,6 @@
 package com.marketplace.HappyMart.service;
 
+import com.marketplace.HappyMart.dto.UserDTO;
 import com.marketplace.HappyMart.service.interfaces.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,20 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+    }
+
+    @Override
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateUser(Long id, UserDTO updatedUser) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        user.setUsername(updatedUser.getUsername());
+        user.setEmail(updatedUser.getEmail());
+        userRepository.save(user);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.marketplace.HappyMart.service.interfaces;
 
+import com.marketplace.HappyMart.dto.UserDTO;
 import com.marketplace.HappyMart.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,5 +20,9 @@ public interface UserService extends UserDetailsService {
 
     User saveUser(User user);
     void updatePassword(String username, String newPassword);
+
+    void deleteUserById(Long id);
+
+    void updateUser(Long id, UserDTO updatedUser);
 }
 
