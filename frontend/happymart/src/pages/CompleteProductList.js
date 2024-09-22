@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 function CompleteProductList() {
     const [products, setProducts] = useState([]);
+    const [userId, setUserId] = useState(localStorage.getItem('userId')); // Assuming userId is stored in localStorage
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,6 +28,25 @@ function CompleteProductList() {
         fetchProducts();
     }, [navigate]);
 
+    const handleAddToCart = async (productId) => {
+        try {
+            const token = localStorage.getItem('jwt');
+            const response = await axios.post(`http://localhost:8080/carts/${userId}/items`, null, {
+                params: {
+                    productId,
+                    quantity: 1 // Assuming adding 1 item by default
+                },
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            alert('Item added to cart successfully!');
+        } catch (error) {
+            console.error('Error adding item to cart:', error);
+            alert('Failed to add item to cart.');
+        }
+    };
+
     return (
         <div className="CompleteProductList">
             <h1>Product List</h1>
@@ -42,13 +62,14 @@ function CompleteProductList() {
                             <strong>Quantity:</strong> {product.quantity} <br/>
                             <strong>Weight:</strong> {product.weight}g <br/>
                             <strong>Description:</strong> {product.description} <br/>
+                            <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
                         </li>
                     ))
                 ) : (
                     <li>No products found.</li>
                 )}
             </ul>
-               <button onClick={() => navigate('/home')}>Home</button>
+            <button onClick={() => navigate('/home')}>Home</button>
         </div>
     );
 }
