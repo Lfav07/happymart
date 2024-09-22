@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 function CompleteProductList() {
     const [products, setProducts] = useState([]);
-    const [userId, setUserId] = useState(localStorage.getItem('userId')); // Assuming userId is stored in localStorage
+    const [userId, setUserId] = useState(localStorage.getItem('userId'));
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -34,7 +34,7 @@ function CompleteProductList() {
             const response = await axios.post(`http://localhost:8080/carts/${userId}/items`, null, {
                 params: {
                     productId,
-                    quantity: 1 // Assuming adding 1 item by default
+                    quantity: 1
                 },
                 headers: {
                     Authorization: `Bearer ${token}`
