@@ -17,7 +17,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -49,8 +51,30 @@ public class UserController {
         }
     }
 
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        try {
+            userService.deleteUserById(id);
+            return ResponseEntity.ok("User deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while deleting user: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/users/{id}")
+    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody UserDTO updatedUser) {
+        try {
+            userService.updateUser(id, updatedUser);
+            return ResponseEntity.ok("User updated successfully");
+        } catch (UsernameNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while updating user: " + e.getMessage());
+        }
+    }
+
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody User loginRequest, HttpServletResponse response) {
+    public ResponseEntity<Map<String, Object>> loginUser(@RequestBody User loginRequest, HttpServletResponse response) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -58,11 +82,21 @@ public class UserController {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             String jwt = jwtUtil.generateToken(userDetails);
 
-            return ResponseEntity.ok(jwt);
+
+            User user = userService.findUserByUsername(loginRequest.getUsername());
+            UserDTO userDTO = convertToDTO(user);
+
+
+            Map<String, Object> responseMap = new HashMap<>();
+            responseMap.put("token", jwt);
+            responseMap.put("user", userDTO);
+
+            return ResponseEntity.ok(responseMap);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
+
 
     @PostMapping("/update-password")
     public ResponseEntity<String> updatePassword(@RequestParam String username, @RequestParam String newPassword) {
