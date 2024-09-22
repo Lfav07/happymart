@@ -5,7 +5,7 @@ public class UserDTO {
     private String username;
     private String email;
 
-    // Getters and Setters
+
     public Long getId() {
         return id;
     }
