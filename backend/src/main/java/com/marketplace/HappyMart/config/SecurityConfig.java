@@ -2,6 +2,7 @@ package com.marketplace.HappyMart.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -42,9 +43,13 @@ public class SecurityConfig {
                 }))
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/api/auth/register", "/api/auth/login",
-                                        "/api/admin/validate-security-code").permitAll()
-                                .requestMatchers("/api/auth/update-password").authenticated()
+                                .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
+                                .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/api/user/**").hasRole("USER")
+                                .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthorizationFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class)
@@ -52,6 +57,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
