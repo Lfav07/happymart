@@ -20,9 +20,10 @@ public class Product {
     @Column(name = "image")
     private String image;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "category_id", referencedColumnName = "category_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "category_id", referencedColumnName = "category_id", nullable = false)
     private Category category;
+
 
     @Column(name = "quantity")
     private int quantity;
