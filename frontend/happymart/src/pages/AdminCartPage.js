@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const AdminCartPage = () => {
+const navigate = useNavigate();
   const [userId, setUserId] = useState('');
   const [cart, setCart] = useState(null);
   const [cartItems, setCartItems] = useState([]);
@@ -116,6 +118,7 @@ const AdminCartPage = () => {
       />
       <button onClick={fetchCart}>Fetch Cart</button>
       <button onClick={handleCreateCart}>Create Cart</button>
+       <button onClick={() => navigate('/admin/home')}>Home</button>
 
       {cart && (
         <div>
@@ -144,6 +147,7 @@ const AdminCartPage = () => {
           />
           <button onClick={handleAddCartItem}>Add Cart Item</button>
           <button onClick={handleClearCart}>Clear Cart</button>
+
         </div>
       )}
     </div>
