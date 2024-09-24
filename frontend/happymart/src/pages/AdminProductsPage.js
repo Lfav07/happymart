@@ -47,7 +47,7 @@ function AdminProductsPage() {
         } catch (error) {
             console.error('There was an error deleting the product!', error);
             if (error.response && error.response.status === 403) {
-                navigate('/login', { replace: true }); /
+                navigate('/login', { replace: true });
             }
         }
     };
