@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 const AdminLoginPage = ({ onLogin }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [securityCode, setSecurityCode] = useState('');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
@@ -13,38 +12,40 @@ const AdminLoginPage = ({ onLogin }) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:8080/api/admin/validate-security-code', { securityCode });
-
-            if (!response.data) {
-                setMessage('Invalid security code.');
-                return;
-            }
-
             const loginResponse = await axios.post('http://localhost:8080/api/auth/login', {
                 username,
                 password
             });
 
-
             const { token, user } = loginResponse.data;
+
 
             localStorage.setItem('jwt', token);
             localStorage.setItem('userId', user.id);
-            localStorage.setItem('username', username);
-            localStorage.setItem('securityCode', securityCode);
+            localStorage.setItem('username', user.username);
+            localStorage.setItem('roles', JSON.stringify(user.roles));
 
-            setMessage('Login successful! Redirecting to home page!');
-            setTimeout(() => {
-                navigate('/admin/home');
-            }, 2000);
 
-            if (onLogin) onLogin();
+            if (user.roles.includes('ROLE_ADMIN')) {
+                setMessage('Login successful! Redirecting to home page!');
+                setTimeout(() => {
+                    navigate('/admin/home');
+                }, 2000);
+
+                if (onLogin) onLogin();
+            } else {
+
+                localStorage.removeItem('jwt');
+                localStorage.removeItem('userId');
+                localStorage.removeItem('username');
+                localStorage.removeItem('roles');
+
+                setMessage('Access denied. You do not have admin privileges.');
+            }
         } catch (error) {
             setMessage(error.response ? error.response.data : 'Error occurred, please try again');
         }
     };
-
-
 
     return (
         <div>
@@ -64,14 +65,6 @@ const AdminLoginPage = ({ onLogin }) => {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label>Employee Security Code:</label>
-                    <input
-                        type="text"
-                        value={securityCode}
-                        onChange={(e) => setSecurityCode(e.target.value)}
                     />
                 </div>
                 <button type="submit">Login</button>
