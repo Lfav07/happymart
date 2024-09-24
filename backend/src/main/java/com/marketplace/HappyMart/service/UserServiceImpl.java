@@ -1,9 +1,11 @@
 package com.marketplace.HappyMart.service;
 
 import com.marketplace.HappyMart.dto.UserDTO;
+import com.marketplace.HappyMart.model.Role;
 import com.marketplace.HappyMart.service.interfaces.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +15,8 @@ import com.marketplace.HappyMart.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,18 +35,26 @@ public class UserServiceImpl implements UserService {
 
 
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found: " + username);
         }
+
+        // Convert Role enum to SimpleGrantedAuthority
+        var authorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.name())) // Get role names like ROLE_USER
+                .collect(Collectors.toList());
+
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
-                new ArrayList<>()
+                authorities
         );
     }
+
 
     @Override
     public List<User> findAllUsers() {
@@ -68,8 +80,15 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+
+        if (user.getRoles() == null || user.getRoles().isEmpty()) {
+            user.setRoles(Set.of(Role.ROLE_USER));
+        }
+
         return userRepository.save(user);
     }
+
 
     @Override
     public void deleteUserById(Long id) {

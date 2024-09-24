@@ -1,13 +1,10 @@
 package com.marketplace.HappyMart.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.util.Set;
 
 @Entity
-public class User {
+public class    User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,6 +14,11 @@ public class User {
     private String password;
 
     private String email;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
+
 
     public Long getId() {
         return id;
@@ -28,16 +30,6 @@ public class User {
 
     public String getUsername() {
         return username;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
     }
 
     public void setUsername(String username) {
@@ -58,5 +50,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

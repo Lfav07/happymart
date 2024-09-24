@@ -1,6 +1,7 @@
 package com.marketplace.HappyMart.controller;
 
 import com.marketplace.HappyMart.dto.UserDTO;
+import com.marketplace.HappyMart.model.Role;
 import com.marketplace.HappyMart.model.User;
 import com.marketplace.HappyMart.service.interfaces.UserService;
 import com.marketplace.HappyMart.config.JwtUtil;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -37,7 +39,6 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody User user, BindingResult result) {
         if (result.hasErrors()) {
-            // Collect validation errors
             StringBuilder errorMessages = new StringBuilder("Validation failed: ");
             result.getAllErrors().forEach(error -> errorMessages.append(error.getDefaultMessage()).append("; "));
             return ResponseEntity.badRequest().body(errorMessages.toString());
@@ -80,12 +81,15 @@ public class UserController {
                     new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            String jwt = jwtUtil.generateToken(userDetails);
 
+            List<String> roles = userDetails.getAuthorities().stream()
+                    .map(authority -> authority.getAuthority().replace("ROLE_", ""))
+                    .collect(Collectors.toList());
+
+            String jwt = jwtUtil.generateToken(userDetails, roles);
 
             User user = userService.findUserByUsername(loginRequest.getUsername());
             UserDTO userDTO = convertToDTO(user);
-
 
             Map<String, Object> responseMap = new HashMap<>();
             responseMap.put("token", jwt);
@@ -96,6 +100,9 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
+
+
+
 
 
     @PostMapping("/update-password")
@@ -145,8 +152,16 @@ public class UserController {
         userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());
+
+
+        List<String> roles = user.getRoles().stream()
+                .map(Role::name)
+                .collect(Collectors.toList());
+        userDTO.setRoles(roles);
+
         return userDTO;
     }
+
 
 
 }
