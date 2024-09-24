@@ -43,7 +43,19 @@ public class SecurityConfig {
                 }))
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/auth/register").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/api/auth/register").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/auth/register").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/auth/login").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                                .requestMatchers(HttpMethod.PUT, "/api/auth/login").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/auth/login").hasRole("ADMIN")
+
+
+
+
+
                                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/api/user/**").hasRole("USER")
                                 .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
