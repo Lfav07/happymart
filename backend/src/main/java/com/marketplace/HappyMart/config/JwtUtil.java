@@ -15,7 +15,7 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-    private final long EXPIRATION_TIME = 900_000; // 15 minutes
+    private final long EXPIRATION_TIME = 18_000_000; // 5 hours
     private final Key SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256); // Auto-generated secret key
 
 
