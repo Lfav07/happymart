@@ -1,6 +1,7 @@
 package com.marketplace.HappyMart.controller;
 
 import com.marketplace.HappyMart.dto.UserDTO;
+import com.marketplace.HappyMart.model.Role;
 import com.marketplace.HappyMart.model.User;
 import com.marketplace.HappyMart.service.interfaces.UserService;
 import com.marketplace.HappyMart.config.JwtUtil;
@@ -81,14 +82,11 @@ public class UserController {
 
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-
             List<String> roles = userDetails.getAuthorities().stream()
-                    .map(authority -> authority.getAuthority().replace("ROLE_", "")) // Extract role names without the "ROLE_" prefix
+                    .map(authority -> authority.getAuthority().replace("ROLE_", ""))
                     .collect(Collectors.toList());
 
-
             String jwt = jwtUtil.generateToken(userDetails, roles);
-
 
             User user = userService.findUserByUsername(loginRequest.getUsername());
             UserDTO userDTO = convertToDTO(user);
@@ -102,6 +100,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
+
 
 
 
@@ -153,8 +152,16 @@ public class UserController {
         userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());
+
+
+        List<String> roles = user.getRoles().stream()
+                .map(Role::name)
+                .collect(Collectors.toList());
+        userDTO.setRoles(roles);
+
         return userDTO;
     }
+
 
 
 }
