@@ -20,7 +20,7 @@ function CompleteProductList() {
             } catch (error) {
                 console.error('There was an error fetching the products!', error);
                 if (error.response && error.response.status === 403) {
-                    navigate('/login', { replace: true }); // Redirect to login
+                    navigate('/login', { replace: true });
                 }
             }
         };
@@ -31,15 +31,35 @@ function CompleteProductList() {
     const handleAddToCart = async (productId) => {
         try {
             const token = localStorage.getItem('jwt');
-            const response = await axios.post(`http://localhost:8080/carts/${userId}/items`, null, {
-                params: {
-                    productId,
-                    quantity: 1
-                },
+
+            const cartResponse = await axios.get(`http://localhost:8080/carts/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
+
+            if (!cartResponse.data || !cartResponse.data.id) {
+                alert('Failed to retrieve cart. Please try again.');
+                return;
+            }
+
+            const cartId = cartResponse.data.id;
+
+
+            const addItemResponse = await axios.post(
+                `http://localhost:8080/carts/${cartId}/items`,
+                null,
+                {
+                    params: {
+                        productId,
+                        quantity: 1
+                    },
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            );
+
             alert('Item added to cart successfully!');
         } catch (error) {
             console.error('Error adding item to cart:', error);
