@@ -8,8 +8,8 @@ const CartPage = () => {
   const [cart, setCart] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
-      const navigate = useNavigate();
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -17,10 +17,12 @@ const CartPage = () => {
 
       setLoading(true);
       try {
-        const cartResponse = await axios.get(`/carts/${user.id}`);
+        // Fetch or create cart for the user
+        const cartResponse = await axios.get(`/users/${user.id}/cart`);
         setCart(cartResponse.data);
 
-        const itemsResponse = await axios.get(`/carts/${cartResponse.data.id}/items`);
+        // Fetch all cart items for the user's cart
+        const itemsResponse = await axios.get(`/users/${user.id}/cart/items`);
         setCartItems(itemsResponse.data);
       } catch (error) {
         setError('Failed to fetch cart');
@@ -32,6 +34,24 @@ const CartPage = () => {
 
     fetchCart();
   }, [user.id]);
+
+  const handleRemoveItem = async (itemId) => {
+    try {
+      await axios.delete(`/users/${user.id}/cart/items/${itemId}`);
+      setCartItems(cartItems.filter(item => item.id !== itemId));
+    } catch (error) {
+      setError('Failed to remove item');
+    }
+  };
+
+  const handleClearCart = async () => {
+    try {
+      await axios.delete(`/users/${user.id}/cart/items`);
+      setCartItems([]);
+    } catch (error) {
+      setError('Failed to clear cart');
+    }
+  };
 
   return (
     <div>
@@ -49,11 +69,13 @@ const CartPage = () => {
                 <p>Product Name: {item.product.name}</p>
                 <p>Quantity: {item.quantity}</p>
                 <p>Price: {item.price}</p>
+                <button onClick={() => handleRemoveItem(item.id)}>Remove</button>
               </li>
             ))}
           </ul>
         </div>
       )}
+      <button onClick={handleClearCart}>Clear Cart</button>
       <button onClick={() => navigate('/home')}>Home</button>
     </div>
   );
