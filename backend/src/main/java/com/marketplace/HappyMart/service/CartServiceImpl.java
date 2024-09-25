@@ -56,34 +56,43 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartItem addCartItem(Long userId, Long productId, int quantity) {
+
         Cart cart = cartRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Cart not found for User ID: " + userId));
+
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + productId));
 
+
         Optional<CartItem> existingCartItemOpt = cart.getItems().stream()
-                .filter(cartItem -> cartItem.getProduct().getId() == (productId))
+                .filter(cartItem -> cartItem.getProduct().getId().equals(productId))
                 .findFirst();
 
-        CartItem cartItem;
         if (existingCartItemOpt.isPresent()) {
-            cartItem = existingCartItemOpt.get();
-            cartItem.setQuantity(cartItem.getQuantity() + quantity);
-            cartItem.setPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
+
+            CartItem existingCartItem = existingCartItemOpt.get();
+            return updateCartItemQuantity(existingCartItem.getId(), existingCartItem.getQuantity() + quantity);
         } else {
-            cartItem = new CartItem();
+            CartItem cartItem = new CartItem();
             cartItem.setCart(cart);
             cartItem.setProduct(product);
             cartItem.setQuantity(quantity);
             cartItem.setPrice(product.getPrice() * quantity);
-            cart.getItems().add(cartItem);
-        }
 
-        cart.updateTotalPrice();
-        cartRepository.save(cart);
-        return cartItemRepository.save(cartItem);
+
+            cart.getItems().add(cartItem);
+
+
+            cart.updateTotalPrice();
+            cartRepository.save(cart);
+
+            return cartItemRepository.save(cartItem);
+        }
     }
+
+
+
 
     @Override
     public Optional<CartItem> getCartItemById(Long cartItemId) {
