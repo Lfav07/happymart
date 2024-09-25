@@ -13,8 +13,8 @@ function CompleteProductList() {
                 const token = localStorage.getItem('jwt');
                 const response = await axios.get('http://localhost:8080/products', {
                     headers: {
-                        Authorization: `Bearer ${token}`
-                    }
+                        Authorization: `Bearer ${token}`,
+                    },
                 });
                 setProducts(response.data);
             } catch (error) {
@@ -32,31 +32,33 @@ function CompleteProductList() {
         try {
             const token = localStorage.getItem('jwt');
 
-            const cartResponse = await axios.get(`http://localhost:8080/carts/${userId}`, {
+
+            const cartResponse = await axios.get(`http://localhost:8080/users/${userId}/cart`, {
                 headers: {
-                    Authorization: `Bearer ${token}`
-                }
+                    Authorization: `Bearer ${token}`,
+                },
             });
 
             if (!cartResponse.data || !cartResponse.data.id) {
-                alert('Failed to retrieve cart. Please try again.');
+                alert('Failed to retrieve or create cart. Please try again.');
                 return;
             }
 
-            const cartId = cartResponse.data.id;
+
+            const requestBody = {
+                productId: productId,
+                quantity: 1,
+            };
 
 
             const addItemResponse = await axios.post(
-                `http://localhost:8080/carts/${cartId}/items`,
-                null,
+                `http://localhost:8080/users/${userId}/cart/items`,
+                requestBody,
                 {
-                    params: {
-                        productId,
-                        quantity: 1
-                    },
                     headers: {
-                        Authorization: `Bearer ${token}`
-                    }
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
                 }
             );
 
@@ -72,16 +74,16 @@ function CompleteProductList() {
             <h1>Product List</h1>
             <ul>
                 {products.length > 0 ? (
-                    products.map(product => (
+                    products.map((product) => (
                         <li key={product.id}>
-                            <strong>{product.name}</strong> <br/>
-                            <img src={product.image} alt={product.name} width="100" /> <br/>
-                            <strong>Company:</strong> {product.company} <br/>
-                            <strong>Category:</strong> {product.category.name} <br/>
-                            <strong>Price:</strong> ${product.price} <br/>
-                            <strong>Quantity:</strong> {product.quantity} <br/>
-                            <strong>Weight:</strong> {product.weight}g <br/>
-                            <strong>Description:</strong> {product.description} <br/>
+                            <strong>{product.name}</strong> <br />
+                            <img src={product.image} alt={product.name} width="100" /> <br />
+                            <strong>Company:</strong> {product.company} <br />
+                            <strong>Category:</strong> {product.category.name} <br />
+                            <strong>Price:</strong> ${product.price} <br />
+                            <strong>Quantity:</strong> {product.quantity} <br />
+                            <strong>Weight:</strong> {product.weight}g <br />
+                            <strong>Description:</strong> {product.description} <br />
                             <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
                         </li>
                     ))
