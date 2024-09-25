@@ -9,7 +9,10 @@ import java.util.Optional;
 public interface CartService {
 
 
-    public Cart createCart(Long userId);
+    Cart getOrCreateCart(Long userId);
+
+    List<CartItem> getAllCartItemsByUserId(Long userId);
+
 
     public Optional<Cart> getCartByUserId(Long userId);
 
@@ -29,4 +32,6 @@ public interface CartService {
     public void removeCartItem(Long cartId, Long cartItemId);
 
     public void clearCart(Long cartId);
+
+    void clearCartByUserId(Long userId);
 }
