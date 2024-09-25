@@ -20,32 +20,29 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private CartRepository cartRepository;
-
     @Autowired
     private CartItemRepository cartItemRepository;
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private ProductRepository productRepository;
 
     @Override
-    public Cart createCart(Long userId) {
-
+    public Cart getOrCreateCart(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
 
-
-        if (cartRepository.findByUserId(userId).isPresent()) {
-            throw new IllegalStateException("User already has a cart.");
-        }
-
-
-        Cart cart = new Cart(user);
-
-
-        return cartRepository.save(cart);
+        return cartRepository.findByUserId(userId)
+                .orElseGet(() -> cartRepository.save(new Cart(user)));
     }
+
+    @Override
+    public List<CartItem> getAllCartItemsByUserId(Long userId) {
+        Cart cart = cartRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Cart not found for User ID: " + userId));
+        return cart.getItems();
+    }
+
 
     @Override
     public Optional<Cart> getCartByUserId(Long userId) {
@@ -54,29 +51,25 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<CartItem> getAllCartItems(Long cartId) {
-        Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new IllegalArgumentException("Cart not found with ID: " + cartId));
-        return cart.getItems();
+        return  cartItemRepository.findAll();
     }
 
     @Override
-    public CartItem addCartItem(Long cartId, Long productId, int quantity) {
-        Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new IllegalArgumentException("Cart not found with ID: " + cartId));
+    public CartItem addCartItem(Long userId, Long productId, int quantity) {
+        Cart cart = cartRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Cart not found for User ID: " + userId));
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + productId));
 
-
         Optional<CartItem> existingCartItemOpt = cart.getItems().stream()
-                .filter(cartItem -> cartItem.getProduct().getId() == productId)
+                .filter(cartItem -> cartItem.getProduct().getId() == (productId))
                 .findFirst();
 
         CartItem cartItem;
         if (existingCartItemOpt.isPresent()) {
-
             cartItem = existingCartItemOpt.get();
-            cartItem.setQuantity(cartItem.getQuantity() + 1);
+            cartItem.setQuantity(cartItem.getQuantity() + quantity);
             cartItem.setPrice(cartItem.getProduct().getPrice() * cartItem.getQuantity());
         } else {
             cartItem = new CartItem();
@@ -88,14 +81,9 @@ public class CartServiceImpl implements CartService {
         }
 
         cart.updateTotalPrice();
-
         cartRepository.save(cart);
         return cartItemRepository.save(cartItem);
     }
-
-
-
-
 
     @Override
     public Optional<CartItem> getCartItemById(Long cartItemId) {
@@ -118,30 +106,32 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public void removeCartItem(Long cartId, Long cartItemId) {
+    public void removeCartItem(Long userId, Long cartItemId) {
         CartItem cartItem = cartItemRepository.findById(cartItemId)
                 .orElseThrow(() -> new IllegalArgumentException("CartItem not found with ID: " + cartItemId));
 
-
-        if (!cartItem.getCart().getId().equals(cartId)) {
-            throw new IllegalStateException("CartItem does not belong to the Cart with ID: " + cartId);
+        if (!cartItem.getCart().getUser().getId().equals(userId)) {
+            throw new IllegalStateException("CartItem does not belong to the User with ID: " + userId);
         }
 
         Cart cart = cartItem.getCart();
         cart.removeItem(cartItem);
         cartRepository.save(cart);
-
         cartItemRepository.delete(cartItem);
     }
 
     @Override
     public void clearCart(Long cartId) {
-        Cart cart = cartRepository.findById(cartId)
-                .orElseThrow(() -> new IllegalArgumentException("Cart not found with ID: " + cartId));
+
+    }
+
+    @Override
+    public void clearCartByUserId(Long userId) {
+        Cart cart = cartRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Cart not found for User ID: " + userId));
 
         cart.getItems().clear();
         cart.updateTotalPrice();
-
         cartRepository.save(cart);
     }
 }
