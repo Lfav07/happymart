@@ -3,41 +3,42 @@ import axios from 'axios';
 import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 
+
 const CartPage = () => {
   const { user } = useUser();
-  const [cart, setCart] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [userId, setUserId] = useState(localStorage.getItem('userId')); // Align with CompleteProductList
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchCart = async () => {
-      if (!user.id) return;
+    const fetchCartItems = async () => {
+      if (!userId) return;
 
       setLoading(true);
       try {
-        // Fetch or create cart for the user
-        const cartResponse = await axios.get(`/users/${user.id}/cart`);
-        setCart(cartResponse.data);
-
-        // Fetch all cart items for the user's cart
-        const itemsResponse = await axios.get(`/users/${user.id}/cart/items`);
-        setCartItems(itemsResponse.data);
+        const token = localStorage.getItem('jwt');
+        const response = await axios.get(`http://localhost:8080/users/${userId}/cart/items`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setCartItems(response.data);
       } catch (error) {
-        setError('Failed to fetch cart');
-        console.error('Error fetching cart', error);
+        setError('Failed to fetch cart items');
+        console.error('Error fetching cart items', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCart();
-  }, [user.id]);
+    fetchCartItems();
+  }, [userId]);
 
   const handleRemoveItem = async (itemId) => {
     try {
-      await axios.delete(`/users/${user.id}/cart/items/${itemId}`);
+      await axios.delete(`http://localhost:8080/users/${userId}/cart/items/${itemId}`);
       setCartItems(cartItems.filter(item => item.id !== itemId));
     } catch (error) {
       setError('Failed to remove item');
@@ -46,36 +47,40 @@ const CartPage = () => {
 
   const handleClearCart = async () => {
     try {
-      await axios.delete(`/users/${user.id}/cart/items`);
-      setCartItems([]);
+     const token = localStorage.getItem('jwt');
+            const response = await axios.delete(`http://localhost:8080/users/${userId}/cart/items`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
     } catch (error) {
       setError('Failed to clear cart');
     }
-  };
+ navigate(0) };
 
   return (
-    <div>
+    <div className="CartPage">
       <h1>Cart</h1>
-      {loading && <p>Loading cart...</p>}
+      {loading && <p>Loading cart items...</p>}
       {error && <p>{error}</p>}
-      {cart && (
+      {cartItems.length > 0 ? (
         <div>
-          <h2>Cart ID: {cart.id}</h2>
-          <h3>Total Price: {cart.totalPrice}</h3>
+          <h2>Your Cart Items</h2>
           <ul>
             {cartItems.map(item => (
               <li key={item.id}>
-                <p>Product ID: {item.product.id}</p>
-                <p>Product Name: {item.product.name}</p>
-                <p>Quantity: {item.quantity}</p>
-                <p>Price: {item.price}</p>
+                <strong>Product Name:</strong> {item.product.name} <br />
+                <strong>Quantity:</strong> {item.quantity} <br />
+                <strong>Price:</strong> ${item.price.toFixed(2)} <br />
                 <button onClick={() => handleRemoveItem(item.id)}>Remove</button>
               </li>
             ))}
           </ul>
+          <button onClick={handleClearCart}>Clear Cart</button>
         </div>
+      ) : (
+        <p>Your cart is empty.</p>
       )}
-      <button onClick={handleClearCart}>Clear Cart</button>
       <button onClick={() => navigate('/home')}>Home</button>
     </div>
   );
