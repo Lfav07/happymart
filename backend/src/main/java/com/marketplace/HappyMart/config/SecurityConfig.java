@@ -52,6 +52,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.PUT, "/api/auth/login").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/api/auth/login").hasRole("ADMIN")
 
+                                // Temporary endpoint
+                                // register admins .requestMatchers("/api/admin/**").permitAll()
 
                                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/api/user/**").hasRole("USER")
