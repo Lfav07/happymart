@@ -3,6 +3,8 @@ package com.marketplace.HappyMart.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "cart_items")
 public class CartItem {
@@ -74,4 +76,20 @@ public class CartItem {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CartItem cartItem = (CartItem) o;
+        return Objects.equals(product.getId(), cartItem.product.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(product.getId());
+    }
+
+
+
 }
