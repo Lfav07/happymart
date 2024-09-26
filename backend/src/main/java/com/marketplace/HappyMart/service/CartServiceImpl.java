@@ -9,6 +9,7 @@ import com.marketplace.HappyMart.repository.CartItemRepository;
 import com.marketplace.HappyMart.repository.ProductRepository;
 import com.marketplace.HappyMart.repository.UserRepository;
 import com.marketplace.HappyMart.service.interfaces.CartService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -68,12 +69,14 @@ public class CartServiceImpl implements CartService {
         Optional<CartItem> existingCartItemOpt = cart.getItems().stream()
                 .filter(cartItem -> cartItem.getProduct().getId().equals(productId))
                 .findFirst();
-
         if (existingCartItemOpt.isPresent()) {
 
             CartItem existingCartItem = existingCartItemOpt.get();
-            return updateCartItemQuantity(existingCartItem.getId(), existingCartItem.getQuantity() + quantity);
+            int newQuantity = existingCartItem.getQuantity() + quantity;
+            return updateCartItemQuantity(existingCartItem.getId(), newQuantity);
+
         } else {
+
             CartItem cartItem = new CartItem();
             cartItem.setCart(cart);
             cartItem.setProduct(product);
@@ -82,8 +85,6 @@ public class CartServiceImpl implements CartService {
 
 
             cart.getItems().add(cartItem);
-
-
             cart.updateTotalPrice();
             cartRepository.save(cart);
 
@@ -94,11 +95,13 @@ public class CartServiceImpl implements CartService {
 
 
 
+
     @Override
     public Optional<CartItem> getCartItemById(Long cartItemId) {
         return cartItemRepository.findById(cartItemId);
     }
 
+    @Transactional
     @Override
     public CartItem updateCartItemQuantity(Long cartItemId, int newQuantity) {
         CartItem cartItem = cartItemRepository.findById(cartItemId)
@@ -109,10 +112,11 @@ public class CartServiceImpl implements CartService {
 
         Cart cart = cartItem.getCart();
         cart.updateTotalPrice();
-
         cartRepository.save(cart);
+
         return cartItemRepository.save(cartItem);
     }
+
 
     @Override
     public void removeCartItem(Long userId, Long cartItemId) {
