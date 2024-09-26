@@ -52,7 +52,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<CartItem> getAllCartItems(Long cartId) {
-        return  cartItemRepository.findAll();
+        return cartItemRepository.findAll();
     }
 
     @Override
@@ -91,9 +91,6 @@ public class CartServiceImpl implements CartService {
             return cartItemRepository.save(cartItem);
         }
     }
-
-
-
 
 
     @Override
