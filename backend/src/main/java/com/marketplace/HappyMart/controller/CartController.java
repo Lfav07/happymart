@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/users/{userId}/cart")
@@ -27,8 +28,8 @@ public class CartController {
 
 
     @GetMapping("/items")
-    public ResponseEntity<List<CartItem>> getAllCartItems(@PathVariable Long userId) {
-        List<CartItem> cartItems = cartService.getAllCartItemsByUserId(userId);
+    public ResponseEntity<Set<CartItem>> getAllCartItems(@PathVariable Long userId) {
+        Set<CartItem> cartItems = cartService.getAllCartItemsByUserId(userId);
         return ResponseEntity.ok(cartItems);
     }
 
