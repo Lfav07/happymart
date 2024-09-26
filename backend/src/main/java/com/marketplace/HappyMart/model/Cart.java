@@ -3,7 +3,9 @@ package com.marketplace.HappyMart.model;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "carts")
@@ -18,7 +20,8 @@ public class Cart {
     private User user;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartItem> items = new ArrayList<>();
+    private Set<CartItem> items = new HashSet<>();
+
 
     @Column(name = "total_price", nullable = false)
     private int totalPrice;
@@ -47,11 +50,11 @@ public class Cart {
         this.user = user;
     }
 
-    public List<CartItem> getItems() {
+    public Set<CartItem> getItems() {
         return items;
     }
 
-    public void setItems(List<CartItem> items) {
+    public void setItems(Set<CartItem> items) {
         this.items = items;
         updateTotalPrice();
     }
