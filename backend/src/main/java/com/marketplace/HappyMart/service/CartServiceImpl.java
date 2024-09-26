@@ -117,6 +117,7 @@ public class CartServiceImpl implements CartService {
     }
 
 
+    @Transactional
     @Override
     public void removeCartItem(Long userId, Long cartItemId) {
         CartItem cartItem = cartItemRepository.findById(cartItemId)
@@ -137,6 +138,7 @@ public class CartServiceImpl implements CartService {
 
     }
 
+    @Transactional
     @Override
     public void clearCartByUserId(Long userId) {
         Cart cart = cartRepository.findByUserId(userId)
