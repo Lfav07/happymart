@@ -5,13 +5,14 @@ import com.marketplace.HappyMart.model.CartItem;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface CartService {
 
 
     Cart getOrCreateCart(Long userId);
 
-    List<CartItem> getAllCartItemsByUserId(Long userId);
+    Set<CartItem> getAllCartItemsByUserId(Long userId);
 
 
     public Optional<Cart> getCartByUserId(Long userId);
