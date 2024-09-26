@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -38,7 +39,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartItem> getAllCartItemsByUserId(Long userId) {
+    public Set<CartItem> getAllCartItemsByUserId(Long userId) {
         Cart cart = cartRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Cart not found for User ID: " + userId));
         return cart.getItems();
@@ -55,6 +56,7 @@ public class CartServiceImpl implements CartService {
         return cartItemRepository.findAll();
     }
 
+    @Transactional
     @Override
     public CartItem addCartItem(Long userId, Long productId, int quantity) {
 
