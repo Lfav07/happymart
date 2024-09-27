@@ -55,7 +55,7 @@ public class CartServiceImplTest {
         cart.setId(1L);
 
         product = new Product();
-        product.setId(1);
+        product.setId(1L);
         product.setPrice(100);
 
         cartItem = new CartItem();
@@ -73,7 +73,7 @@ public class CartServiceImplTest {
         when(cartRepository.findByUserId(1L)).thenReturn(Optional.empty());
         when(cartRepository.save(any(Cart.class))).thenReturn(cart);
 
-        Cart createdCart = cartService.createCart(1L);
+        Cart createdCart = cartService.getOrCreateCart(1L);
 
         System.out.println("Created cart for user: " + createdCart.getUser().getUsername());
 
@@ -84,23 +84,12 @@ public class CartServiceImplTest {
         verify(cartRepository, times(1)).save(any(Cart.class));
     }
 
-    @Test
-    void testCreateCart_UserAlreadyHasCart() {
-        System.out.println("Running testCreateCart_UserAlreadyHasCart");
-
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
-        when(cartRepository.findByUserId(1L)).thenReturn(Optional.of(cart));
-
-        assertThrows(IllegalStateException.class, () -> cartService.createCart(1L));
-        verify(userRepository, times(1)).findById(1L);
-        verify(cartRepository, times(1)).findByUserId(1L);
-    }
 
     @Test
     void testAddCartItem() {
         System.out.println("Running testAddCartItem");
 
-        when(cartRepository.findById(1L)).thenReturn(Optional.of(cart));
+        when(cartRepository.findByUserId(1L)).thenReturn(Optional.of(cart));
         product.setPrice(100);
         when(productRepository.findById(1L)).thenReturn(Optional.of(product));
 
@@ -115,7 +104,7 @@ public class CartServiceImplTest {
         assertNotNull(addedCartItem);
         assertEquals(2, addedCartItem.getQuantity());
         assertEquals(200, addedCartItem.getPrice());
-        verify(cartRepository, times(1)).findById(1L);
+        verify(cartRepository, times(1)).findByUserId(1L);
         verify(productRepository, times(1)).findById(1L);
         verify(cartItemRepository, times(1)).save(any(CartItem.class));
         verify(cartRepository, times(1)).save(cart);
@@ -175,9 +164,9 @@ public class CartServiceImplTest {
     void testClearCart() {
         System.out.println("Running testClearCart");
 
-        when(cartRepository.findById(1L)).thenReturn(Optional.of(cart));
+        when(cartRepository.findByUserId(1L)).thenReturn(Optional.of(cart));
 
-        cartService.clearCart(1L);
+        cartService.clearCartByUserId(1L);
 
         System.out.println("Cleared all items from the cart");
 
