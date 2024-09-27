@@ -32,7 +32,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public Cart getOrCreateCart(Long userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+                .orElseThrow(() -> new IllegalStateException("User not found with ID: " + userId));
 
         return cartRepository.findByUserId(userId)
                 .orElseGet(() -> cartRepository.save(new Cart(user)));
