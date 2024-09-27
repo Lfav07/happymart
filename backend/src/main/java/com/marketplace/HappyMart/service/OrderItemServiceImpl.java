@@ -35,6 +35,11 @@ public class OrderItemServiceImpl implements OrderItemService {
     public List<OrderItem> getAllOrderItems() {
         return orderItemRepository.findAll();
     }
+    public void deleteByOrderId(Long orderId) {
+        List<OrderItem> items = orderItemRepository.findByOrderId(orderId);
+        orderItemRepository.deleteAll(items);
+    }
+
 
     @Override
     public List<OrderItem> getOrderItemsByOrderId(Long orderId) {
