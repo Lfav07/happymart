@@ -3,14 +3,18 @@ import axios from 'axios';
 import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 
-
 const CartPage = () => {
   const { user } = useUser();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [userId, setUserId] = useState(localStorage.getItem('userId')); // Align with CompleteProductList
+  const [userId, setUserId] = useState(localStorage.getItem('userId'));
   const navigate = useNavigate();
+
+
+  const calculateTotalAmount = () => {
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -45,18 +49,71 @@ const CartPage = () => {
     }
   };
 
+  const handleCheckout = async () => {
+    try {
+      const token = localStorage.getItem('jwt');
+      const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
+
+
+      const orderResponse = await axios.post(
+        `http://localhost:8080/orders`,
+        {
+          userId: userId,
+          totalAmount: totalAmount,
+          status: 'PENDING'
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      const orderId = orderResponse.data.id;
+
+
+      for (const cartItem of cartItems) {
+        await axios.post(
+          `http://localhost:8080/orders/${orderId}/items`,
+          {
+            product: { id: cartItem.product.id },
+            quantity: cartItem.quantity,
+            price: cartItem.price
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+      }
+
+
+      await handleClearCart();
+      alert('Order placed successfully!');
+      navigate('/orders');
+    } catch (error) {
+      setError('Failed to place the order');
+      console.error('Error placing order:', error);
+    }
+  };
+
+
   const handleClearCart = async () => {
     try {
-     const token = localStorage.getItem('jwt');
-            const response = await axios.delete(`http://localhost:8080/users/${userId}/cart/items`, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
+      const token = localStorage.getItem('jwt');
+      await axios.delete(`http://localhost:8080/users/${userId}/cart/items`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setCartItems([]);
     } catch (error) {
       setError('Failed to clear cart');
     }
- navigate(0) };
+  };
 
   return (
     <div className="CartPage">
@@ -76,6 +133,8 @@ const CartPage = () => {
               </li>
             ))}
           </ul>
+          <h3>Total Amount: ${calculateTotalAmount().toFixed(2)}</h3>
+          <button onClick={handleCheckout}>Checkout</button>
           <button onClick={handleClearCart}>Clear Cart</button>
         </div>
       ) : (
