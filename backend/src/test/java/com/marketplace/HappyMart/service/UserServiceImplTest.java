@@ -1,5 +1,6 @@
 package com.marketplace.HappyMart.service;
 
+import com.marketplace.HappyMart.model.Role;
 import com.marketplace.HappyMart.model.User;
 import com.marketplace.HappyMart.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +18,7 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +43,7 @@ class UserServiceImplTest {
         user.setUsername("TestingUser");
         user.setPassword("TestingPassword");
         user.setEmail("TestingEmail");
+        user.setRoles(Collections.singleton(Role.ROLE_USER));
     }
 
     @Test
