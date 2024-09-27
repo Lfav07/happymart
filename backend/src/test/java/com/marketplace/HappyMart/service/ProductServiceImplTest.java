@@ -42,7 +42,7 @@ class ProductServiceImplTest {
         category.setName("Electronics");
 
         product = new Product();
-        product.setId(1);
+        product.setId(1L);
         product.setCompany("PhoneCorp");
         product.setName("Smartphone");
         product.setImage("image_url");
