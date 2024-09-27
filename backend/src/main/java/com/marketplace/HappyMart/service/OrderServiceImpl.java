@@ -3,6 +3,7 @@ package com.marketplace.HappyMart.service;
 import com.marketplace.HappyMart.model.Order;
 import com.marketplace.HappyMart.model.OrderStatus;
 import com.marketplace.HappyMart.repository.OrderRepository;
+import com.marketplace.HappyMart.service.interfaces.OrderItemService;
 import com.marketplace.HappyMart.service.interfaces.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,9 @@ import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
+    @Autowired
+    private OrderItemServiceImpl orderItemService;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -55,6 +59,8 @@ public class OrderServiceImpl implements OrderService {
         if (!orderRepository.existsById(id)) {
             throw new RuntimeException("Order not found");
         }
+        orderItemService.deleteByOrderId(id);
+
     orderRepository.deleteById(id);
     }
 
