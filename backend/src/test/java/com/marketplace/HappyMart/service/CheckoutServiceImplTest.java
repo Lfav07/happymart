@@ -47,7 +47,7 @@ class CheckoutServiceImplTest {
         user.setId(1L);
 
         product = new Product();
-        product.setId(1);
+        product.setId(1L);
         product.setPrice(100);
 
         cartItem = new CartItem();
@@ -58,7 +58,7 @@ class CheckoutServiceImplTest {
         cart = new Cart();
         cart.setId(1L);
         cart.setUser(user);
-        cart.setItems(Collections.singletonList(cartItem));
+        cart.addItem(cartItem);
         order = new Order();
         order.setUserId(user.getId());
         order.setTotalAmount(cart.getTotalPrice());
