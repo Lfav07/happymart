@@ -46,7 +46,7 @@ class ReviewServiceImplTest {
         user.setUsername("TestingUser");
 
         product = new Product();
-        product.setId(1);
+        product.setId(1L);
         product.setPrice(100);
 
         review = new Review();
