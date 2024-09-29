@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const OrderPage = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const [userId, setUserId] = useState(localStorage.getItem('userId'));
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('/orders');
+        const token = localStorage.getItem('jwt');
+        const response = await axios.get(`http://localhost:8080/orders/${userId}/orders`, {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                });
         setOrders(response.data);
       } catch (error) {
         setError('Failed to fetch orders');
@@ -32,12 +40,12 @@ const OrderPage = () => {
         {orders.map(order => (
           <li key={order.id}>
             <p>Order ID: {order.id}</p>
-            <p>User ID: {order.userId}</p>
             <p>Total Amount: {order.totalAmount}</p>
             <p>Status: {order.status}</p>
           </li>
         ))}
       </ul>
+      <button onClick={() => navigate('/home')}>Home</button>
     </div>
   );
 };
