@@ -76,6 +76,12 @@ public class OrderController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/{userId}/orders")
+    public  ResponseEntity<List<Order>> getOrdersByUserId(@PathVariable Long userId) {
+        List<Order> orders = orderService.getOrdersByUserId(userId);
+        return  ResponseEntity.ok(orders);
+    }
+
     //OrderItem
 
     @PostMapping("/{orderId}/items")
