@@ -18,6 +18,7 @@ import AdminHome from './pages/AdminHome';
 import AdminManageUsersPage from './pages/AdminManageUsersPage';
 import EditProductPage from './pages/EditProductPage';
 import AdminCartPage from './pages/AdminCartPage';
+import OrderPage from './pages/OrderPage';
 
 const App = () => {
     return (
@@ -30,6 +31,7 @@ const App = () => {
                     <Route path="/products" element={<ProtectedRoute element={CompleteProductList} />} />
                     <Route path="/cart" element={<ProtectedRoute element={CartPage} />} />
                     <Route path="/home" element={<ProtectedRoute element={HomePage} />} />
+                    <Route path="/orders" element={<ProtectedRoute element={OrderPage} />} />
                     <Route path="/logout" element={<ProtectedRoute element={LogoutPage} />} />
                     <Route path="/admin/login" element={<AdminLoginPage />} />
                     <Route path="/admin/products" element={<AdminProtectedRoute element={AdminProductsPage} />} />
