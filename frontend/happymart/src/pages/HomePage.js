@@ -12,6 +12,7 @@ const HomePage = () => {
             <p>Choose an action:</p>
             <button onClick={() => navigate('/products')}>Go to products catalog</button>
             <button onClick={() => navigate('/cart')}>Go to cart</button>
+            <button onClick={() => navigate('/orders')}>Go to orders</button>
             <button onClick={() => navigate('/logout')}>Log out</button>
         </div>
     );
