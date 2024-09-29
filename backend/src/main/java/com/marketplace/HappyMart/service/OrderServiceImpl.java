@@ -3,7 +3,6 @@ package com.marketplace.HappyMart.service;
 import com.marketplace.HappyMart.model.Order;
 import com.marketplace.HappyMart.model.OrderStatus;
 import com.marketplace.HappyMart.repository.OrderRepository;
-import com.marketplace.HappyMart.service.interfaces.OrderItemService;
 import com.marketplace.HappyMart.service.interfaces.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +27,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
+    }
+
+    @Override
+    public List<Order> getOrdersByUserId(Long userId) {
+        return orderRepository.findByUserId(userId);
     }
 
     @Override
