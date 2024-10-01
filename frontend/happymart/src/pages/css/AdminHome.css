@@ -1,0 +1,35 @@
+.admin-home-container h1 {
+  color: #2c3e50;
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.admin-home-container h2 {
+  color: #34495e;
+  font-size: 2rem;
+  margi n-bottom: 20px;
+}
+
+.admin-home-container p {
+  color: #7f8c8d;
+  font-size: 1.2rem;
+}
+
+.admin-home-container button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.admin-home-container button:hover {
+  background-color: #2980b9;
+}
+
+.admin-home-container button:active {
+  background-color: #1f618d;
+}
