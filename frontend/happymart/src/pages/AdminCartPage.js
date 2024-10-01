@@ -3,107 +3,89 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const AdminCartPage = () => {
-const navigate = useNavigate();
-  const [userId, setUserId] = useState('');
-  const [cart, setCart] = useState(null);
   const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [newCartItem, setNewCartItem] = useState({ productId: '', quantity: '' });
+  const [userId, setUserId] = useState('');
+  const navigate = useNavigate();
 
-  const fetchCart = async () => {
-    try {
-      const response = await axios.get(`/carts/${userId}`);
-      setCart(response.data);
-      if (response.data) {
-        fetchCartItems(response.data.id);
-      }
-    } catch (error) {
-      console.error('Error fetching cart:', error);
-    }
-  };
+  const fetchCartItems = async () => {
+    if (!userId) return;
 
-  const fetchCartItems = async (cartId) => {
+    setLoading(true);
     try {
-      const response = await axios.get(`/carts/${cartId}/items`);
+      const token = localStorage.getItem('jwt');
+      const response = await axios.get(`http://localhost:8080/users/${userId}/cart/items`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setCartItems(response.data);
     } catch (error) {
-      console.error('Error fetching cart items:', error);
-    }
-  };
-
-  const handleCreateCart = async () => {
-    try {
-      const response = await axios.post(`/carts/create?userId=${userId}`);
-      setCart(response.data);
-      alert('Cart created successfully!');
-    } catch (error) {
-      console.error('Error creating cart:', error);
+      setError('Failed to fetch cart items');
+      console.error('Error fetching cart items', error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleAddCartItem = async () => {
-      if (!cart) {
-          alert('No cart available. Please create a cart first.');
-          return;
-      }
-
-      if (!newCartItem.productId || !newCartItem.quantity) {
-          alert('Please fill in all fields.');
-          return;
-      }
-
-      console.log('Adding cart item:', newCartItem);
-      try {
-          const response = await axios.post(`/carts/${cart.id}/items`, null, {
-              params: {
-                  productId: newCartItem.productId,
-                  quantity: newCartItem.quantity,
-              },
-          });
-          setCartItems([...cartItems, response.data]);
-          setNewCartItem({ productId: '', quantity: '' });
-          alert('Cart item added successfully!');
-      } catch (error) {
-          console.error('Error adding cart item:', error.response ? error.response.data : error.message);
-      }
-  };
-
-
-  const handleUpdateCartItem = async (cartItemId) => {
-    const newQuantity = prompt('Enter new quantity:');
-    if (!newQuantity) return;
+    if (!newCartItem.productId || !newCartItem.quantity) {
+      alert('Please fill in all fields.');
+      return;
+    }
 
     try {
-      const response = await axios.put(`/carts/items/${cartItemId}`, null, {
-        params: { newQuantity },
-      });
-      setCartItems(cartItems.map(item => (item.id === cartItemId ? response.data : item)));
-      alert('Cart item updated successfully!');
+      const token = localStorage.getItem('jwt');
+      const response = await axios.post(
+        `http://localhost:8080/users/${userId}/cart/items`,
+        { productId: newCartItem.productId, quantity: newCartItem.quantity },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      setCartItems([...cartItems, response.data]);
+      setNewCartItem({ productId: '', quantity: '' });
+      alert('Cart item added successfully!');
     } catch (error) {
-      console.error('Error updating cart item:', error);
+      console.error('Error adding cart item:', error);
+      setError('Failed to add cart item');
     }
   };
 
-  const handleRemoveCartItem = async (cartItemId) => {
-    if (!cart) return;
-
+  const handleRemoveCartItem = async (itemId) => {
     try {
-      await axios.delete(`/carts/${cart.id}/items/${cartItemId}`);
-      setCartItems(cartItems.filter(item => item.id !== cartItemId));
+      const token = localStorage.getItem('jwt');
+      await axios.delete(`http://localhost:8080/users/${userId}/cart/items/${itemId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setCartItems(cartItems.filter(item => item.id !== itemId));
       alert('Cart item removed successfully!');
     } catch (error) {
       console.error('Error removing cart item:', error);
+      setError('Failed to remove cart item');
     }
   };
 
   const handleClearCart = async () => {
-    if (!cart) return;
-
     try {
-      await axios.delete(`/carts/${cart.id}`);
+      const token = localStorage.getItem('jwt');
+      await axios.delete(`http://localhost:8080/users/${userId}/cart/items`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setCartItems([]);
       alert('Cart cleared successfully!');
     } catch (error) {
       console.error('Error clearing cart:', error);
+      setError('Failed to clear cart');
     }
   };
 
@@ -116,23 +98,27 @@ const navigate = useNavigate();
         value={userId}
         onChange={(e) => setUserId(e.target.value)}
       />
-      <button onClick={fetchCart}>Fetch Cart</button>
-      <button onClick={handleCreateCart}>Create Cart</button>
-       <button onClick={() => navigate('/admin/home')}>Home</button>
+      <button onClick={fetchCartItems}>Fetch Cart Items</button>
+      <button onClick={() => navigate('/admin/home')}>Home</button>
 
-      {cart && (
+      {loading && <p>Loading cart items...</p>}
+      {error && <p>{error}</p>}
+
+      {cartItems.length > 0 ? (
         <div>
-          <h2>Cart ID: {cart.id}</h2>
-          <h3>Cart Items</h3>
+          <h2>Cart Items</h2>
           <ul>
             {cartItems.map(item => (
               <li key={item.id}>
-                Product ID: {item.productId}, Quantity: {item.quantity}
-                <button onClick={() => handleUpdateCartItem(item.id)}>Update</button>
+                Product ID: {item.product.id}, Quantity: {item.quantity}, Price: ${item.price.toFixed(2)}
                 <button onClick={() => handleRemoveCartItem(item.id)}>Remove</button>
               </li>
             ))}
           </ul>
+          <h3>Total Amount: ${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</h3>
+          <button onClick={handleClearCart}>Clear Cart</button>
+
+          <h3>Add New Cart Item</h3>
           <input
             type="text"
             placeholder="Product ID"
@@ -146,9 +132,9 @@ const navigate = useNavigate();
             onChange={(e) => setNewCartItem({ ...newCartItem, quantity: e.target.value })}
           />
           <button onClick={handleAddCartItem}>Add Cart Item</button>
-          <button onClick={handleClearCart}>Clear Cart</button>
-
         </div>
+      ) : (
+        <p>No items in cart.</p>
       )}
     </div>
   );
