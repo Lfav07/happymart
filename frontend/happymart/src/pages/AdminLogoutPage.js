@@ -9,7 +9,9 @@ const AdminLogoutPage = () => {
   useEffect(() => {
 
     localStorage.removeItem('jwt');
+    localStorage.removeItem('roles');
     localStorage.removeItem('username');
+
     setUser({ id: '' });
 
 
