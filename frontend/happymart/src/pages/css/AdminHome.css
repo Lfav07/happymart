@@ -15,16 +15,7 @@
   font-size: 1.2rem;
 }
 
-.admin-home-container button {
-  background-color: #3498db;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin: 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 5px;
-}
+
 
 .admin-home-container button:hover {
   background-color: #2980b9;
