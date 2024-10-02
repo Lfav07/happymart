@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 function CompleteProductList() {
     const [products, setProducts] = useState([]);
     const [userId, setUserId] = useState(localStorage.getItem('userId'));
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -31,8 +33,6 @@ function CompleteProductList() {
     const handleAddToCart = async (productId) => {
         try {
             const token = localStorage.getItem('jwt');
-
-
             const cartResponse = await axios.get(`http://localhost:8080/users/${userId}/cart`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -44,12 +44,10 @@ function CompleteProductList() {
                 return;
             }
 
-
             const requestBody = {
                 productId: productId,
                 quantity: 1,
             };
-
 
             const addItemResponse = await axios.post(
                 `http://localhost:8080/users/${userId}/cart/items`,
@@ -69,12 +67,20 @@ function CompleteProductList() {
         }
     };
 
+
+    const indexOfLastProduct = currentPage * itemsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+
+    const totalPages = Math.ceil(products.length / itemsPerPage);
+
     return (
         <div className="CompleteProductList">
             <h1>Product List</h1>
             <ul>
-                {products.length > 0 ? (
-                    products.map((product) => (
+                {currentProducts.length > 0 ? (
+                    currentProducts.map((product) => (
                         <li key={product.id}>
                             <strong>{product.name}</strong> <br />
                             <img src={product.image} alt={product.name} width="100" /> <br />
@@ -91,6 +97,14 @@ function CompleteProductList() {
                     <li>No products found.</li>
                 )}
             </ul>
+            <div>
+                {currentPage > 1 && (
+                    <button onClick={() => setCurrentPage(currentPage - 1)}>Previous</button>
+                )}
+                {currentPage < totalPages && (
+                    <button onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                )}
+            </div>
             <button onClick={() => navigate('/home')}>Home</button>
         </div>
     );
