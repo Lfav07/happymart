@@ -104,12 +104,11 @@ public class UserController {
 
 
 
-
-    @PostMapping("/update-password")
+    @PostMapping("/reset-password")
     public ResponseEntity<String> updatePassword(@RequestParam String username, @RequestParam String newPassword) {
         try {
             userService.updatePassword(username, newPassword);
-            return ResponseEntity.ok("Password updated successfully");
+            return ResponseEntity.ok("Password Reseted successfully");
         } catch (UsernameNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         } catch (Exception e) {
