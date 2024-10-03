@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './css/AdminProductsPage.css';
 
 function AdminProductsPage() {
     const [products, setProducts] = useState([]);
@@ -60,16 +61,20 @@ function AdminProductsPage() {
                 {products.length > 0 ? (
                     products.map(product => (
                         <li key={product.id}>
-                            <strong>{product.name}</strong> <br/>
-                            <img src={product.image} alt={product.name} width="100" /> <br/>
-                            <strong>Company:</strong> {product.company} <br/>
-                            <strong>Category:</strong> {product.category.name} <br/>
-                            <strong>Price:</strong> ${product.price} <br/>
-                            <strong>Quantity:</strong> {product.quantity} <br/>
-                            <strong>Weight:</strong> {product.weight}g <br/>
-                            <strong>Description:</strong> {product.description} <br/>
-                            <button onClick={() => handleEditProduct(product.id)}>Edit</button>
-                            <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
+                            <img src={product.image} alt={product.name} />
+                            <div>
+                                <strong>{product.name}</strong>
+                                <strong>Company:</strong> {product.company}
+                                <strong>Category:</strong> {product.category.name}
+                                <strong>Price:</strong> ${product.price}
+                                <strong>Quantity:</strong> {product.quantity}
+                                <strong>Weight:</strong> {product.weight}g
+                                <strong>Description:</strong> {product.description}
+                                <div>
+                                    <button onClick={() => handleEditProduct(product.id)}>Edit</button>
+                                    <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
+                                </div>
+                            </div>
                         </li>
                     ))
                 ) : (

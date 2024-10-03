@@ -10,9 +10,9 @@ const HomePage = () => {
             <h1>HappyMarket</h1>
             <h2>Welcome, {currentUsername ? currentUsername : 'Guest'}!</h2>
             <p>Choose an action:</p>
-            <button onClick={() => navigate('/products')}>Go to products catalog</button>
-            <button onClick={() => navigate('/cart')}>Go to cart</button>
-            <button onClick={() => navigate('/orders')}>Go to orders</button>
+            <button onClick={() => navigate('/products')}>Products catalog</button>
+            <button onClick={() => navigate('/cart')}>Cart</button>
+            <button onClick={() => navigate('/orders')}>Orders</button>
             <button onClick={() => navigate('/logout')}>Log out</button>
         </div>
     );

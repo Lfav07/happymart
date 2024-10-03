@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
+import './css/CartPage.css';
 
 const CartPage = () => {
   const { user } = useUser();
@@ -10,7 +11,6 @@ const CartPage = () => {
   const [error, setError] = useState('');
   const [userId, setUserId] = useState(localStorage.getItem('userId'));
   const navigate = useNavigate();
-
 
   const calculateTotalAmount = () => {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -54,7 +54,6 @@ const CartPage = () => {
       const token = localStorage.getItem('jwt');
       const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
 
-
       const orderResponse = await axios.post(
         `http://localhost:8080/orders`,
         {
@@ -71,7 +70,6 @@ const CartPage = () => {
       );
 
       const orderId = orderResponse.data.id;
-
 
       for (const cartItem of cartItems) {
         await axios.post(
@@ -90,7 +88,6 @@ const CartPage = () => {
         );
       }
 
-
       await handleClearCart();
       alert('Order placed successfully!');
       navigate('/orders');
@@ -99,7 +96,6 @@ const CartPage = () => {
       console.error('Error placing order:', error);
     }
   };
-
 
   const handleClearCart = async () => {
     try {
@@ -126,14 +122,21 @@ const CartPage = () => {
           <ul>
             {cartItems.map(item => (
               <li key={item.id}>
-                <strong>Product Name:</strong> {item.product.name} <br />
-                <strong>Quantity:</strong> {item.quantity} <br />
-                <strong>Price:</strong> ${item.price.toFixed(2)} <br />
+                <div className="item-details">
+                  <strong>Product Name:</strong> {item.product.name}
+                </div>
+                <div className="item-details">
+                  <strong>Quantity:</strong> {item.quantity}
+                </div>
+                <div className="item-details">
+                  <strong>Price:</strong> ${item.price.toFixed(2)}
+                </div>
                 <button onClick={() => handleRemoveItem(item.id)}>Remove</button>
               </li>
             ))}
           </ul>
-          <h3>Total Amount: ${calculateTotalAmount().toFixed(2)}</h3>
+
+          <h3 className="total-amount">Total Amount: ${calculateTotalAmount().toFixed(2)}</h3>
           <button onClick={handleCheckout}>Checkout</button>
           <button onClick={handleClearCart}>Clear Cart</button>
         </div>

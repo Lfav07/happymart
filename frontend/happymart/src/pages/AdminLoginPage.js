@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './css/AdminLoginPage.css';
 
 const AdminLoginPage = ({ onLogin }) => {
     const [username, setUsername] = useState('');
@@ -19,12 +20,10 @@ const AdminLoginPage = ({ onLogin }) => {
 
             const { token, user } = loginResponse.data;
 
-
             localStorage.setItem('jwt', token);
             localStorage.setItem('userId', user.id);
             localStorage.setItem('username', user.username);
             localStorage.setItem('roles', JSON.stringify(user.roles));
-
 
             if (user.roles.includes('ROLE_ADMIN')) {
                 setMessage('Login successful! Redirecting to home page!');
@@ -34,7 +33,6 @@ const AdminLoginPage = ({ onLogin }) => {
 
                 if (onLogin) onLogin();
             } else {
-
                 localStorage.removeItem('jwt');
                 localStorage.removeItem('userId');
                 localStorage.removeItem('username');
@@ -48,26 +46,39 @@ const AdminLoginPage = ({ onLogin }) => {
     };
 
     return (
-        <div>
-            <h1>Admin Login</h1>
+        <div className="container"> {}
+            <div className="text">Admin Login</div>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Username:</label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
+                <div className="form-row">
+                    <div className="input-data">
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+                        <label>Username</label>
+                        <div className="underline"></div>
+                    </div>
                 </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                <div className="form-row">
+                    <div className="input-data">
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                        <label>Password</label>
+                        <div className="underline"></div>
+                    </div>
                 </div>
-                <button type="submit">Login</button>
+                <div className="submit-btn">
+                    <div className="input-data">
+                        <input type="submit" value="Login" />
+                        <div className="inner"></div>
+                    </div>
+                </div>
             </form>
             {message && <p>{message}</p>}
         </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './css/CompleteProductList.css';
 
 function CompleteProductList() {
     const [products, setProducts] = useState([]);
@@ -67,12 +68,9 @@ function CompleteProductList() {
         }
     };
 
-
     const indexOfLastProduct = currentPage * itemsPerPage;
     const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
     const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
-
-
     const totalPages = Math.ceil(products.length / itemsPerPage);
 
     return (
@@ -82,22 +80,25 @@ function CompleteProductList() {
                 {currentProducts.length > 0 ? (
                     currentProducts.map((product) => (
                         <li key={product.id}>
-                            <strong>{product.name}</strong> <br />
-                            <img src={product.image} alt={product.name} width="100" /> <br />
-                            <strong>Company:</strong> {product.company} <br />
-                            <strong>Category:</strong> {product.category.name} <br />
-                            <strong>Price:</strong> ${product.price} <br />
-                            <strong>Quantity:</strong> {product.quantity} <br />
-                            <strong>Weight:</strong> {product.weight}g <br />
-                            <strong>Description:</strong> {product.description} <br />
-                            <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
+                            <img src={product.image} alt={product.name} className="product-image" />
+                            <div className="product-details">
+                                <strong>{product.name}</strong>
+                                <strong>Company:</strong> {product.company}
+                                <strong>Category:</strong> {product.category.name}
+                                <strong>Price:</strong> ${product.price.toFixed(2)}
+                                <strong>Quantity:</strong> {product.quantity}
+                                <strong>Weight:</strong> {product.weight}g
+                                <strong>Description:</strong> {product.description}
+                                <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
+                            </div>
                         </li>
                     ))
                 ) : (
                     <li>No products found.</li>
                 )}
             </ul>
-            <div>
+
+            <div className="pagination">
                 {currentPage > 1 && (
                     <button onClick={() => setCurrentPage(currentPage - 1)}>Previous</button>
                 )}

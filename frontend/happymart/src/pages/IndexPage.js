@@ -8,8 +8,8 @@ const IndexPage = () => {
         <div>
             <h1>HappyMarket</h1>
             <p>Choose an action:</p>
-            <button onClick={() => navigate('/login')}>Go to Login</button>
-            <button onClick={() => navigate('/register')}>Go to Register</button>
+            <button onClick={() => navigate('/login')}>Login</button>
+            <button onClick={() => navigate('/register')}>Register</button>
         </div>
     );
 };

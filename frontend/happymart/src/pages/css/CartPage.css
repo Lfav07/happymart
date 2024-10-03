@@ -1,0 +1,83 @@
+.CartPage {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.CartPage h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #3498db;
+}
+
+.CartPage ul {
+  list-style: none;
+  padding: 0;
+}
+
+.CartPage li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.CartPage li strong {
+  font-weight: 500;
+  margin-right: 20px;
+}
+
+.CartPage li button {
+  background: linear-gradient(45deg, #56d8e4, #9f01ea);
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.CartPage li button:hover {
+  background: linear-gradient(45deg, #9f01ea, #56d8e4);
+}
+
+.CartPage button {
+  background: #3498db;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.CartPage button:hover {
+  background: #2980b9;
+}
+
+.CartPage .total-amount {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: center;
+}
+
+
+@media (max-width: 768px) {
+  .CartPage li {
+    flex-direction: column;
+  }
+  .CartPage li strong {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}

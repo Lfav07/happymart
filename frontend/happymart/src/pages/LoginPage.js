@@ -67,7 +67,7 @@ const LoginPage = ({ onLogin }) => {
                         <input type="submit" value="Login" />
                     </div>
                 </div>
-                <button type="button" onClick={() => navigate('/register')}>Go to Register</button>
+                <button type="button" onClick={() => navigate('/register')}>Register</button>
             </form>
             {message && <p>{message}</p>}
         </div>
