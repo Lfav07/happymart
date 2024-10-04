@@ -23,6 +23,9 @@ public class OrderServiceImplTest {
     @Mock
     private OrderRepository orderRepository;
 
+    @Mock
+    private OrderItemServiceImpl orderItemService;
+
     @InjectMocks
     private OrderServiceImpl orderService;
 
