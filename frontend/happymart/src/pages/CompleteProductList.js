@@ -5,9 +5,9 @@ import './css/CompleteProductList.css';
 
 function CompleteProductList() {
     const [products, setProducts] = useState([]);
-    const [userId, setUserId] = useState(localStorage.getItem('userId'));
+    const [userId, setUserId] = useState(localStorage.getItem('userId') || null);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const itemsPerPage = 3;
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -46,11 +46,11 @@ function CompleteProductList() {
             }
 
             const requestBody = {
-                productId: productId,
+                productId,
                 quantity: 1,
             };
 
-            const addItemResponse = await axios.post(
+            await axios.post(
                 `http://localhost:8080/users/${userId}/cart/items`,
                 requestBody,
                 {
@@ -86,7 +86,6 @@ function CompleteProductList() {
                                 <strong>Company:</strong> {product.company}
                                 <strong>Category:</strong> {product.category.name}
                                 <strong>Price:</strong> ${product.price.toFixed(2)}
-                                <strong>Quantity:</strong> {product.quantity}
                                 <strong>Weight:</strong> {product.weight}g
                                 <strong>Description:</strong> {product.description}
                                 <button onClick={() => handleAddToCart(product.id)}>Add to Cart</button>
@@ -98,14 +97,18 @@ function CompleteProductList() {
                 )}
             </ul>
 
-            <div className="pagination">
-                {currentPage > 1 && (
-                    <button onClick={() => setCurrentPage(currentPage - 1)}>Previous</button>
-                )}
-                {currentPage < totalPages && (
-                    <button onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
-                )}
-            </div>
+            {totalPages > 1 && (
+                <div className="pagination">
+                    {currentPage > 1 && (
+                        <button onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}>Previous</button>
+                    )}
+
+                    {currentPage < totalPages && (
+                        <button onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}>Next</button>
+                    )}
+                </div>
+            )}
+
             <button onClick={() => navigate('/home')}>Home</button>
         </div>
     );

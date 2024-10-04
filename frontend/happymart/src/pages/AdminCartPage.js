@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './css/AdminCartPage.css';
 
 const AdminCartPage = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -82,7 +83,6 @@ const AdminCartPage = () => {
         },
       });
       setCartItems([]);
-      alert('Cart cleared successfully!');
     } catch (error) {
       console.error('Error clearing cart:', error);
       setError('Failed to clear cart');
@@ -90,7 +90,7 @@ const AdminCartPage = () => {
   };
 
   return (
-    <div>
+    <div className="AdminCartPage">
       <h1>Admin Cart Management</h1>
       <input
         type="text"
@@ -110,12 +110,14 @@ const AdminCartPage = () => {
           <ul>
             {cartItems.map(item => (
               <li key={item.id}>
-                Product ID: {item.product.id}, Quantity: {item.quantity}, Price: ${item.price.toFixed(2)}
+                <strong>Product ID:</strong> {item.product.id},
+                <strong> Quantity:</strong> {item.quantity},
+                <strong> Price:</strong> ${item.price.toFixed(2)}
                 <button onClick={() => handleRemoveCartItem(item.id)}>Remove</button>
               </li>
             ))}
           </ul>
-          <h3>Total Amount: ${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</h3>
+          <h3 className="total-amount">Total Amount: ${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</h3>
           <button onClick={handleClearCart}>Clear Cart</button>
 
           <h3>Add New Cart Item</h3>

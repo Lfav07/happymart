@@ -75,7 +75,7 @@ const AdminLoginPage = ({ onLogin }) => {
                 </div>
                 <div className="submit-btn">
                     <div className="input-data">
-                        <input type="submit" value="Login" />
+                        <input type="submit" value="Login           " />
                         <div className="inner"></div>
                     </div>
                 </div>

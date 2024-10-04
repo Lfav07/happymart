@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-
 const AdminOrderPage = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -49,8 +48,7 @@ const AdminOrderPage = () => {
   const handleUpdateOrder = async (id) => {
     try {
       const token = localStorage.getItem('jwt');
-      await axios.put(`http://localhost:8080/orders/${id}`, {
-        totalAmount: updatedOrder.totalAmount || undefined,
+      await axios.patch(`http://localhost:8080/orders/${id}/status`, {
         status: updatedOrder.status || undefined,
       }, {
         headers: {
@@ -84,25 +82,25 @@ const AdminOrderPage = () => {
               <p><strong>Total Amount:</strong> ${order.totalAmount}</p>
               <p><strong>Status:</strong> {order.status}</p>
               <button onClick={() => handleDeleteOrder(order.id)}>Delete Order</button>
-              <button onClick={() => { setSelectedOrder(order.id); setUpdatedOrder({ totalAmount: order.totalAmount, status: order.status }); }}>Update Order</button>
+              <button onClick={() => {
+                setSelectedOrder(order.id);
+                setUpdatedOrder({ totalAmount: order.totalAmount, status: order.status });
+              }}>Update Order</button>
             </div>
             {selectedOrder === order.id && (
               <div className="update-order-form">
                 <h4>Update Order</h4>
-                <input
-                  type="number"
-                  name="totalAmount"
-                  value={updatedOrder.totalAmount}
-                  onChange={handleUpdateInputChange}
-                  placeholder="Total Amount"
-                />
-                <input
-                  type="text"
+
+                <select
                   name="status"
                   value={updatedOrder.status}
                   onChange={handleUpdateInputChange}
-                  placeholder="Status"
-                />
+                >
+                  <option value="">Select Status</option>
+                  <option value="PENDING">PENDING</option>
+                  <option value="COMPLETED">COMPLETED</option>
+                  <option value="CANCELLED">CANCELLED</option>
+                </select>
                 <button onClick={() => handleUpdateOrder(order.id)}>Submit Update</button>
               </div>
             )}

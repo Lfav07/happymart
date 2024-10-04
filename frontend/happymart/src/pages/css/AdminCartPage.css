@@ -1,0 +1,111 @@
+.AdminCartPage {
+  max-width: 1000px;
+  margin: auto;
+  background: #ffffff;
+  padding: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.AdminCartPage h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #3498db;
+}
+
+.AdminCartPage input[type="text"],
+.AdminCartPage input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.AdminCartPage ul {
+  list-style: none;
+  padding: 0;
+}
+
+.AdminCartPage li {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.AdminCartPage li strong {
+  font-weight: 500;
+  margin-right: 20px;
+}
+
+.AdminCartPage li button {
+  background: linear-gradient(45deg, #56d8e4, #9f01ea);
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.AdminCartPage li button:hover {
+  background: linear-gradient(45deg, #9f01ea, #56d8e4);
+}
+
+.AdminCartPage button {
+  background: #3498db;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.AdminCartPage button:hover {
+  background: #2980b9;
+}
+
+.AdminCartPage .total-amount {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.update-order-form {
+  background: #f0f0f0;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.update-order-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.AdminCartPage p {
+  color: #e74c3c;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .AdminCartPage li {
+    flex-direction: column;
+  }
+  .AdminCartPage li strong {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
