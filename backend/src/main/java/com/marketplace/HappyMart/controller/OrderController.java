@@ -2,6 +2,7 @@ package com.marketplace.HappyMart.controller;
 
 import com.marketplace.HappyMart.model.Order;
 import com.marketplace.HappyMart.model.OrderItem;
+import com.marketplace.HappyMart.model.OrderStatus;
 import com.marketplace.HappyMart.service.interfaces.OrderItemService;
 import com.marketplace.HappyMart.service.interfaces.OrderService;
 import com.marketplace.HappyMart.util.ValidationUtil;
@@ -79,6 +80,12 @@ public class OrderController {
     @GetMapping("/{userId}/orders")
     public  ResponseEntity<List<Order>> getOrdersByUserId(@PathVariable Long userId) {
         List<Order> orders = orderService.getOrdersByUserId(userId);
+        return  ResponseEntity.ok(orders);
+    }
+
+    @GetMapping("/{userId}/orders")
+    public  ResponseEntity<List<Order>> getOrdersByStatus(@PathVariable Long userId, @RequestParam OrderStatus status) {
+        List<Order> orders = orderService.getOrderByStatus(userId, status);
         return  ResponseEntity.ok(orders);
     }
 
