@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const AdminOrderPage = () => {
@@ -8,6 +9,7 @@ const AdminOrderPage = () => {
   const [error, setError] = useState('');
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [updatedOrder, setUpdatedOrder] = useState({ totalAmount: '', status: '' });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -107,6 +109,7 @@ const AdminOrderPage = () => {
           </li>
         ))}
       </ul>
+      <button onClick={() => navigate('/admin/home')}>Home</button>
     </div>
   );
 };
