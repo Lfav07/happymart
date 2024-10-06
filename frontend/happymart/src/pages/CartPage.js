@@ -42,12 +42,23 @@ const CartPage = () => {
 
   const handleRemoveItem = async (itemId) => {
     try {
-      await axios.delete(`http://localhost:8080/users/${userId}/cart/items/${itemId}`);
+      const token = localStorage.getItem('jwt');
+
+
+      await axios.delete(`http://localhost:8080/users/${userId}/cart/items/${itemId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+
       setCartItems(cartItems.filter(item => item.id !== itemId));
     } catch (error) {
       setError('Failed to remove item');
     }
   };
+
+
 
   const handleCheckout = async () => {
     try {
