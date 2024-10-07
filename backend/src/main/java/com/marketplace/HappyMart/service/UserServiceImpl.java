@@ -31,11 +31,6 @@ public class UserServiceImpl implements UserService {
     }
 
 
-
-
-
-
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
@@ -43,9 +38,9 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("User not found: " + username);
         }
 
-        // Convert Role enum to SimpleGrantedAuthority
+
         var authorities = user.getRoles().stream()
-                .map(role -> new SimpleGrantedAuthority(role.name())) // Get role names like ROLE_USER
+                .map(role -> new SimpleGrantedAuthority(role.name()))
                 .collect(Collectors.toList());
 
         return new org.springframework.security.core.userdetails.User(
@@ -105,13 +100,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updatePassword(String username, String newPassword) {
-        User existingUser = userRepository.findByUsername(username);
+    public void updatePassword(String email, String newPassword) {
+        User existingUser = userRepository.findByEmail(email);
         if (existingUser == null) {
-            throw new UsernameNotFoundException("User not found: " + username);
+            throw new UsernameNotFoundException("User not found: " + email);
         }
         String encodedNewPassword = passwordEncoder.encode(newPassword);
         existingUser.setPassword(encodedNewPassword);
         userRepository.save(existingUser);
     }
+
 }
