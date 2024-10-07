@@ -133,22 +133,30 @@ class UserServiceImplTest {
 
     @Test
     void testUpdatePassword_UserExists() {
-        when(userRepository.findByUsername("TestingUser")).thenReturn(user);
-        when(passwordEncoder.encode("newPassword")).thenReturn("encodedNewPassword");
+        String email = "TestingEmail";
 
-        userService.updatePassword("TestingUser", "newPassword");
+        when(userRepository.findByEmail(email)).thenReturn(user);
+        when(passwordEncoder.encode("newPass")).thenReturn("encodedNewPassword");
+
+        userService.updatePassword(email, "newPass");
 
         assertEquals("encodedNewPassword", user.getPassword());
-        verify(userRepository, times(1)).findByUsername("TestingUser");
+
+        verify(userRepository, times(1)).findByEmail(email);
         verify(userRepository, times(1)).save(user);
     }
 
     @Test
     void testUpdatePassword_UserNotFound() {
-        when(userRepository.findByUsername("UnknownUser")).thenReturn(null);
+        String email = "testEmail@gmail.com";
 
-        assertThrows(UsernameNotFoundException.class, () -> userService.updatePassword("UnknownUser", "newPassword"));
-        verify(userRepository, times(1)).findByUsername("UnknownUser");
+        when(userRepository.findByEmail(email)).thenReturn(null);
+
+        assertThrows(UsernameNotFoundException.class, () -> userService.updatePassword(email, "newPass"));
+
+        verify(userRepository, times(1)).findByEmail(email);
         verify(userRepository, times(0)).save(any());
     }
+
+
 }
