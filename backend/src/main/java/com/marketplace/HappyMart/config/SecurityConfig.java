@@ -44,11 +44,11 @@ public class SecurityConfig {
                 }))
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers(HttpMethod.GET, "/api/auth/register").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/auth/register").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/auth/reset-password").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/auth/login").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/auth/login").hasRole("ADMIN")
 
 
                                 .requestMatchers(HttpMethod.PUT, "/api/auth/register").hasRole("ADMIN")
