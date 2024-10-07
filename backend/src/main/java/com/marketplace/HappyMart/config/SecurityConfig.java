@@ -47,22 +47,32 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/api/auth/register").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/auth/reset-password").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/api/auth/login").permitAll()
+
+
                                 .requestMatchers(HttpMethod.PUT, "/api/auth/register").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/api/auth/register").hasRole("ADMIN")
-                                .requestMatchers(HttpMethod.GET, "/api/auth/login").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/api/auth/login").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/api/auth/login").hasRole("ADMIN")
 
-                                /* Temporary endpoint
-                                register admins */ .requestMatchers("/api/admin/**").permitAll()
+                                /* Endpoint for Registering admins
+                                .requestMatchers("/api/admin/**").permitAll()
+                                */
+
+
 
                                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/categories/**").hasRole("ADMIN")
                                 .requestMatchers("/api/user/**").hasRole("USER")
+
+
                                 .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/products/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.PUT, "/products/**").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole("ADMIN")
+
+
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthorizationFilter(jwtUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class)
