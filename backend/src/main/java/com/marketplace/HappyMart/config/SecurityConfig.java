@@ -46,6 +46,7 @@ public class SecurityConfig {
                         authorizeRequests
                                 .requestMatchers(HttpMethod.GET, "/api/auth/register").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/auth/reset-password").permitAll()
                                 .requestMatchers(HttpMethod.PUT, "/api/auth/register").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/api/auth/register").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/api/auth/login").permitAll()
