@@ -1,5 +1,6 @@
 package com.marketplace.HappyMart.controller;
 
+import com.marketplace.HappyMart.dto.ResetPasswordRequest;
 import com.marketplace.HappyMart.dto.UserDTO;
 import com.marketplace.HappyMart.model.Role;
 import com.marketplace.HappyMart.model.User;
@@ -105,18 +106,18 @@ public class UserController {
 
 
     @PostMapping("/reset-password")
-    public ResponseEntity<String> updatePassword(@RequestParam String username, @RequestParam String newPassword) {
+    public ResponseEntity<String> updatePassword(@RequestBody ResetPasswordRequest request) {
         try {
-            userService.updatePassword(username, newPassword);
-            return ResponseEntity.ok("Password Reseted successfully");
+            userService.updatePassword(request.getEmail(), request.getNewPassword());
+            return ResponseEntity.ok("Password reset successfully");
         } catch (UsernameNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while updating password: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error occurred while updating password: " + e.getMessage());
         }
-
-
     }
+
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
