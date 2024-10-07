@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './css/RegisterPage.css';
 
 const RegisterPage = () => {
     const [username, setUsername] = useState('');
@@ -11,7 +12,6 @@ const RegisterPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
 
         if (!username || !password || !email) {
             setMessage('All fields are required');
@@ -34,35 +34,57 @@ const RegisterPage = () => {
     };
 
     return (
-        <div>
-            <h1>Register</h1>
+        <div className="container">
+            <h1 className="text">Register</h1>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Username:</label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
+                <div className="form-row">
+                    <div className="input-data">
+                        <input
+                            type="text"
+                            required
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                        <label>Username</label>
+                        <div className="underline"></div>
+                    </div>
                 </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                <div className="form-row">
+                    <div className="input-data">
+                        <input
+                            type="password"
+                            required
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <label>Password</label>
+                        <div className="underline"></div>
+                    </div>
                 </div>
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
+                <div className="form-row">
+                    <div className="input-data">
+                        <input
+                            type="email"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <label>Email</label>
+                        <div className="underline"></div>
+                    </div>
                 </div>
-                <button type="submit">Register</button>
-                 <button onClick={() => navigate('/login')}>Login</button>
+                <div className="form-row submit-btn">
+                    <div className="input-data">
+                        <input type="submit" value="Register" />
+                        <div className="inner"></div>
+                    </div>
+                </div>
+                <div className="form-row submit-btn">
+                    <div className="input-data">
+                        <input type="button" value="Login" onClick={() => navigate('/login')} />
+                        <div className="inner"></div>
+                    </div>
+                </div>
             </form>
             {message && <p>{message}</p>}
         </div>
