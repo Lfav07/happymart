@@ -5,6 +5,8 @@ import './css/AdminProductsPage.css';
 
 function AdminProductsPage() {
     const [products, setProducts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 3;
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -13,8 +15,8 @@ function AdminProductsPage() {
                 const token = localStorage.getItem('jwt');
                 const response = await axios.get('http://localhost:8080/products', {
                     headers: {
-                        Authorization: `Bearer ${token}`
-                    }
+                        Authorization: `Bearer ${token}`,
+                    },
                 });
                 setProducts(response.data);
             } catch (error) {
@@ -41,8 +43,8 @@ function AdminProductsPage() {
             const token = localStorage.getItem('jwt');
             await axios.delete(`http://localhost:8080/products/${id}`, {
                 headers: {
-                    Authorization: `Bearer ${token}`
-                }
+                    Authorization: `Bearer ${token}`,
+                },
             });
             setProducts(products.filter(product => product.id !== id));
         } catch (error) {
@@ -53,13 +55,19 @@ function AdminProductsPage() {
         }
     };
 
+
+    const indexOfLastProduct = currentPage * itemsPerPage;
+    const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+    const totalPages = Math.ceil(products.length / itemsPerPage);
+
     return (
         <div className="CompleteProductList">
             <h1>Product List</h1>
             <button onClick={handleAddProduct}>Add Product</button>
             <ul>
-                {products.length > 0 ? (
-                    products.map(product => (
+                {currentProducts.length > 0 ? (
+                    currentProducts.map(product => (
                         <li key={product.id}>
                             <img src={product.image} alt={product.name} />
                             <div>
@@ -81,6 +89,19 @@ function AdminProductsPage() {
                     <li>No products found.</li>
                 )}
             </ul>
+
+            {totalPages > 1 && (
+                <div className="pagination">
+                    {currentPage > 1 && (
+                        <button onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}>Previous</button>
+                    )}
+
+                    {currentPage < totalPages && (
+                        <button onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}>Next</button>
+                    )}
+                </div>
+            )}
+
             <button onClick={() => navigate('/admin/home')}>Home</button>
         </div>
     );
