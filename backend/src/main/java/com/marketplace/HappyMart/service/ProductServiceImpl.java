@@ -20,6 +20,7 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Override
     @Transactional
     public Product createProduct(Product product) {
         Category category = product.getCategory();
@@ -34,10 +35,15 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
 
+    @Override
+    public List<Product> getProductsByCategory(Category category) {
+        return  productRepository.getProductsByCategory(category);
+    }
+    @Override
     public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
     }
-
+    @Override
     @Transactional
     public Optional<Product> updateProduct(Long id, String company, String name, String image,
                                  Category category, int quantity, int price,
