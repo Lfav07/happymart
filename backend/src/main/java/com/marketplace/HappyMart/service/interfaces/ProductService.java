@@ -12,6 +12,8 @@ public interface ProductService {
 
     public List<Product> getAllProducts();
 
+    List<Product> getProductsByCategory(Category category);
+
     public Optional<Product> getProductById(Long id);
 
     public Optional<Product> updateProduct(Long id, String company, String name, String image,
