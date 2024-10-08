@@ -1,5 +1,6 @@
 package com.marketplace.HappyMart.repository;
 
+import com.marketplace.HappyMart.model.Category;
 import com.marketplace.HappyMart.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -10,6 +11,10 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
+    List<Product> getProductsByCategory(Category category);
+
+
+
 
     @Query("SELECT p FROM Product p WHERE " +
             "(:keyword IS NULL OR p.name LIKE %:keyword%) AND " +

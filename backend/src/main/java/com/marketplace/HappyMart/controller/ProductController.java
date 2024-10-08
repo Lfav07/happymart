@@ -28,6 +28,23 @@ public class ProductController {
         this.categoryService = categoryService;
     }
 
+    @GetMapping("/names")
+    public ResponseEntity<List<Product>> getProductsByCategory(@RequestParam int categoryId) {
+
+        Category category = new Category();
+        category.setId(categoryId);
+
+
+        List<Product> products = productService.getProductsByCategory(category);
+
+        if (products.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(products); 
+    }
+
+
     @GetMapping
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
