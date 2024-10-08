@@ -1,0 +1,9 @@
+{
+  "app_name": "HappyMarket",
+  "welcome": "Bem-vindo, {{name}}!",
+  "choose_action": "Escolha uma ação:",
+  "products_catalog": "Catálogo de produtos",
+  "cart": "Carrinho",
+  "orders": "Pedidos",
+  "logout": "Sair"
+}
