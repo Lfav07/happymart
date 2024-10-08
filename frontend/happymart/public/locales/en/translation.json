@@ -5,5 +5,19 @@
   "products_catalog": "Products catalog",
   "cart": "Cart",
   "orders": "Orders",
-  "logout": "Log out"
+  "logout": "Log out",
+  "product_list": "Product List",
+  "all_products": "All Products",
+  "filter": "Filter",
+  "no_products_found": "No products found.",
+  "add_to_cart": "Add to Cart",
+  "home": "Home",
+  "login": "Login",
+  "register": "Register",
+  "forgot_password": "Forgot your password?",
+  "reset_password": "Reset Password",
+  "registration_success": "Registration successful! Redirecting to login...",
+  "login_success": "Login successful! Redirecting to home page!",
+  "incorrect_credentials": "Incorrect username or password.",
+  "all_fields_required": "All fields are required"
 }

@@ -5,5 +5,37 @@
   "products_catalog": "Catálogo de produtos",
   "cart": "Carrinho",
   "orders": "Pedidos",
-  "logout": "Sair"
+  "logout": "Sair",
+  "product_list": "Lista de Produtos",
+  "all_products": "Todos os Produtos",
+  "filter": "Filtrar",
+  "no_products_found": "Nenhum produto encontrado.",
+  "add_to_cart": "Adicionar ao Carrinho",
+  "home": "Início",
+  "login": "Entrar",
+  "username": "Usuário",
+  "password": "Senha",
+  "email": "Email",
+  "new_password": "Nova Senha",
+  "register": "Registrar",
+  "forgot_password": "Esqueceu sua senha?",
+  "reset_password": "Redefinir",
+  "registration_success": "Registro bem-sucedido! Redirecionando para login...",
+  "login_success": "Login bem-sucedido! Redirecionando para a página inicial!",
+  "incorrect_credentials": "Nome de usuário ou senha incorretos.",
+  "all_fields_required": "Todos os campos são obrigatórios",
+  "next": "Próximo",
+  "previous": "Anterior",
+  "company": "Empresa",
+  "category": "Categoria",
+  "price": "Preço",
+  "weight": "Peso",
+  "description": "Descrição"
+
+
+
+
+
+
+
 }
