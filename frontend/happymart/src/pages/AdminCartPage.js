@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './css/AdminCartPage.css';
 
 const AdminCartPage = () => {
+  const { t } = useTranslation();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -24,7 +26,7 @@ const AdminCartPage = () => {
       });
       setCartItems(response.data);
     } catch (error) {
-      setError('Failed to fetch cart items');
+      setError(t('failedToFetchCartItems'));
       console.error('Error fetching cart items', error);
     } finally {
       setLoading(false);
@@ -33,7 +35,7 @@ const AdminCartPage = () => {
 
   const handleAddCartItem = async () => {
     if (!newCartItem.productId || !newCartItem.quantity) {
-      alert('Please fill in all fields.');
+      alert(t('pleaseFillInAllFields'));
       return;
     }
 
@@ -51,10 +53,10 @@ const AdminCartPage = () => {
       );
       setCartItems([...cartItems, response.data]);
       setNewCartItem({ productId: '', quantity: '' });
-      alert('Cart item added successfully!');
+      alert(t('cartItemAddedSuccessfully'));
     } catch (error) {
       console.error('Error adding cart item:', error);
-      setError('Failed to add cart item');
+      setError(t('failedToAddCartItem'));
     }
   };
 
@@ -67,10 +69,10 @@ const AdminCartPage = () => {
         },
       });
       setCartItems(cartItems.filter(item => item.id !== itemId));
-      alert('Cart item removed successfully!');
+      alert(t('cartItemRemovedSuccessfully'));
     } catch (error) {
       console.error('Error removing cart item:', error);
-      setError('Failed to remove cart item');
+      setError(t('failedToRemoveCartItem'));
     }
   };
 
@@ -83,60 +85,61 @@ const AdminCartPage = () => {
         },
       });
       setCartItems([]);
+      alert(t('cartClearedSuccessfully'));
     } catch (error) {
       console.error('Error clearing cart:', error);
-      setError('Failed to clear cart');
+      setError(t('failedToClearCart'));
     }
   };
 
   return (
     <div className="AdminCartPage">
-      <h1>Admin Cart Management</h1>
+      <h1>{t('adminCartManagement')}</h1>
       <input
         type="text"
-        placeholder="User ID"
+        placeholder={t('userId')}
         value={userId}
         onChange={(e) => setUserId(e.target.value)}
       />
-      <button onClick={fetchCartItems}>Fetch Cart Items</button>
-      <button onClick={() => navigate('/admin/home')}>Home</button>
+      <button onClick={fetchCartItems}>{t('fetchCartItems')}</button>
+      <button onClick={() => navigate('/admin/home')}>{t('home')}</button>
 
-      {loading && <p>Loading cart items...</p>}
+      {loading && <p>{t('loadingCartItems')}</p>}
       {error && <p>{error}</p>}
 
       {cartItems.length > 0 ? (
         <div>
-          <h2>Cart Items</h2>
+          <h2>{t('cartItems')}</h2>
           <ul>
             {cartItems.map(item => (
               <li key={item.id}>
-                <strong>Product ID:</strong> {item.product.id},
-                <strong> Quantity:</strong> {item.quantity},
-                <strong> Price:</strong> ${item.price.toFixed(2)}
-                <button onClick={() => handleRemoveCartItem(item.id)}>Remove</button>
+                <strong>{t('productId')}:</strong> {item.product.id}  ,
+                <strong> {  t('quantity')}:</strong> {item.quantity }  ,
+                <strong> {t('price')}:</strong> ${item.price.toFixed(2)}
+                <button onClick={() => handleRemoveCartItem(item.id)}>{t('remove')}</button>
               </li>
             ))}
           </ul>
-          <h3 className="total-amount">Total Amount: ${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</h3>
-          <button onClick={handleClearCart}>Clear Cart</button>
+          <h3 className="total-amount">{t('totalAmount')}: ${cartItems.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2)}</h3>
+          <button onClick={handleClearCart}>{t('clearCart')}</button>
 
-          <h3>Add New Cart Item</h3>
+          <h3>{t('addNewCartItem')}</h3>
           <input
             type="text"
-            placeholder="Product ID"
+            placeholder={t('productId')}
             value={newCartItem.productId}
-            onChange={(e) => setNewCartItem({ ...newCartItem, productId: e.target.value })}
+            onChange={(e) => setNewCartItem({ ...newCartItem,  productId: e.target.value })}
           />
           <input
             type="number"
-            placeholder="Quantity"
+            placeholder={t('quantity')}
             value={newCartItem.quantity}
             onChange={(e) => setNewCartItem({ ...newCartItem, quantity: e.target.value })}
           />
-          <button onClick={handleAddCartItem}>Add Cart Item</button>
+          <button onClick={handleAddCartItem}>{t('addCartItem')}</button>
         </div>
       ) : (
-        <p>No items in cart.</p>
+        <p>{t('noItemsInCart')}</p>
       )}
     </div>
   );

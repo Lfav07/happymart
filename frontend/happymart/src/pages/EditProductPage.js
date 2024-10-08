@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './css/EditProductPage.css';
 
 function EditProductPage() {
+    const { t } = useTranslation();
     const [product, setProduct] = useState(null);
     const [categories, setCategories] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
@@ -26,10 +28,8 @@ function EditProductPage() {
                 setProduct(productResponse.data);
                 setCategories(categoriesResponse.data);
 
-
                 const existingCategory = categoriesResponse.data.find(cat => cat.id === productResponse.data.category.id);
                 if (!existingCategory) {
-
                     setProduct(prevProduct => ({
                         ...prevProduct,
                         category: categoriesResponse.data[0]
@@ -37,12 +37,12 @@ function EditProductPage() {
                 }
             } catch (error) {
                 console.error('Error fetching product or categories:', error);
-                setErrorMessage('Failed to load product or categories. Please try again.');
+                setErrorMessage(t('failedToLoadProductOrCategories'));
             }
         };
 
         fetchProductAndCategories();
-    }, [id]);
+    }, [id, t]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -64,48 +64,48 @@ function EditProductPage() {
             navigate('/admin/products');
         } catch (error) {
             console.error('Error updating the product:', error);
-            setErrorMessage('Failed to update the product. Please check your input and try again.');
+            setErrorMessage(t('failedToUpdateProduct'));
         }
     };
 
-    if (!product) return <p>Loading...</p>;
+    if (!product) return <p>{t('loading')}</p>;
 
     return (
         <div>
-            <h1>Edit Product</h1>
+            <h1>{t('editProduct')}</h1>
             {errorMessage && <p className="error">{errorMessage}</p>}
             <form onSubmit={handleSubmit}>
-                <label htmlFor="name">Product Name</label>
-                <input type="text" name="name" value={product.name} onChange={handleChange} placeholder="Product Name" required />
+                <label htmlFor="name">{t('productName')}</label>
+                <input type="text" name="name" value={product.name} onChange={handleChange} placeholder={t('productNamePlaceholder')} required />
 
-                <label htmlFor="image">Image URL</label>
-                <input type="text" name="image" value={product.image} onChange={handleChange} placeholder="Image URL" required />
+                <label htmlFor="image">{t('imageUrl')}</label>
+                <input type="text" name="image" value={product.image} onChange={handleChange} placeholder={t('imageUrlPlaceholder')} required />
 
-                <label htmlFor="company">Company</label>
-                <input type="text" name="company" value={product.company} onChange={handleChange} placeholder="Company" required />
+                <label htmlFor="company">{t('company')}</label>
+                <input type="text" name="company" value={product.company} onChange={handleChange} placeholder={t('companyPlaceholder')} required />
 
-                <label htmlFor="category">Category</label>
+                <label htmlFor="category">{t('category')}</label>
                 <select name="category" value={product.category?.id || ''} onChange={handleChange} required>
-                    <option value="" disabled>Select a category</option>
+                    <option value="" disabled>{t('selectCategory')}</option>
                     {categories.map((cat) => (
                         <option key={cat.id} value={cat.id}>{cat.name}</option>
                     ))}
                 </select>
 
-                <label htmlFor="quantity">Quantity</label>
-                <input type="number" name="quantity" value={product.quantity} onChange={handleChange} placeholder="Quantity" required />
+                <label htmlFor="quantity">{t('quantity')}</label>
+                <input type="number" name="quantity" value={product.quantity} onChange={handleChange} placeholder={t('quantityPlaceholder')} required />
 
-                <label htmlFor="price">Price</label>
-                <input type="number" name="price" value={product.price} onChange={handleChange} placeholder="Price" required />
+                <label htmlFor="price">{t('price')}</label>
+                <input type="number" name="price" value={product.price} onChange={handleChange} placeholder={t('pricePlaceholder')} required />
 
-                <label htmlFor="weight">Weight</label>
-                <input type="number" name="weight" value={product.weight} onChange={handleChange} placeholder="Weight" required />
+                <label htmlFor="weight">{t('weight')}</label>
+                <input type="number" name="weight" value={product.weight} onChange={handleChange} placeholder={t('weightPlaceholder')} required />
 
-                <label htmlFor="description">Description</label>
-                <textarea name="description" value={product.description} onChange={handleChange} placeholder="Description" required />
+                <label htmlFor="description">{t('description')}</label>
+                <textarea name="description" value={product.description} onChange={handleChange} placeholder={t('descriptionPlaceholder')} required />
 
-                <button type="submit">Update Product</button>
-                <button type="button" onClick={() => navigate('/admin/products')}>Back to catalog</button>
+                <button type="submit">{t('updateProduct')}</button>
+                <button type="button" onClick={() => navigate('/admin/products')}>{t('backToCatalog')}</button>
             </form>
         </div>
     );

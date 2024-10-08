@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function AdminManageUsersPage() {
+    const { t } = useTranslation();
     const [users, setUsers] = useState([]);
     const navigate = useNavigate();
 
@@ -43,21 +45,21 @@ function AdminManageUsersPage() {
 
     return (
         <div className="admin-users-list">
-            <h1>Users List</h1>
+            <h1>{t('usersList')}</h1>
             <ul>
                 {users.length > 0 ? (
                     users.map(user => (
                         <li key={user.id}>
-                            <strong>Username:</strong> {user.username} <br/>
-                            <strong>Email:</strong> {user.email} <br/>
-                            <button onClick={() => handleDeleteUser(user.id)}>Delete User</button>
+                            <strong>{t('username')}:</strong> {user.username} <br/>
+                            <strong>{t('email')}:</strong> {user.email} <br/>
+                            <button onClick={() => handleDeleteUser(user.id)}>{t('deleteUser')}</button>
                         </li>
                     ))
                 ) : (
-                    <li>No users found.</li>
+                    <li>{t('noUsersFound')}</li>
                 )}
             </ul>
-            <button onClick={() => navigate('/admin/home')}>Home</button>
+            <button onClick={() => navigate('/admin/home')}>{t('home')}</button>
         </div>
     );
 }

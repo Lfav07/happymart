@@ -2,10 +2,26 @@
   "app_name": "HappyMarket",
   "welcome": "Welcome, {{name}}!",
   "choose_action": "Please choose an action:",
+
+  "login": "Login",
+  "register": "Register",
+  "forgot_password": "Forgot your password?",
+
+  "registration_success": "Registration successful! Redirecting to login...",
+  "login_success": "Login successful! Redirecting to home page...",
+  "incorrect_credentials": "Invalid username or password.",
+  "all_fields_required": "All fields are required.",
+
+  "admin_login": "Admin Login",
+  "username": "Username",
+  "password": "Password",
+  "new_password": "New Password",
+
   "products_catalog": "Product Catalog",
   "cart": "Cart",
   "orders": "Orders",
   "logout": "Log out",
+
   "product_list": "Product List",
   "all_products": "All Products",
   "next": "Next",
@@ -19,24 +35,6 @@
   "no_products_found": "No products found.",
   "add_to_cart": "Add to Cart",
   "home": "Home",
-  "login": "Login",
-  "register": "Register",
-  "forgot_password": "Forgot your password?",
-  "reset_password": "Reset Password",
-  "register.username": "Username",
-  "register.email": "Email",
-  "register.title": "Register",
-  "register.loginButton": "Login",
-  "register.password": "Password",
-  "registration_success": "Registration successful! Redirecting to login...",
-  "login_success": "Login successful! Redirecting to home page...",
-  "incorrect_credentials": "Invalid username or password.",
-  "all_fields_required": "All fields are required.",
-  "register.registerButton": "Register",
-
-  "admin_login": "Login",
-  "username": "Username",
-  "password": "Password",
 
   "welcome_admin": "Welcome, Admin",
   "manage_products": "Manage Products",
@@ -59,6 +57,38 @@
   "edit": "Edit",
   "delete": "Delete",
 
+  "adminCategoryManagement": "Manage Categories",
+  "addNewCategory": "Add New Category",
+  "categoryName": "Category Name",
+  "addCategory": "Add Category",
+  "existingCategories": "Existing Categories",
+
+  "usersList": "Users List",
+  "deleteUser": "Delete User",
+
+  "adminCartManagement": "Manage Carts",
+  "userId": "Enter User ID",
+  "fetchCartItems": "Fetch cart items",
+  "noItemsInCart": "No items in cart",
+  "cartItems": "Cart Items",
+  "totalAmount": "Total Amount",
+  "remove": "Remove",
+  "addNewCartItem": "Add New Cart Item",
+  "clearCart": "Clear Cart",
+  "addCartItem": "Add Cart Item",
+
+  "editProduct": "Edit Product",
+  "productName": "Product Name",
+  "imageUrl": "Image URL",
+  "updateProduct": "Update Product",
+  "failedToUpdateProduct": "Failed to update product",
+  "backToCatalog": "Back To Catalog",
+
+  "chooseAction": "Choose An Action",
+
+  "productId": "Product ID",
+  "pleaseFillInAllFields": "Please, Fill in All Fields",
+
   "cart_title": "Cart",
   "loading_cart": "Loading cart items...",
   "error": "{{error}}",
@@ -80,6 +110,6 @@
   "order_id": "Order ID",
   "status": "Status",
   "view_products_button": "View Products",
-  "products_in_order": "Products in this Order:"
-
+  "products_in_order": "Products in this Order:",
+  "email": "Email"
 }

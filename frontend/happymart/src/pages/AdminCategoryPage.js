@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './css/AdminCategoryPage.css';
 
 function AdminCategoryPage() {
+    const { t } = useTranslation();
     const [categories, setCategories] = useState([]);
     const [newCategory, setNewCategory] = useState('');
     const [editCategory, setEditCategory] = useState({ id: null, name: '' });
@@ -20,12 +22,12 @@ function AdminCategoryPage() {
                 setCategories(response.data);
             } catch (error) {
                 console.error('Error fetching categories:', error);
-                setErrorMessage('Failed to fetch categories.');
+                setErrorMessage(t('failedToFetchCategories'));
             }
         };
 
         fetchCategories();
-    }, []);
+    }, [t]);
 
     const handleAddCategory = async (e) => {
         e.preventDefault();
@@ -38,14 +40,14 @@ function AdminCategoryPage() {
             setNewCategory('');
         } catch (error) {
             console.error('Error adding category:', error);
-            setErrorMessage('Failed to add category.');
+            setErrorMessage(t('failedToAddCategory'));
         }
     };
 
     const handleEditCategory = async (e) => {
         e.preventDefault();
         if (editCategory.name.trim() === '') {
-            setErrorMessage('Category name cannot be empty.');
+            setErrorMessage(t('categoryNameCannotBeEmpty'));
             return;
         }
         try {
@@ -57,7 +59,7 @@ function AdminCategoryPage() {
             setEditCategory({ id: null, name: '' });
         } catch (error) {
             console.error('Error updating category:', error);
-            setErrorMessage('Failed to update category.');
+            setErrorMessage(t('failedToUpdateCategory'));
         }
     };
 
@@ -70,7 +72,7 @@ function AdminCategoryPage() {
             setCategories(categories.filter(cat => cat.id !== id));
         } catch (error) {
             console.error('Error deleting category:', error);
-            setErrorMessage('Failed to delete category.');
+            setErrorMessage(t('failedToDeleteCategory'));
         }
     };
 
@@ -84,23 +86,23 @@ function AdminCategoryPage() {
 
     return (
         <div className="admin-container">
-            <h1 className="admin-title">Admin Category Management</h1>
+            <h1 className="admin-title">{t('adminCategoryManagement')}</h1>
             {errorMessage && <p className="error">{errorMessage}</p>}
 
-            <h2 className="admin-subtitle">Add New Category</h2>
+            <h2 className="admin-subtitle">{t('addNewCategory')}</h2>
             <form className="category-form" onSubmit={handleAddCategory}>
                 <input
                     className="category-input"
                     type="text"
                     value={newCategory}
                     onChange={(e) => setNewCategory(e.target.value)}
-                    placeholder="Category Name"
+                    placeholder={t('categoryName')}
                     required
                 />
-                <button className="category-button" type="submit">Add Category</button>
+                <button className="category-button" type="submit">{t('addCategory')}</button>
             </form>
 
-            <h2 className="admin-subtitle">Existing Categories</h2>
+            <h2 className="admin-subtitle">{t('existingCategories')}</h2>
             <ul className="category-list">
                 {categories.map(category => (
                     <li key={category.id} className="category-item">
@@ -110,24 +112,21 @@ function AdminCategoryPage() {
                                     type="text"
                                     value={editCategory.name}
                                     onChange={handleChangeEdit}
-                                    placeholder="Category Name"
+                                    placeholder={t('categoryName')}
                                 />
-                                <button className="category-button" onClick={handleEditCategory}>Save</button>
+                                <button className="category-button" onClick={handleEditCategory}>{t('save')}</button>
                             </>
                         ) : (
                             <>
                                 {category.name}
-                                <button className="edit-button" onClick={() => handleEditClick(category)}>Edit</button>
-                                <button className="delete-button" onClick={() => handleDeleteCategory(category.id)}>Delete</button>
+                                <button className="edit-button" onClick={() => handleEditClick(category)}>{t('edit')}</button>
+                                <button className="delete-button" onClick={() => handleDeleteCategory(category.id)}>{t('delete')}</button>
                             </>
-
                         )}
-
                     </li>
-
                 ))}
             </ul>
- <button onClick={() => navigate('/admin/home')}>Home</button>
+            <button onClick={() => navigate('/admin/home')}>{t('home')}</button>
         </div>
     );
 }

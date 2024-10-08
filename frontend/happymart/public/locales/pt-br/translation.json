@@ -2,24 +2,32 @@
   "app_name": "HappyMarket",
   "welcome": "Bem-vindo, {{name}}!",
   "choose_action": "Por favor, escolha uma ação:",
+
+  "login": "Entrar",
+  "register": "Registrar",
+  "forgot_password": "Esqueceu sua senha?",
+
+  "registration_success": "Cadastro realizado com sucesso! Redirecionando para o login...",
+  "login_success": "Login realizado com sucesso! Redirecionando para a página inicial...",
+  "incorrect_credentials": "Nome de usuário ou senha incorretos.",
+  "all_fields_required": "Todos os campos são obrigatórios.",
+
+  "admin_login": "Entrar",
+  "username": "Usuário",
+  "password": "Senha",
+  "new_password": "Nova Senha",
+
   "products_catalog": "Catálogo de Produtos",
   "cart": "Carrinho",
   "orders": "Pedidos",
   "logout": "Sair",
+
   "product_list": "Lista de Produtos",
   "all_products": "Todos os Produtos",
   "filter": "Filtrar",
   "no_products_found": "Nenhum produto encontrado.",
   "add_to_cart": "Adicionar ao Carrinho",
-  "admin_login": "Entrar",
-  "username": "Usuário",
-  "password": "Senha",
   "home": "Início",
-  "login": "Entrar",
-  "register": "Registrar",
-  "forgot_password": "Esqueceu sua senha?",
-  "reset_password": "Redefinir Senha",
-
 
   "welcome_admin": "Bem vindo, Administrador",
   "manage_products": "Administrar Produtos",
@@ -37,17 +45,12 @@
   "cancelled_status": "CANCELADO",
   "submit_update": "Atualizar",
 
-
   "register.username": "Nome de Usuário",
   "register.email": "Email",
   "register.title": "Registrar",
   "register.loginButton": "Entrar",
   "register.registerButton": "Registrar",
   "register.password": "Senha",
-  "registration_success": "Cadastro realizado com sucesso! Redirecionando para o login...",
-  "login_success": "Login realizado com sucesso! Redirecionando para a página inicial...",
-  "incorrect_credentials": "Nome de usuário ou senha incorretos.",
-  "all_fields_required": "Todos os campos são obrigatórios.",
 
   "next": "Próximo",
   "previous": "Anterior",
@@ -57,12 +60,41 @@
   "weight": "Peso",
   "description": "Descrição",
 
+  "chooseAction": "Escolha Uma Opção",
+
   "productList": "Lista de Produtos",
   "addProduct": "Adicionar Produto",
   "edit": "Editar",
   "delete": "Excluir",
+  "failedToUpdateProduct": "Erro ao atulizar produto",
 
+  "adminCategoryManagement": "Gerenciar Categorias",
+  "addNewCategory": "Adicionar Categoria",
+  "categoryName": "Nome",
+  "addCategory": "Adicionar Categoria",
+  "existingCategories": "Categorias Existentes",
+  "productId": "ID do produto",
+  "pleaseFillInAllFields": "Por favor, Preencha Todos Os Campos",
 
+  "adminCartManagement": "Gerenciar Carrinhos",
+  "userId": "Insira ID Do Usuário",
+  "fetchCartItems": "Buscar Itens No Carrinho",
+  "noItemsInCart": "Nenhum Item Encontrado",
+  "cartItems": "Itens No Carrinho",
+  "totalAmount": "Valor Total",
+  "remove": "Remover",
+  "addNewCartItem": "Adicionar Novo Item",
+  "clearCart": "Limpar Carrinho",
+  "addCartItem": "Adicionar Item",
+
+  "editProduct": "Editar Produto",
+  "productName": "Nome Do Produto",
+  "imageUrl": "URL Da Imagem",
+  "updateProduct": "Atualizar Produto",
+  "backToCatalog": "Voltar Ao Catálogo",
+
+  "usersList": "Lista De Usuários",
+  "deleteUser": "Excluir Usuário",
 
   "cart_title": "Carrinho",
   "loading_cart": "Carregando itens do carrinho...",
@@ -87,5 +119,4 @@
   "product_name": "Nome do Produto:",
   "quantity": "Quantidade",
   "home_button": "Início"
-
 }
