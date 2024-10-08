@@ -112,9 +112,12 @@ form .form-row .input-data {
 .submit-btn .input-data {
     overflow: hidden;
     height: 50px;
-    width: 100%;
+    width: auto;
+    max-width: 100px;
     text-align: center;
     position: relative;
+    margin: 0 auto;
+    cursor: pointer;
 }
 
 .submit-btn .input-data .inner {
@@ -124,6 +127,7 @@ form .form-row .input-data {
     left: -100%;
     background: -webkit-linear-gradient(right, #56d8e4, #9f01ea, #56d8e4, #9f01ea);
     transition: all 0.4s;
+    z-index: 1;
 }
 
 .submit-btn .input-data:hover .inner {
@@ -144,24 +148,26 @@ form .form-row .input-data {
     height: 100%;
     padding: 0;
     width: 100%;
+    line-height: 50px;
+    display: inline-block;
+
+    pointer-events: auto;
 }
 
+
+.submit-btn .input-data:hover input {
+    color: #fff;
+}
 
 @media (max-width: 700px) {
-  .container .text {
-    font-size: 30px;
-  }
-  .container form {
-    padding: 10px 0 0 0;
-  }
-  .container form .form-row {
-    display: block;
-  }
-  form .form-row .input-data {
-    margin: 35px 0 !important;
-    width: 100% !important;
-  }
-  .submit-btn .input-data {
-    width: 100% !important;
-  }
+    .submit-btn .input-data {
+        width: 100%;
+        max-width: none;
+    }
 }
+
+
+
+
+
+
