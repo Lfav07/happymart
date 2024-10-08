@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import './css/EditProductPage.css';
 
 function EditProductPage() {
     const [product, setProduct] = useState(null);
@@ -13,21 +14,30 @@ function EditProductPage() {
         const fetchProductAndCategories = async () => {
             try {
                 const token = localStorage.getItem('jwt');
-                const productResponse = await axios.get(`http://localhost:8080/products/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                const categoriesResponse = await axios.get('http://localhost:8080/categories', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+                const [productResponse, categoriesResponse] = await Promise.all([
+                    axios.get(`http://localhost:8080/products/${id}`, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    }),
+                    axios.get('http://localhost:8080/categories', {
+                        headers: { Authorization: `Bearer ${token}` }
+                    })
+                ]);
+
                 setProduct(productResponse.data);
                 setCategories(categoriesResponse.data);
+
+
+                const existingCategory = categoriesResponse.data.find(cat => cat.id === productResponse.data.category.id);
+                if (!existingCategory) {
+
+                    setProduct(prevProduct => ({
+                        ...prevProduct,
+                        category: categoriesResponse.data[0]
+                    }));
+                }
             } catch (error) {
                 console.error('Error fetching product or categories:', error);
-                setErrorMessage('Failed to load product or categories.');
+                setErrorMessage('Failed to load product or categories. Please try again.');
             }
         };
 
@@ -38,9 +48,9 @@ function EditProductPage() {
         const { name, value } = e.target;
         if (name === 'category') {
             const selectedCategory = categories.find(category => category.id === parseInt(value));
-            setProduct({ ...product, category: selectedCategory });
+            setProduct(prevProduct => ({ ...prevProduct, category: selectedCategory }));
         } else {
-            setProduct({ ...product, [name]: value });
+            setProduct(prevProduct => ({ ...prevProduct, [name]: value }));
         }
     };
 
@@ -49,14 +59,12 @@ function EditProductPage() {
         try {
             const token = localStorage.getItem('jwt');
             await axios.put(`http://localhost:8080/products/${id}`, product, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+                headers: { Authorization: `Bearer ${token}` }
             });
             navigate('/admin/products');
         } catch (error) {
             console.error('Error updating the product:', error);
-            setErrorMessage('Failed to update the product.');
+            setErrorMessage('Failed to update the product. Please check your input and try again.');
         }
     };
 
@@ -67,23 +75,37 @@ function EditProductPage() {
             <h1>Edit Product</h1>
             {errorMessage && <p className="error">{errorMessage}</p>}
             <form onSubmit={handleSubmit}>
+                <label htmlFor="name">Product Name</label>
                 <input type="text" name="name" value={product.name} onChange={handleChange} placeholder="Product Name" required />
+
+                <label htmlFor="image">Image URL</label>
                 <input type="text" name="image" value={product.image} onChange={handleChange} placeholder="Image URL" required />
+
+                <label htmlFor="company">Company</label>
                 <input type="text" name="company" value={product.company} onChange={handleChange} placeholder="Company" required />
 
-                <select name="category" value={product.category.id} onChange={handleChange}>
+                <label htmlFor="category">Category</label>
+                <select name="category" value={product.category?.id || ''} onChange={handleChange} required>
+                    <option value="" disabled>Select a category</option>
                     {categories.map((cat) => (
                         <option key={cat.id} value={cat.id}>{cat.name}</option>
                     ))}
                 </select>
 
+                <label htmlFor="quantity">Quantity</label>
                 <input type="number" name="quantity" value={product.quantity} onChange={handleChange} placeholder="Quantity" required />
-                <input type="number" name="price" value={product.price} onChange={handleChange} placeholder="Price" required />
-                <input type="number" name="weight" value={product.weight} onChange={handleChange} placeholder="Weight" required />
-                <textarea name="description" value={product.description} onChange={handleChange} placeholder="Description" required />
-                <button type="submit">Update Product</button>
 
-                <button onClick={() => navigate('/admin/products')}>Back to catalog</button>
+                <label htmlFor="price">Price</label>
+                <input type="number" name="price" value={product.price} onChange={handleChange} placeholder="Price" required />
+
+                <label htmlFor="weight">Weight</label>
+                <input type="number" name="weight" value={product.weight} onChange={handleChange} placeholder="Weight" required />
+
+                <label htmlFor="description">Description</label>
+                <textarea name="description" value={product.description} onChange={handleChange} placeholder="Description" required />
+
+                <button type="submit">Update Product</button>
+                <button type="button" onClick={() => navigate('/admin/products')}>Back to catalog</button>
             </form>
         </div>
     );
