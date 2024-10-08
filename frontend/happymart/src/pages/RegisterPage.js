@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './css/RegisterPage.css';
 
 const RegisterPage = () => {
+    const { t, i18n } = useTranslation();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
@@ -14,7 +16,7 @@ const RegisterPage = () => {
         e.preventDefault();
 
         if (!username || !password || !email) {
-            setMessage('All fields are required');
+            setMessage(t('register.allFieldsRequired'));
             return;
         }
 
@@ -24,18 +26,20 @@ const RegisterPage = () => {
                 password,
                 email
             });
-            setMessage('Registration successful! Redirecting to login...');
+            setMessage(t('register.registrationSuccessful'));
             setTimeout(() => {
                 navigate('/login');
             }, 2000);
         } catch (error) {
-            setMessage(error.response ? error.response.data : 'Error occurred');
+            setMessage(error.response ? error.response.data : t('register.errorOccurred'));
         }
     };
 
     return (
         <div className="container">
-            <h1 className="text">Register</h1>
+        <button onClick={() => i18n.changeLanguage('pt-BR')}>Português (Brasil)</button>
+                    <button onClick={() => i18n.changeLanguage('en')}>English</button>
+            <h1 className="text">{t('register.title')}</h1>
             <form onSubmit={handleSubmit}>
                 <div className="form-row">
                     <div className="input-data">
@@ -45,7 +49,7 @@ const RegisterPage = () => {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />
-                        <label>Username</label>
+                        <label>{t('register.username')}</label>
                         <div className="underline"></div>
                     </div>
                 </div>
@@ -57,7 +61,7 @@ const RegisterPage = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <label>Password</label>
+                        <label>{t('register.password')}</label>
                         <div className="underline"></div>
                     </div>
                 </div>
@@ -69,19 +73,19 @@ const RegisterPage = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                        <label>Email</label>
+                        <label>{t('register.email')}</label>
                         <div className="underline"></div>
                     </div>
                 </div>
                 <div className="form-row submit-btn">
                     <div className="input-data">
-                        <input type="submit" value="Register" />
+                        <input type="submit" value={t('register.registerButton')} />
                         <div className="inner"></div>
                     </div>
                 </div>
                 <div className="form-row submit-btn">
                     <div className="input-data">
-                        <input type="button" value="Login" onClick={() => navigate('/login')} />
+                        <input type="button" value={t('register.loginButton')} onClick={() => navigate('/login')} />
                         <div className="inner"></div>
                     </div>
                 </div>

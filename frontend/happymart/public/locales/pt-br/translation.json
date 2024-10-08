@@ -1,8 +1,8 @@
 {
   "app_name": "HappyMarket",
   "welcome": "Bem-vindo, {{name}}!",
-  "choose_action": "Escolha uma ação:",
-  "products_catalog": "Catálogo de produtos",
+  "choose_action": "Por favor, escolha uma ação:",
+  "products_catalog": "Catálogo de Produtos",
   "cart": "Carrinho",
   "orders": "Pedidos",
   "logout": "Sair",
@@ -13,17 +13,19 @@
   "add_to_cart": "Adicionar ao Carrinho",
   "home": "Início",
   "login": "Entrar",
-  "username": "Usuário",
-  "password": "Senha",
-  "email": "Email",
-  "new_password": "Nova Senha",
   "register": "Registrar",
   "forgot_password": "Esqueceu sua senha?",
-  "reset_password": "Redefinir",
-  "registration_success": "Registro bem-sucedido! Redirecionando para login...",
-  "login_success": "Login bem-sucedido! Redirecionando para a página inicial!",
+  "reset_password": "Redefinir Senha",
+  "register.username": "Nome de Usuário",
+  "register.email": "Email",
+  "register.title": "Registrar",
+  "register.loginButton": "Entrar",
+  "register.registerButton": "Registrar",
+  "register.password": "Senha",
+  "registration_success": "Cadastro realizado com sucesso! Redirecionando para o login...",
+  "login_success": "Login realizado com sucesso! Redirecionando para a página inicial...",
   "incorrect_credentials": "Nome de usuário ou senha incorretos.",
-  "all_fields_required": "Todos os campos são obrigatórios",
+  "all_fields_required": "Todos os campos são obrigatórios.",
   "next": "Próximo",
   "previous": "Anterior",
   "company": "Empresa",
@@ -31,11 +33,4 @@
   "price": "Preço",
   "weight": "Peso",
   "description": "Descrição"
-
-
-
-
-
-
-
 }
