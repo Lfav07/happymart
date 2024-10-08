@@ -11,6 +11,9 @@
   "filter": "Filtrar",
   "no_products_found": "Nenhum produto encontrado.",
   "add_to_cart": "Adicionar ao Carrinho",
+  "admin_login": "Entrar",
+  "username": "Usuário",
+  "password": "Senha",
   "home": "Início",
   "login": "Entrar",
   "register": "Registrar",
@@ -39,15 +42,24 @@
   "loading_cart": "Carregando itens do carrinho...",
   "error": "{{error}}",
   "your_cart_items": "Seus Itens no Carrinho",
-  "product_name": "Nome do Produto:",
-  "quantity": "Quantidade:",
   "remove_button": "Remover",
   "total_amount": "Valor Total:",
   "checkout_button": "Finalizar Compra",
   "clear_cart_button": "Limpar Carrinho",
   "cart_empty": "Seu carrinho está vazio.",
-  "home_button": "Início",
   "order_success": "Pedido realizado com sucesso!",
-  "order_fail": "Falha ao realizar o pedido"
+  "order_fail": "Falha ao realizar o pedido",
+
+  "orders_title": "Pedidos",
+  "loading_orders": "Carregando pedidos...",
+  "fetch_orders_error": "Falha ao buscar pedidos",
+  "order_id": "ID do Pedido:",
+
+  "status": "Status:",
+  "view_products_button": "Ver Produtos",
+  "products_in_order": "Produtos neste Pedido:",
+  "product_name": "Nome do Produto:",
+  "quantity": "Quantidade:",
+  "home_button": "Início"
 
 }

@@ -34,6 +34,10 @@
   "all_fields_required": "All fields are required.",
   "register.registerButton": "Register",
 
+  "admin_login": "Login",
+  "username": "Username",
+  "password": "Password",
+
   "cart_title": "Cart",
   "loading_cart": "Loading cart items...",
   "error": "{{error}}",
@@ -47,6 +51,14 @@
   "cart_empty": "Your cart is empty.",
   "home_button": "Home",
   "order_success": "Order placed successfully!",
-  "order_fail": "Failed to place the order"
+  "order_fail": "Failed to place the order",
+
+  "orders_title": "Orders",
+  "loading_orders": "Loading orders...",
+  "fetch_orders_error": "Failed to fetch orders",
+  "order_id": "Order ID:",
+  "status": "Status:",
+  "view_products_button": "View Products",
+  "products_in_order": "Products in this Order:"
 
 }
