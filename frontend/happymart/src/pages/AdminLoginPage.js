@@ -26,7 +26,7 @@ const AdminLoginPage = ({ onLogin }) => {
             localStorage.setItem('roles', JSON.stringify(user.roles));
 
             if (user.roles.includes('ROLE_ADMIN')) {
-                setMessage('Login successful! Redirecting to home page!');
+                setMessage('Login successful! Redirecting to home page...');
                 setTimeout(() => {
                     navigate('/admin/home');
                 }, 2000);
@@ -41,12 +41,16 @@ const AdminLoginPage = ({ onLogin }) => {
                 setMessage('Access denied. You do not have admin privileges.');
             }
         } catch (error) {
-            setMessage(error.response ? error.response.data : 'Error occurred, please try again');
+            if (error.response && error.response.status === 401) {
+                setMessage('Incorrect username or password.');
+            } else {
+                setMessage(error.response?.data || 'Error occurred, please try again.');
+            }
         }
     };
 
     return (
-        <div className="container"> {}
+        <div className="container">
             <div className="text">Admin Login</div>
             <form onSubmit={handleSubmit}>
                 <div className="form-row">
@@ -75,7 +79,7 @@ const AdminLoginPage = ({ onLogin }) => {
                 </div>
                 <div className="submit-btn">
                     <div className="input-data">
-                        <input type="submit" value="Login           " />
+                        <input type="submit" value="Login" />
                         <div className="inner"></div>
                     </div>
                 </div>
