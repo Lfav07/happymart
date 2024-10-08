@@ -32,5 +32,22 @@
   "category": "Categoria",
   "price": "Preço",
   "weight": "Peso",
-  "description": "Descrição"
+  "description": "Descrição",
+
+
+  "cart_title": "Carrinho",
+  "loading_cart": "Carregando itens do carrinho...",
+  "error": "{{error}}",
+  "your_cart_items": "Seus Itens no Carrinho",
+  "product_name": "Nome do Produto:",
+  "quantity": "Quantidade:",
+  "remove_button": "Remover",
+  "total_amount": "Valor Total:",
+  "checkout_button": "Finalizar Compra",
+  "clear_cart_button": "Limpar Carrinho",
+  "cart_empty": "Seu carrinho está vazio.",
+  "home_button": "Início",
+  "order_success": "Pedido realizado com sucesso!",
+  "order_fail": "Falha ao realizar o pedido"
+
 }

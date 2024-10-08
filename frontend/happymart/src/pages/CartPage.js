@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useUser } from '../contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './css/CartPage.css';
 
 const CartPage = () => {
   const { user } = useUser();
+  const { t } = useTranslation();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -30,7 +32,7 @@ const CartPage = () => {
         });
         setCartItems(response.data);
       } catch (error) {
-        setError('Failed to fetch cart items');
+        setError(t('error', { error: 'Failed to fetch cart items' }));
         console.error('Error fetching cart items', error);
       } finally {
         setLoading(false);
@@ -38,12 +40,11 @@ const CartPage = () => {
     };
 
     fetchCartItems();
-  }, [userId]);
+  }, [userId, t]);
 
   const handleRemoveItem = async (itemId) => {
     try {
       const token = localStorage.getItem('jwt');
-
 
       await axios.delete(`http://localhost:8080/users/${userId}/cart/items/${itemId}`, {
         headers: {
@@ -51,14 +52,11 @@ const CartPage = () => {
         },
       });
 
-
       setCartItems(cartItems.filter(item => item.id !== itemId));
     } catch (error) {
-      setError('Failed to remove item');
+      setError(t('error', { error: 'Failed to remove item' }));
     }
   };
-
-
 
   const handleCheckout = async () => {
     try {
@@ -100,10 +98,10 @@ const CartPage = () => {
       }
 
       await handleClearCart();
-      alert('Order placed successfully!');
+      alert(t('order_success'));
       navigate('/orders');
     } catch (error) {
-      setError('Failed to place the order');
+      setError(t('order_fail'));
       console.error('Error placing order:', error);
     }
   };
@@ -118,43 +116,43 @@ const CartPage = () => {
       });
       setCartItems([]);
     } catch (error) {
-      setError('Failed to clear cart');
+      setError(t('error', { error: 'Failed to clear cart' }));
     }
   };
 
   return (
     <div className="CartPage">
-      <h1>Cart</h1>
-      {loading && <p>Loading cart items...</p>}
+      <h1>{t('cart_title')}</h1>
+      {loading && <p>{t('loading_cart')}</p>}
       {error && <p>{error}</p>}
       {cartItems.length > 0 ? (
         <div>
-          <h2>Your Cart Items</h2>
+          <h2>{t('your_cart_items')}</h2>
           <ul>
             {cartItems.map(item => (
               <li key={item.id}>
                 <div className="item-details">
-                  <strong>Product Name:</strong> {item.product.name}
+                  <strong>{t('product_name')}</strong> {item.product.name}
                 </div>
                 <div className="item-details">
-                  <strong>Quantity:</strong> {item.quantity}
+                  <strong>{t('quantity')}</strong> {item.quantity}
                 </div>
                 <div className="item-details">
-                  <strong>Price:</strong> ${item.price.toFixed(2)}
+                  <strong>{t('price')}</strong> ${item.price.toFixed(2)}
                 </div>
-                <button onClick={() => handleRemoveItem(item.id)}>Remove</button>
+                <button onClick={() => handleRemoveItem(item.id)}>{t('remove_button')}</button>
               </li>
             ))}
           </ul>
 
-          <h3 className="total-amount">Total Amount: ${calculateTotalAmount().toFixed(2)}</h3>
-          <button onClick={handleCheckout}>Checkout</button>
-          <button onClick={handleClearCart}>Clear Cart</button>
+          <h3 className="total-amount">{t('total_amount')} ${calculateTotalAmount().toFixed(2)}</h3>
+          <button onClick={handleCheckout}>{t('checkout_button')}</button>
+          <button onClick={handleClearCart}>{t('clear_cart_button')}</button>
         </div>
       ) : (
-        <p>Your cart is empty.</p>
+        <p>{t('cart_empty')}</p>
       )}
-      <button onClick={() => navigate('/home')}>Home</button>
+      <button onClick={() => navigate('/home')}>{t('home_button')}</button>
     </div>
   );
 };
