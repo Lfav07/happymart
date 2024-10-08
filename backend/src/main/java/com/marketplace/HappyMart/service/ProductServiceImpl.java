@@ -70,6 +70,7 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteAll();
     }
 
+    @Override
     @Transactional
     public void deleteProductById(Long id) {
         if (!productRepository.existsById(id)) {

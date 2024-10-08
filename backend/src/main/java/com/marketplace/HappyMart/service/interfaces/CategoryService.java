@@ -13,8 +13,12 @@ public interface CategoryService {
     Optional<Category> createCategoryByName(String name);
 
     public List<Category> getAllCategories();
+
     public Optional<Category> getCategoryById(Long id);
+
     public Optional<Category> updateCategory(Long id, String name);
+
     public void deleteCategoryById(Long id);
+
     public void deleteAllCategories();
 }

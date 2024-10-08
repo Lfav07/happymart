@@ -22,12 +22,16 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private CartRepository cartRepository;
+
     @Autowired
     private CartItemRepository cartItemRepository;
+
     @Autowired
     private UserRepository userRepository;
+
     @Autowired
     private ProductRepository productRepository;
+
 
     @Override
     public Cart getOrCreateCart(Long userId) {
