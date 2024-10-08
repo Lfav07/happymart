@@ -20,7 +20,8 @@ import EditProductPage from './pages/EditProductPage';
 import AdminCartPage from './pages/AdminCartPage';
 import OrderPage from './pages/OrderPage';
 import AdminOrderPage from './pages/AdminOrderPage';
-import AdminRedirect from './pages/AdminRedirect'
+import AdminRedirect from './pages/AdminRedirect';
+import AdminCategoryPage from './pages/AdminCategoryPage';
 
 const App = () => {
     return (
@@ -45,6 +46,7 @@ const App = () => {
                     <Route path="/admin/users" element={<AdminProtectedRoute element={AdminManageUsersPage} />} />\
                     <Route path="/admin/carts" element={<AdminProtectedRoute element={AdminCartPage} />} />
                     <Route path="/admin/orders" element={<AdminProtectedRoute element={AdminOrderPage} />} />
+                    <Route path="/admin/categories" element={<AdminProtectedRoute element={AdminCategoryPage} />} />
 
                 </Routes>
             </Router>
