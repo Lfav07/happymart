@@ -19,6 +19,25 @@
   "register": "Registrar",
   "forgot_password": "Esqueceu sua senha?",
   "reset_password": "Redefinir Senha",
+
+
+  "welcome_admin": "Bem vindo, Administrador",
+  "manage_products": "Administrar Produtos",
+  "manage_categories": "Administrar Categorias",
+  "manage_carts": "Administrar Carrinhos",
+  "manage_users": "Administrar Usuários",
+  "manage_orders": "Administrar Pedidos",
+
+  "admin_orders_management": "Gerenciar Pedidos",
+  "delete_order": "Excluir Pedido",
+  "update_order": "Atualizar Pedido",
+  "pending_status": "PENDENTE",
+  "select_status": "Selecione o Status",
+  "completed_status": "COMPLETO",
+  "cancelled_status": "CANCELADO",
+  "submit_update": "Atualizar",
+
+
   "register.username": "Nome de Usuário",
   "register.email": "Email",
   "register.title": "Registrar",
@@ -29,6 +48,7 @@
   "login_success": "Login realizado com sucesso! Redirecionando para a página inicial...",
   "incorrect_credentials": "Nome de usuário ou senha incorretos.",
   "all_fields_required": "Todos os campos são obrigatórios.",
+
   "next": "Próximo",
   "previous": "Anterior",
   "company": "Empresa",
@@ -36,6 +56,12 @@
   "price": "Preço",
   "weight": "Peso",
   "description": "Descrição",
+
+  "productList": "Lista de Produtos",
+  "addProduct": "Adicionar Produto",
+  "edit": "Editar",
+  "delete": "Excluir",
+
 
 
   "cart_title": "Carrinho",
@@ -53,13 +79,13 @@
   "orders_title": "Pedidos",
   "loading_orders": "Carregando pedidos...",
   "fetch_orders_error": "Falha ao buscar pedidos",
-  "order_id": "ID do Pedido:",
+  "order_id": "ID do Pedido",
 
-  "status": "Status:",
+  "status": "Status",
   "view_products_button": "Ver Produtos",
   "products_in_order": "Produtos neste Pedido:",
   "product_name": "Nome do Produto:",
-  "quantity": "Quantidade:",
+  "quantity": "Quantidade",
   "home_button": "Início"
 
 }
