@@ -14,7 +14,7 @@ COPY pom.xml /home/app/
 
 COPY src /home/app/src/
 
-# Run Maven to package the application
+
 RUN mvn clean package -DskipTests
 
 
