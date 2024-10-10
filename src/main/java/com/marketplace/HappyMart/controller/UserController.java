@@ -64,7 +64,11 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody UserDTO updatedUser) {
+    public ResponseEntity<String> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO updatedUser) {
+        if (updatedUser == null) {
+            return ResponseEntity.badRequest().body("Invalid user data");
+        }
+
         try {
             userService.updateUser(id, updatedUser);
             return ResponseEntity.ok("User updated successfully");
@@ -102,7 +106,6 @@ public class UserController {
         }
     }
 
-
     @PostMapping("/reset-password")
     public ResponseEntity<String> updatePassword(@RequestBody ResetPasswordRequest request) {
         try {
@@ -115,7 +118,6 @@ public class UserController {
                     .body("Error occurred while updating password: " + e.getMessage());
         }
     }
-
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers() {
@@ -151,7 +153,6 @@ public class UserController {
         userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());
 
-
         List<String> roles = user.getRoles().stream()
                 .map(Role::name)
                 .collect(Collectors.toList());
@@ -159,6 +160,4 @@ public class UserController {
 
         return userDTO;
     }
-
-
 }

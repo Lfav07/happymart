@@ -46,12 +46,14 @@
   "submit_update": "Atualizar",
 
   "admin.register.title": "Registrar Administrador",
-  "register.username": "Nome de Usuário",
+  "register.username": "Nome de Usuário (3-20)",
   "register.email": "Email",
   "register.title": "Registrar",
   "register.loginButton": "Entrar",
   "register.registerButton": "Registrar",
   "register.password": "Senha",
+
+  "failedToDeleteCategory": "Erro: Remova produtos com a categoria primeiro",
 
   "next": "Próximo",
   "previous": "Anterior",

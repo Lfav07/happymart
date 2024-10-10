@@ -13,10 +13,10 @@ import org.springframework.stereotype.Service;
 import com.marketplace.HappyMart.model.User;
 import com.marketplace.HappyMart.repository.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.regex.Pattern;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,14 +30,12 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found: " + username);
         }
-
 
         var authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.name()))
@@ -49,7 +47,6 @@ public class UserServiceImpl implements UserService {
                 authorities
         );
     }
-
 
     @Override
     public List<User> findAllUsers() {
@@ -66,7 +63,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User not found with ID: " + id));
     }
 
-
     @Override
     @Transactional
     public User saveUser(User user) {
@@ -74,8 +70,10 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("User already exists!");
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        validateUsername(user.getUsername());
+        validateEmail(user.getEmail());
 
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         if (user.getRoles() == null || user.getRoles().isEmpty()) {
             user.setRoles(Set.of(Role.ROLE_USER));
@@ -83,7 +81,6 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.save(user);
     }
-
 
     @Override
     public void deleteUserById(Long id) {
@@ -94,6 +91,8 @@ public class UserServiceImpl implements UserService {
     public void updateUser(Long id, UserDTO updatedUser) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        validateUsername(updatedUser.getUsername());
+        validateEmail(updatedUser.getEmail());
         user.setUsername(updatedUser.getUsername());
         user.setEmail(updatedUser.getEmail());
         userRepository.save(user);
@@ -110,4 +109,15 @@ public class UserServiceImpl implements UserService {
         userRepository.save(existingUser);
     }
 
+    private void validateUsername(String username) {
+        if (!Pattern.matches("^[a-zA-Z0-9]{3,20}$", username)) {
+            throw new IllegalArgumentException("Invalid username format");
+        }
+    }
+
+    private void validateEmail(String email) {
+        if (!Pattern.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$", email)) {
+            throw new IllegalArgumentException("Invalid email format");
+        }
+    }
 }

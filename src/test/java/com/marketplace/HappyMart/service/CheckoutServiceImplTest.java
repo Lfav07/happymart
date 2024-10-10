@@ -1,9 +1,7 @@
 package com.marketplace.HappyMart.service;
 
 import com.marketplace.HappyMart.model.*;
-import com.marketplace.HappyMart.repository.CartRepository;
 import com.marketplace.HappyMart.service.interfaces.CartService;
-import com.marketplace.HappyMart.service.interfaces.CheckoutService;
 import com.marketplace.HappyMart.service.interfaces.OrderItemService;
 import com.marketplace.HappyMart.service.interfaces.OrderService;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,8 +11,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;

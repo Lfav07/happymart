@@ -3,7 +3,6 @@ package com.marketplace.HappyMart.controller;
 import com.marketplace.HappyMart.model.Category;
 import com.marketplace.HappyMart.model.Product;
 import com.marketplace.HappyMart.service.CategoryServiceImpl;
-import com.marketplace.HappyMart.service.interfaces.CategoryService;
 import com.marketplace.HappyMart.service.interfaces.ProductService;
 import com.marketplace.HappyMart.util.ValidationUtil;
 import jakarta.validation.Valid;

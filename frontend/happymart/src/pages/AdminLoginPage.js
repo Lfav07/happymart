@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import './css/AdminLoginPage.css';
+import './css/UserLoginPage.css';
 import { useTranslation } from 'react-i18next';
 
 const AdminLoginPage = ({ onLogin }) => {

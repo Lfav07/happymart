@@ -82,12 +82,14 @@
 
   "admin.register.title": "Admin Register",
   "register.title": "Register",
-  "register.username": "Username",
+  "register.username": "Username (3-20)",
   "register.password": "Password",
   "register.email": "Email",
   "register.registrationSuccessful": "Registration Successful!",
   "register.registerButton": "Register",
   "register.loginButton": "Login",
+
+  "failedToDeleteCategory": "Error: Remove products with the category first",
 
 
   "editProduct": "Edit Product",
