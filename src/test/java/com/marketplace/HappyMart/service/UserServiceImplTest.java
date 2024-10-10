@@ -42,7 +42,7 @@ class UserServiceImplTest {
         user.setId(1L);
         user.setUsername("TestingUser");
         user.setPassword("TestingPassword");
-        user.setEmail("TestingEmail");
+        user.setEmail("TestingEmail@gmail.com");
         user.setRoles(Collections.singleton(Role.ROLE_USER));
     }
 
