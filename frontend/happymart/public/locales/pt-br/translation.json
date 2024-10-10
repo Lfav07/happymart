@@ -45,6 +45,8 @@
   "cancelled_status": "CANCELADO",
   "submit_update": "Atualizar",
 
+  "reset_password": "Resetar",
+
   "admin.register.title": "Registrar Administrador",
   "register.username": "Nome de Usuário (3-20)",
   "register.email": "Email",

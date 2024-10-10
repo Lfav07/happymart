@@ -90,7 +90,7 @@
   "register.loginButton": "Login",
 
   "failedToDeleteCategory": "Error: Remove products with the category first",
-
+  "reset_password": "Reset",
 
   "editProduct": "Edit Product",
   "productName": "Product Name",
