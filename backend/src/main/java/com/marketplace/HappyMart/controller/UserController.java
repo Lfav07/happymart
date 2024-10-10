@@ -103,8 +103,6 @@ public class UserController {
     }
 
 
-
-
     @PostMapping("/reset-password")
     public ResponseEntity<String> updatePassword(@RequestBody ResetPasswordRequest request) {
         try {
@@ -161,7 +159,6 @@ public class UserController {
 
         return userDTO;
     }
-
 
 
 }

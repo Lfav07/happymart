@@ -41,7 +41,6 @@ public class CartController {
     }
 
 
-
     @GetMapping("/items/{cartItemId}")
     public ResponseEntity<CartItem> getCartItemById(@PathVariable Long userId,
                                                     @PathVariable Long cartItemId) {

@@ -50,11 +50,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @Transactional
     public Optional<Category> updateCategory(Long id, String name) {
-        return  categoryRepository.findById(id)
-                        .map(category -> {
-        category.setName(name);
-        return categoryRepository.save(category);
-                        });
+        return categoryRepository.findById(id)
+                .map(category -> {
+                    category.setName(name);
+                    return categoryRepository.save(category);
+                });
     }
 
     @Override

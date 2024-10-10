@@ -47,9 +47,9 @@ public class JwtUtil {
     public String generateToken(UserDetails userDetails, List<String> roles) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
-                .claim("roles", roles) // Add roles as a claim
+                .claim("roles", roles)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME)) // 15 minutes
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
                 .compact();
     }

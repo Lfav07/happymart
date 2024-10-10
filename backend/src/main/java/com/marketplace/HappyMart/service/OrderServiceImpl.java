@@ -46,20 +46,20 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Optional<Order> updateOrder(Long id, Long userId, int totalAmount) {
-       return orderRepository.findById(id)
-               .map(order -> {
-                   order.setUserId(id);
-                   order.setTotalAmount(totalAmount);
-                   return  orderRepository.save(order);
-               });
+        return orderRepository.findById(id)
+                .map(order -> {
+                    order.setUserId(id);
+                    order.setTotalAmount(totalAmount);
+                    return orderRepository.save(order);
+                });
     }
 
     @Override
     public Optional<Order> updateOrderStatus(Long id, OrderStatus orderStatus) {
-        return  orderRepository.findById(id)
+        return orderRepository.findById(id)
                 .map(order -> {
                     order.setStatus(orderStatus);
-                    return  orderRepository.save(order);
+                    return orderRepository.save(order);
                 });
     }
 
@@ -70,11 +70,11 @@ public class OrderServiceImpl implements OrderService {
         }
         orderItemService.deleteByOrderId(id);
 
-    orderRepository.deleteById(id);
+        orderRepository.deleteById(id);
     }
 
     @Override
     public void deleteAllOrders() {
-     orderRepository.deleteAll();
+        orderRepository.deleteAll();
     }
 }

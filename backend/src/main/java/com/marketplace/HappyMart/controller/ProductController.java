@@ -41,7 +41,7 @@ public class ProductController {
             return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(products); 
+        return ResponseEntity.ok(products);
     }
 
 
@@ -55,7 +55,6 @@ public class ProductController {
         if (result.hasErrors()) {
             return ValidationUtil.handleValidationErrors(result);
         }
-
 
 
         String categoryName = product.getCategory().getName();
@@ -83,7 +82,7 @@ public class ProductController {
             return ValidationUtil.handleValidationErrors(result);
         }
 
-        // Ensure the category is persisted
+
         Category category = updatedProduct.getCategory();
         if (category != null && category.getId() == 0) {
             categoryService.createCategory(category);

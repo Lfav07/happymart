@@ -15,13 +15,12 @@ public class AdminController {
 
 
     @Autowired
-    private  final UserServiceImpl userService;
+    private final UserServiceImpl userService;
 
     @Autowired
-    public AdminController( UserServiceImpl userService) {
+    public AdminController(UserServiceImpl userService) {
         this.userService = userService;
     }
-
 
 
     @PostMapping("/create-admin")

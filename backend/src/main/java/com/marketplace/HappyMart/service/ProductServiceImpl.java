@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
         if (category.getId() == 0) {
             categoryRepository.save(category);
         }
-       return productRepository.save(product);
+        return productRepository.save(product);
     }
 
     public List<Product> getAllProducts() {
@@ -37,32 +38,34 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductsByCategory(Category category) {
-        return  productRepository.getProductsByCategory(category);
+        return productRepository.getProductsByCategory(category);
     }
+
     @Override
     public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
     }
+
     @Override
     @Transactional
     public Optional<Product> updateProduct(Long id, String company, String name, String image,
-                                 Category category, int quantity, int price,
-                                 int weight, String description) {
-        return  productRepository.findById(id)
-                        .map(product -> {
+                                           Category category, int quantity, int price,
+                                           int weight, String description) {
+        return productRepository.findById(id)
+                .map(product -> {
 
 
-                            product.setCompany(company);
-                            product.setName(name);
-                            product.setImage(image);
-                            product.setCategory(category);
-                            product.setQuantity(quantity);
-                            product.setPrice(price);
-                            product.setWeight(weight);
-                            product.setDescription(description);
+                    product.setCompany(company);
+                    product.setName(name);
+                    product.setImage(image);
+                    product.setCategory(category);
+                    product.setQuantity(quantity);
+                    product.setPrice(price);
+                    product.setWeight(weight);
+                    product.setDescription(description);
 
-                            return productRepository.save(product);
-                        });
+                    return productRepository.save(product);
+                });
     }
 
     @Override

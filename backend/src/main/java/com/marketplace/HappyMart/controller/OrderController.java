@@ -78,15 +78,15 @@ public class OrderController {
     }
 
     @GetMapping("/{userId}/orders")
-    public  ResponseEntity<List<Order>> getOrdersByUserId(@PathVariable Long userId) {
+    public ResponseEntity<List<Order>> getOrdersByUserId(@PathVariable Long userId) {
         List<Order> orders = orderService.getOrdersByUserId(userId);
-        return  ResponseEntity.ok(orders);
+        return ResponseEntity.ok(orders);
     }
 
     @GetMapping("/{userId}/orders/status")
-    public  ResponseEntity<List<Order>> getOrdersByStatus(@PathVariable Long userId, @RequestParam OrderStatus status) {
+    public ResponseEntity<List<Order>> getOrdersByStatus(@PathVariable Long userId, @RequestParam OrderStatus status) {
         List<Order> orders = orderService.getOrderByStatus(userId, status);
-        return  ResponseEntity.ok(orders);
+        return ResponseEntity.ok(orders);
     }
 
     //OrderItem

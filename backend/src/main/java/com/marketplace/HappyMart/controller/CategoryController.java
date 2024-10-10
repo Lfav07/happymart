@@ -17,7 +17,7 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    private  final CategoryService categoryService;
+    private final CategoryService categoryService;
 
 
     public CategoryController(CategoryService categoryService) {
@@ -26,7 +26,7 @@ public class CategoryController {
 
     @GetMapping
     public List<Category> getAllCategories() {
-        return  categoryService.getAllCategories();
+        return categoryService.getAllCategories();
     }
 
     @PostMapping
@@ -37,9 +37,10 @@ public class CategoryController {
         Category createdCategory = categoryService.createCategory(category);
         return ResponseEntity.ok(createdCategory);
     }
+
     @GetMapping("/{id}")
-    public  ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
-        return  categoryService.getCategoryById(id).map(ResponseEntity::ok)
+    public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
+        return categoryService.getCategoryById(id).map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
@@ -58,7 +59,6 @@ public class CategoryController {
         categoryService.deleteCategoryById(id);
         return ResponseEntity.ok().build();
     }
-
 
 
 }
