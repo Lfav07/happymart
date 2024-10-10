@@ -77,6 +77,19 @@
   "clearCart": "Clear Cart",
   "addCartItem": "Add Cart Item",
 
+
+  "noProductsFound": "No Products Found",
+
+  "admin.register.title": "Admin Register",
+  "register.title": "Register",
+  "register.username": "Username",
+  "register.password": "Password",
+  "register.email": "Email",
+  "register.registrationSuccessful": "Registration Successful!",
+  "register.registerButton": "Register",
+  "register.loginButton": "Login",
+
+
   "editProduct": "Edit Product",
   "productName": "Product Name",
   "imageUrl": "Image URL",

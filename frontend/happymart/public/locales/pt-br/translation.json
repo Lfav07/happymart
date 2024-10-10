@@ -45,6 +45,7 @@
   "cancelled_status": "CANCELADO",
   "submit_update": "Atualizar",
 
+  "admin.register.title": "Registrar Administrador",
   "register.username": "Nome de Usuário",
   "register.email": "Email",
   "register.title": "Registrar",
@@ -67,6 +68,8 @@
   "edit": "Editar",
   "delete": "Excluir",
   "failedToUpdateProduct": "Erro ao atulizar produto",
+
+  "noProductsFound": "Nenhum Produto Encontrado",
 
   "adminCategoryManagement": "Gerenciar Categorias",
   "addNewCategory": "Adicionar Categoria",
