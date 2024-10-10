@@ -11,6 +11,7 @@ import HomePage from './pages/HomePage';
 import CartPage from './pages/CartPage';
 import LogoutPage from './pages/LogoutPage';
 import AdminLoginPage from './pages/AdminLoginPage';
+import AdminRegisterPage from './pages/AdminRegisterPage';
 import AdminLogoutPage from './pages/AdminLogoutPage';
 import AdminProductsPage from './pages/AdminProductsPage';
 import AddProductPage from './pages/AddProductPage';
@@ -38,6 +39,7 @@ const App = () => {
                     <Route path="/logout" element={<ProtectedRoute element={LogoutPage} />} />
                     <Route path="/admin/" element={<AdminProtectedRoute element={AdminRedirect} />} />
                     <Route path="/admin/login" element={<AdminLoginPage />} />
+                    <Route path="/admin/register" element={<AdminRegisterPage />} />
                     <Route path="/admin/products" element={<AdminProtectedRoute element={AdminProductsPage} />} />
                     <Route path="/admin/products/edit/:id" element={<AdminProtectedRoute element={EditProductPage} />} />
                     <Route path="/admin/products/add" element={<AdminProtectedRoute element={AddProductPage} />} />

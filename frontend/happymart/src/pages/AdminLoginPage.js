@@ -55,6 +55,8 @@ const AdminLoginPage = ({ onLogin }) => {
         <div className="container">
             <button onClick={() => i18n.changeLanguage('pt-BR')}>Português (Brasil)</button>
             <button onClick={() => i18n.changeLanguage('en')}>English</button>
+            <button type="button" onClick={() => navigate('/admin/register')}>{t('register')}</button>
+
             <div className="text">{t('admin_login')}</div>  {}
             <form onSubmit={handleSubmit}>
                 <div className="form-row">

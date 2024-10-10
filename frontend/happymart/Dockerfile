@@ -18,6 +18,7 @@ RUN npm run build
 
 FROM nginx:alpine
 
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=build /react-docker-example/build /usr/share/nginx/html
 RUN mv /usr/share/nginx/html/locales/pt-br /usr/share/nginx/html/locales/pt-BR

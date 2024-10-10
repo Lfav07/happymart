@@ -56,9 +56,9 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.PUT, "/api/auth/login").hasRole("ADMIN")
                                 .requestMatchers(HttpMethod.DELETE, "/api/auth/login").hasRole("ADMIN")
 
-                                /* Endpoint for Registering admins
-                                .requestMatchers("/api/admin/**").permitAll()
-                                */
+                                //Endpoint allowed for demonstration purposes
+                                .requestMatchers("/api/admin/create-admin").permitAll()
+
 
 
 
