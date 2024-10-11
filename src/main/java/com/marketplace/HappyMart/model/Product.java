@@ -17,6 +17,7 @@ public class Product {
     @Column(name = "name")
     private String name;
 
+    @Lob
     @Column(name = "image")
     private String image;
 
@@ -31,6 +32,7 @@ public class Product {
     @Column(name = "price")
     private int price;
 
+    // in grams
     @Column(name = "weight")
     private int weight;
 
