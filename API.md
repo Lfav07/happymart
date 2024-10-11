@@ -6,6 +6,7 @@ If you're using Postman or another API management tool, make sure to include the
 
 - **Authorization**: Bearer `jwt_token_here`
 
+JWT token is usually like this: ``eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl0sImlhdCI6MTcyODM0ODAzNywiZXhwIjoxNzI4MzY2MDM3fQ.1NNXJLpvQc0TEp1zLYiIuTCnSSqSJPUkxGJwpeQikZg`` 
 
 ## Users
 
