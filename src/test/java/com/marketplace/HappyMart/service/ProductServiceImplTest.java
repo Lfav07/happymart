@@ -36,7 +36,6 @@ class ProductServiceImplTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-
         category = new Category();
         category.setId(1);
         category.setName("Electronics");
@@ -55,9 +54,9 @@ class ProductServiceImplTest {
 
     @Test
     void testCreateProduct_CategoryNotPersisted() {
-        category.setId(0);
 
-        when(categoryRepository.save(category)).thenReturn(category);
+        when(categoryRepository.findByName(category.getName())).thenReturn(Optional.empty());
+        when(categoryRepository.save(any(Category.class))).thenReturn(category);
         when(productRepository.save(product)).thenReturn(product);
 
         System.out.println("Testing creation of product with non-persisted category...");
@@ -65,15 +64,21 @@ class ProductServiceImplTest {
 
         assertNotNull(createdProduct);
         assertEquals("Smartphone", createdProduct.getName());
-        verify(categoryRepository, times(1)).save(category);
+
+
+        verify(categoryRepository, times(1)).save(any(Category.class));
+
+
         verify(productRepository, times(1)).save(product);
 
         System.out.println("Product created: " + createdProduct);
     }
 
+
     @Test
     void testCreateProduct_CategoryAlreadyExists() {
 
+        when(categoryRepository.findByName(category.getName())).thenReturn(Optional.of(category));
         when(productRepository.save(product)).thenReturn(product);
 
         System.out.println("Testing creation of product with existing category...");
