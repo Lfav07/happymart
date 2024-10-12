@@ -15,7 +15,7 @@ public class Order {
     private Long userId;
 
     @Column(name = "total_amount", nullable = false)
-    private int totalAmount;
+    private double totalAmount;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
@@ -47,11 +47,11 @@ public class Order {
         this.userId = userId;
     }
 
-    public int getTotalAmount() {
+    public double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(int totalAmount) {
+    public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
@@ -66,7 +66,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long userId, int totalAmount, OrderStatus status) {
+    public Order(Long userId, double totalAmount, OrderStatus status) {
         this.userId = userId;
         this.totalAmount = totalAmount;
         this.status = status;

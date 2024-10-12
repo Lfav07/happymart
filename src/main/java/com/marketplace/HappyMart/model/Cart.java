@@ -22,7 +22,7 @@ public class Cart {
 
 
     @Column(name = "total_price", nullable = false)
-    private int totalPrice;
+    private double totalPrice;
 
     public Cart() {
     }
@@ -57,12 +57,12 @@ public class Cart {
         updateTotalPrice();
     }
 
-    public int getTotalPrice() {
+    public double getTotalPrice() {
         return totalPrice;
     }
 
     public void updateTotalPrice() {
-        this.totalPrice = items.stream().mapToInt(CartItem::getPrice).sum();
+        this.totalPrice = items.stream().mapToDouble(CartItem::getPrice).sum();
     }
 
     public void addItem(CartItem item) {

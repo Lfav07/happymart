@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Optional<Order> updateOrder(Long id, Long userId, int totalAmount) {
+    public Optional<Order> updateOrder(Long id, Long userId, double totalAmount) {
         return orderRepository.findById(id)
                 .map(order -> {
                     order.setUserId(id);

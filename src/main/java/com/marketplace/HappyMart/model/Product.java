@@ -17,8 +17,7 @@ public class Product {
     @Column(name = "name")
     private String name;
 
-    @Lob
-    @Column(name = "image")
+    @Column(name = "image", length = 2048)
     private String image;
 
     @ManyToOne(optional = false)
@@ -30,9 +29,9 @@ public class Product {
     private int quantity;
 
     @Column(name = "price")
-    private int price;
+    private double price;
 
-    // in grams
+    // In grams
     @Column(name = "weight")
     private int weight;
 
@@ -42,7 +41,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String company, String name, String image, Category category, int quantity, int price, int weight, String description) {
+    public Product(String company, String name, String image, Category category, int quantity, double price, int weight, String description) {
         this.company = company;
         this.name = name;
         this.image = image;
@@ -95,11 +94,11 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

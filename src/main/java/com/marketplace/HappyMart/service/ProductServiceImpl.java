@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public Optional<Product> updateProduct(Long id, String company, String name, String image,
-                                           Category category, int quantity, int price,
+                                           Category category, int quantity, double price,
                                            int weight, String description) {
         return productRepository.findById(id)
                 .map(product -> {

@@ -17,7 +17,7 @@ public interface ProductService {
     public Optional<Product> getProductById(Long id);
 
     public Optional<Product> updateProduct(Long id, String company, String name, String image,
-                                           Category category, int quantity, int price,
+                                           Category category, int quantity, double price,
                                            int weight, String description);
 
     public void deleteProductById(Long id);

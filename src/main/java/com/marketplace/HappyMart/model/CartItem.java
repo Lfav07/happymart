@@ -26,12 +26,12 @@ public class CartItem {
     private int quantity;
 
     @Column(name = "price", nullable = false)
-    private int price;
+    private double price;
 
     public CartItem() {
     }
 
-    public CartItem(Product product, int quantity, int price) {
+    public CartItem(Product product, int quantity, double price) {
         this.product = product;
         this.quantity = quantity;
         this.price = price;
@@ -69,11 +69,11 @@ public class CartItem {
         this.quantity = quantity;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
