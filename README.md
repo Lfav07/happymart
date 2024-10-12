@@ -1,6 +1,6 @@
 # HappyMart - Java Spring Supermarket
 
-![Screenshot of HappyMart](./IMG/screenshot.png)
+![Screenshot of HappyMart](./img/Screenshot.png)
 
 #### Open For Contributions!
 
@@ -27,7 +27,8 @@ This project is a supermarket management system that supports managing users, pr
     - Docker setup for easy deployment
     - MySQL database integration
     - JWT authentication for secure access
-
+    - JUnit tests
+    - 
 
 ## Requirements
 
