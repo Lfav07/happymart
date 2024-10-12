@@ -51,6 +51,8 @@
 
   "access_denied": "Acesso negado",
 
+  "register.errorOccurred": "Ocorreu um erro",
+
   "admin.register.title": "Registrar Administrador",
   "register.username": "Nome de Usuário (3-20)",
   "register.email": "Email",

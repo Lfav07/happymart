@@ -105,6 +105,8 @@
 
   "access_denied": "Acess denied",
 
+  "register.errorOccurred": "Error ocurred",
+
   "productId": "Product ID",
   "pleaseFillInAllFields": "Please, Fill in All Fields",
 

@@ -9,7 +9,7 @@ function AddProductPage() {
         name: '',
         image: '',
         company: '',
-        category: '', // Keep this as a string for the category name
+        category: '',
         quantity: '',
         price: '',
         weight: '',
