@@ -37,7 +37,6 @@ const App = () => {
                     <Route path="/home" element={<ProtectedRoute element={HomePage} />} />
                     <Route path="/orders" element={<ProtectedRoute element={OrderPage} />} />
                     <Route path="/logout" element={<ProtectedRoute element={LogoutPage} />} />
-                    <Route path="/admin/" element={<AdminProtectedRoute element={AdminRedirect} />} />
                     <Route path="/admin/login" element={<AdminLoginPage />} />
                     <Route path="/admin/register" element={<AdminRegisterPage />} />
                     <Route path="/admin/products" element={<AdminProtectedRoute element={AdminProductsPage} />} />
@@ -50,6 +49,7 @@ const App = () => {
                     <Route path="/admin/orders" element={<AdminProtectedRoute element={AdminOrderPage} />} />
                     <Route path="/admin/categories" element={<AdminProtectedRoute element={AdminCategoryPage} />} />
 
+                    <Route path="/admin/*" element={<AdminProtectedRoute element={AdminCategoryPage} />} />
                 </Routes>
             </Router>
         </UserProvider>
