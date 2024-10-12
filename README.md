@@ -1,6 +1,6 @@
 # HappyMart - Java Spring Supermarket
 
-![Screenshot of HappyMart](./IMG/screenshot.png)
+![Screenshot of HappyMart](./img/Screenshot.png)
 
 #### Open For Contributions!
 
