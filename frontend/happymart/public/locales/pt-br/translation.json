@@ -49,6 +49,8 @@
 
   "error_occurred": "Ocorreu um erro",
 
+  "access_denied": "Acesso negado",
+
   "admin.register.title": "Registrar Administrador",
   "register.username": "Nome de Usuário (3-20)",
   "register.email": "Email",

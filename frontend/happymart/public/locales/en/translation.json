@@ -103,6 +103,8 @@
 
   "error_occurred": "Error occurred",
 
+  "access_denied": "Acess denied",
+
   "productId": "Product ID",
   "pleaseFillInAllFields": "Please, Fill in All Fields",
 
