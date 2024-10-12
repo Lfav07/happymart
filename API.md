@@ -1,5 +1,21 @@
 # API Endpoints
 
+## Table of Contents
+- [Authorization](#authorization)
+
+- [Users](#users)
+
+- [Categories](#categories)
+
+- [Products](#products)
+
+- [Carts](#carts)
+
+- [Orders](#orders)
+
+- [Order Items](#order-items)
+
+
 
 ### Authorization
 If you're using Postman or another API management tool, make sure to include the JWT returned from login in the request headers:
@@ -7,6 +23,29 @@ If you're using Postman or another API management tool, make sure to include the
 - **Authorization**: Bearer `jwt_token_here`
 
 JWT token is usually like this: ``eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIkFETUlOIl0sImlhdCI6MTcyODM0ODAzNywiZXhwIjoxNzI4MzY2MDM3fQ.1NNXJLpvQc0TEp1zLYiIuTCnSSqSJPUkxGJwpeQikZg`` 
+
+### Admin-Only Endpoints
+The following endpoints are restricted to users with admin privileges. Accessing these endpoints requires an authenticated admin account with a valid JWT token in the request headers:
+
+- **Categories**:
+  - `POST /categories`
+  - `PUT /categories/{id}`
+  - `DELETE /categories/{id}`
+
+- **Products**:
+  - `POST /products`
+  - `PUT /products/{id}`
+  - `DELETE /products/{id}`
+  - `DELETE /products`
+
+- **Orders**:
+  - `PUT /orders/{id}`
+  - `DELETE /orders/{id}`
+
+- **Users**:
+  - `GET /api/auth/users`
+  - `GET /api/auth/users/id/{id}`
+
 
 ## Users
 
@@ -298,47 +337,3 @@ Example body:
 ### **Get all order items** (From all orders)
 
 `GET http://localhost:8080/orders/items`
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
