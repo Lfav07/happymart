@@ -55,14 +55,6 @@ public class ProductController {
             return ValidationUtil.handleValidationErrors(result);
         }
 
-
-        String categoryName = product.getCategory().getName();
-        Category category = categoryService.createCategoryByName(categoryName)
-                .orElseThrow(() -> new RuntimeException("Category could not be created or retrieved"));
-
-
-        product.setCategory(category);
-
         Product createdProduct = productService.createProduct(product);
         return ResponseEntity.ok(createdProduct);
     }

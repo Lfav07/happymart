@@ -7,7 +7,6 @@ import com.marketplace.HappyMart.repository.ProductRepository;
 import com.marketplace.HappyMart.service.interfaces.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import jakarta.transaction.Transactional;
 
 import java.util.List;
@@ -24,14 +23,26 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public Product createProduct(Product product) {
-        Category category = product.getCategory();
 
-        if (category.getId() == 0) {
-            categoryRepository.save(category);
+        String categoryName = product.getCategory().getName();
+        Optional<Category> existingCategoryOpt = categoryRepository.findByName(categoryName);
+
+
+        Category category;
+        if (existingCategoryOpt.isPresent()) {
+            category = existingCategoryOpt.get();
+        } else {
+            category = new Category();
+            category.setName(categoryName);
+            category = categoryRepository.save(category);
         }
+
+
+        product.setCategory(category);
         return productRepository.save(product);
     }
 
+    @Override
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
@@ -53,8 +64,6 @@ public class ProductServiceImpl implements ProductService {
                                            int weight, String description) {
         return productRepository.findById(id)
                 .map(product -> {
-
-
                     product.setCompany(company);
                     product.setName(name);
                     product.setImage(image);
@@ -63,7 +72,6 @@ public class ProductServiceImpl implements ProductService {
                     product.setPrice(price);
                     product.setWeight(weight);
                     product.setDescription(description);
-
                     return productRepository.save(product);
                 });
     }

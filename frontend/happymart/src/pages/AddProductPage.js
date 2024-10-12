@@ -9,7 +9,7 @@ function AddProductPage() {
         name: '',
         image: '',
         company: '',
-        category: '',
+        category: '', // Keep this as a string for the category name
         quantity: '',
         price: '',
         weight: '',
@@ -45,7 +45,12 @@ function AddProductPage() {
         e.preventDefault();
         try {
             const token = localStorage.getItem('jwt');
-            await axios.post('http://localhost:8080/products', product, {
+
+            const productWithCategory = {
+                ...product,
+                category: { name: product.category }
+            };
+            await axios.post('http://localhost:8080/products', productWithCategory, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -67,7 +72,7 @@ function AddProductPage() {
                 <label htmlFor="category">{t('category')}</label>
                 <select name="category" value={product.category} onChange={handleChange} required>
                     {categories.map((cat) => (
-                        <option key={cat.id} value={cat.id}>{cat.name}</option>
+                        <option key={cat.id} value={cat.name}>{cat.name}</option>
                     ))}
                 </select>
 

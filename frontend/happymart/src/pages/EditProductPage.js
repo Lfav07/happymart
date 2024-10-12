@@ -86,7 +86,6 @@ function EditProductPage() {
 
                 <label htmlFor="category">{t('category')}</label>
                 <select name="category" value={product.category?.id || ''} onChange={handleChange} required>
-                    <option value="" disabled>{t('selectCategory')}</option>
                     {categories.map((cat) => (
                         <option key={cat.id} value={cat.id}>{cat.name}</option>
                     ))}
