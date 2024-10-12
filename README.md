@@ -101,7 +101,7 @@ docker-compose up
       ```
 
    4. Access the user frontend at: `http://localhost:3000`
-   5. Access the admin frontend at: `http://localhost:3000/admin/login`
+   5. Access the admin frontend at: `http://localhost:3000/admin`
 
 ## API Endpoints
 

@@ -49,7 +49,7 @@ const App = () => {
                     <Route path="/admin/orders" element={<AdminProtectedRoute element={AdminOrderPage} />} />
                     <Route path="/admin/categories" element={<AdminProtectedRoute element={AdminCategoryPage} />} />
 
-                    <Route path="/admin/*" element={<AdminProtectedRoute element={AdminCategoryPage} />} />
+                    <Route path="/admin/*" element={<AdminProtectedRoute element={AdminRedirect} />} />
                 </Routes>
             </Router>
         </UserProvider>
