@@ -101,6 +101,8 @@
 
   "chooseAction": "Choose An Action",
 
+  "error_occurred": "Error occurred",
+
   "productId": "Product ID",
   "pleaseFillInAllFields": "Please, Fill in All Fields",
 
