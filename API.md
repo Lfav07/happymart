@@ -127,11 +127,212 @@ Example body:
   "quantity": 100,
   "price": 2,
   "weight": 180,
-  "description": "fresh red apple"
+  "description": "Fresh red apple"
+}
+
+```
+
+
+### **Update product by id**
+- #### Replace `{id}` with the desired product ID.
+`PUT http://localhost:8080/products/{id}`
+
+Example body:
+```json
+{
+  "name": "Updated Product",
+  "company": "Updated Company",
+  "image": "http://example.com/updated-image.jpg",
+  "category": {
+    "name": "Fruits"
+  },
+  "quantity": 150,
+  "price": 60,
+  "weight": 250,
+  "description": "This is an updated product description."
 }
 
 
 ```
+
+### **Get all products**
+
+`GET http://localhost:8080/products`
+
+### **Get product by id**
+- #### Replace `{id}` with the desired product ID.
+`GET http://localhost:8080/products/{id}`
+
+
+### **Get products by category id**
+- #### Replace `{id}` with the desired category ID.
+`GET http://localhost:8080/products/names?categoryId={id}`
+
+### **Delete product by id**
+- #### Replace `{id}` with the desired product ID.
+`DELETE http://localhost:8080/products/{id}`
+
+### **Delete all products**
+
+`DELETE http://localhost:8080/products`
+
+## Carts
+
+### **Get or create cart**
+- #### Replace `{userId}` with the desired user ID.
+`GET http://localhost:8080/users/{userId}/cart`
+
+### **Get all cart items**
+- #### Replace `{userId}` with the desired user ID.
+`GET http://localhost:8080/users/{userId}/cart/items`
+
+### **Add item to cart**
+- #### Replace `{userId}` with the desired user ID.
+`POST http://localhost:8080/users/{userId}/cart/items`
+
+Example body:
+```json
+{
+  "productId": 1,
+  "quantity": 2
+}
+```
+
+### **Get cart item by ID** (Retrieves a specific item from the cart.)
+- #### Replace {userId} and {cartItemId} with the desired user ID and cart item ID.
+`GET http://localhost:8080/users/{userId}/cart/items/{cartItemId}`
+
+### **Update cart item quantity**
+- #### Replace {userId} and {cartItemId} with the desired user ID and cart item ID.
+`PUT http://localhost:8080/users/{userId}/cart/items/{cartItemId}?newQuantity={newQuantity}`
+
+### **Remove item from cart**
+- #### Replace {userId} and {cartItemId} with the desired user ID and cart item ID.
+`DELETE http://localhost:8080/users/{userId}/cart/items/{cartItemId}`
+
+### **Clear cart**
+- #### Replace {userId} with the desired user ID.
+`DELETE http://localhost:8080/users/{userId}/cart/items`
+
+## Orders
+
+### **Create order**
+`POST http://localhost:8080/orders`
+
+#### Example request body:
+```json
+{
+  "userId": 1,
+  "totalAmount": 100.50,
+  "status": "PENDING"
+}
+```
+
+### **Get all orders**
+`GET http://localhost:8080/orders`
+
+
+### **Get order by order id**
+- #### Replace {orderId} with the desired order ID.
+`GET http://localhost:8080/orders/{orderId}`
+
+### **Get orders by user id**
+- #### Replace {userId} with the desired user ID.
+`GET http://localhost:8080/orders/{id}`
+
+### **Update order by id**
+- #### Replace {id} with the desired order ID.
+`PUT http://localhost:8080/orders/{id}`
+
+#### Example request body:
+```json
+{
+  "userId": 2,
+  "totalAmount": 100.50
+}
+```
+
+
+### **Update order status by id**
+- #### Replace {id} with the desired order ID.
+`PATCH http://localhost:8080/orders/{id}/status`
+
+#### Example request body:
+```json
+{
+  "status": "COMPLETED"
+}
+
+```
+
+### **Delete Order by id**
+- #### Replace {id} with the desired user ID.
+`DELETE http://localhost:8080/orders/{id}`
+
+
+## Order Items
+
+### Note: {orderId} refers to the order id, not the order item id
+
+### **Create Order item**
+- #### Replace {orderId} with the desired order ID.
+`POST http://localhost:8080/orders/{orderId}/items`
+
+#### Example request body:
+```json
+{
+  "product": {
+    "id": 1
+  },
+  "quantity": 2,
+  "price": 50
+}
+
+
+```
+
+### **Get order items by id**
+- #### Replace {orderId} with the desired order ID.
+`GET http://localhost:8080/orders/{orderId}/items`
+
+### **Get all order items** (From all orders)
+
+`GET http://localhost:8080/orders/items`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
