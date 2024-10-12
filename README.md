@@ -1,5 +1,9 @@
 # HappyMart - Java Spring Supermarket
 
+![Screenshot of HappyMart](./IMG/screenshot.png)
+
+#### Open For Contributions!
+
 #### HappyMart is a comprehensive supermarket management system built using Java Spring for the backend and React for the frontend. It allows users to manage products, orders, and user accounts seamlessly. Designed for developers and businesses alike, HappyMart serves as a ready-to-deploy solution or as a foundation for further customization in e-commerce platforms.
 ## Table of Contents
 - [Overview](#overview)
@@ -14,14 +18,16 @@
 ## Overview
 
 This project is a supermarket management system that supports managing users, products, and orders.
+
 ## Features
-- Manage users, Products, and orders.
-  - REST API for CRUD operations.
-  - Responsive React frontend.
-  - Internationalization support with i18next.
-  - Docker setup for easy deployment.
-  - MYSQL database.
-  - JWT authentication.
+- Manage Users, Products, and Orders
+    - REST API for CRUD operations
+    - Responsive React frontend
+    - Internationalization support with i18next
+    - Docker setup for easy deployment
+    - MySQL database integration
+    - JWT authentication for secure access
+
 
 ## Requirements
 
