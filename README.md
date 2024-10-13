@@ -28,7 +28,6 @@ This project is a supermarket management system that supports managing users, pr
     - MySQL database integration
     - JWT authentication for secure access
     - JUnit tests
-    - 
 
 ## Requirements
 
